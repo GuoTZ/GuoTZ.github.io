@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>Swift  Result&lt;T, E: Error&gt; 枚举类型 - 博客</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="Swift 枚举类型Swift 中枚举的能力相比 OC 有着很大的进步，每个枚举值除了可以是常规的基础类型，还可以是一个关联的类型。有了这样的特性后用枚举来优化返回结果的数据结构显得水到渠成： 12345678enum Result&amp;lt;Success, Failure&amp;gt; where Failure : Error &amp;#123;    /// A success, storing a `S">
+<meta name="keywords" content="iOS,Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift  Result&lt;T, E: Error&gt; 枚举类型">
+<meta property="og:url" content="http://yoursite.com/2019/05/03/Swift-Result-T-E-Error-枚举类型/index.html">
+<meta property="og:site_name" content="博客">
+<meta property="og:description" content="Swift 枚举类型Swift 中枚举的能力相比 OC 有着很大的进步，每个枚举值除了可以是常规的基础类型，还可以是一个关联的类型。有了这样的特性后用枚举来优化返回结果的数据结构显得水到渠成： 12345678enum Result&amp;lt;Success, Failure&amp;gt; where Failure : Error &amp;#123;    /// A success, storing a `S">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="og:updated_time" content="2019-05-07T09:40:04.780Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift  Result&lt;T, E: Error&gt; 枚举类型">
+<meta name="twitter:description" content="Swift 枚举类型Swift 中枚举的能力相比 OC 有着很大的进步，每个枚举值除了可以是常规的基础类型，还可以是一个关联的类型。有了这样的特性后用枚举来优化返回结果的数据结构显得水到渠成： 12345678enum Result&amp;lt;Success, Failure&amp;gt; where Failure : Error &amp;#123;    /// A success, storing a `S">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/solarized-dark.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="Swift  Result&lt;T, E: Error&gt; 枚举类型" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">首页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+                <a class="navbar-item" href="/links">工具</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/GuoTZ">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-05-03T06:47:40.000Z">2019-05-03</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/iOS/">iOS</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 分钟 读完 (大约 857 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Swift  Result&lt;T, E: Error&gt; 枚举类型
+            
+        </h1>
+        <div class="content">
+            <h3 id="Swift-枚举类型"><a href="#Swift-枚举类型" class="headerlink" title="Swift 枚举类型"></a>Swift 枚举类型</h3><p><code>Swift</code> 中枚举的能力相比 OC 有着很大的进步，每个枚举值除了可以是常规的基础类型，还可以是一个关联的类型。有了这样的特性后用枚举来优化返回结果的数据结构显得水到渠成：</p>
+<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Result</span>&lt;<span class="hljs-title">Success</span>, <span class="hljs-title">Failure</span>&gt; <span class="hljs-title">where</span> <span class="hljs-title">Failure</span> : <span class="hljs-title">Error</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/// A success, storing a `Success` value.</span></span><br><span class="line">    <span class="hljs-keyword">case</span> success(<span class="hljs-type">Success</span>)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/// A failure, storing a `Failure` value.</span></span><br><span class="line">    <span class="hljs-keyword">case</span> failure(<span class="hljs-type">Failure</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>定义异步返回结果是 <code>Int</code> 类型的函数：<br><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">fetchData</span><span class="hljs-params">(<span class="hljs-number">_</span> completionHandler: @escaping <span class="hljs-params">(Result&lt;Int, Error&gt;)</span></span></span> -&gt; <span class="hljs-type">Void</span>) &#123;</span><br><span class="line">    <span class="hljs-type">DispatchQueue</span>.global().async &#123;</span><br><span class="line">        <span class="hljs-keyword">let</span> isSuccess = <span class="hljs-literal">true</span></span><br><span class="line">        <span class="hljs-keyword">if</span> isSuccess &#123;</span><br><span class="line">            <span class="hljs-keyword">let</span> resultValue = <span class="hljs-number">6</span></span><br><span class="line">            <span class="hljs-keyword">return</span> completionHandler(.success(resultValue))</span><br><span class="line">        &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">            <span class="hljs-keyword">let</span> error = <span class="hljs-type">NSError</span>(domain: <span class="hljs-string">"custom error"</span>, code: -<span class="hljs-number">1</span>, userInfo: <span class="hljs-literal">nil</span>)</span><br><span class="line">            <span class="hljs-keyword">return</span> completionHandler(.failure(error))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>返回值的类型通过泛型进行约束， <code>Result</code> 第一个泛型类型表示返回值的类型，第二个类型表示错误的类型。对 <code>Result</code> 赋值和常规的枚举一样：<br><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> valueResult: <span class="hljs-type">Result</span>&lt;<span class="hljs-type">Int</span>, <span class="hljs-type">CustomError</span>&gt; = <span class="hljs-type">Result</span>.success(<span class="hljs-number">4</span>)</span><br></pre></td></tr></table></figure></p>
+<p>// 因为 swift 中会进行类型推断，编译器在确认返回的是 <code>Result</code> 类型后，可以省略枚举类型的声明<br>let errorResult = .failure(CustomError.inputNotValid)<br>取出 Result 值和获取普通的关联类型枚举是一样的：<br><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fetchData &#123; (result) <span class="hljs-keyword">in</span></span><br><span class="line">    <span class="hljs-keyword">switch</span> result &#123;</span><br><span class="line">    <span class="hljs-keyword">case</span> .success(<span class="hljs-keyword">let</span> value):</span><br><span class="line">        <span class="hljs-built_in">print</span>(value)</span><br><span class="line">    <span class="hljs-keyword">case</span> .failure(<span class="hljs-keyword">let</span> error)</span><br><span class="line">        <span class="hljs-built_in">print</span>(error.localizedDescription)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果你只想要获取其中一项的值，也可以直接用 <code>if</code> <code>case</code> 拆包：<br><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fetchDate &#123; (result) <span class="hljs-keyword">in</span></span><br><span class="line">    <span class="hljs-keyword">if</span> <span class="hljs-keyword">case</span> .success(<span class="hljs-keyword">let</span> value) = result &#123;</span><br><span class="line">        <span class="hljs-built_in">print</span>(value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以判等<br><code>Enum</code> 是一个值类型，是一个值就应该可以判断是否相等。如果 <code>Result</code> 的成功和失败的类型都是  <code>Equatable</code>，那么 <code>Result</code> 就可以判等，源码如下：<br><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">extension</span> <span class="hljs-title">Result</span> : <span class="hljs-title">Equatable</span> <span class="hljs-title">where</span> <span class="hljs-title">Success</span> : <span class="hljs-title">Equatable</span>, <span class="hljs-title">Failure</span> : <span class="hljs-title">Equatable</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>类似的，如果是成功和失败的类型都是 Hashable，那么 Result 也是 Hashable：<br><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">extension</span> <span class="hljs-title">Result</span> : <span class="hljs-title">Hashable</span> <span class="hljs-title">where</span> <span class="hljs-title">Success</span> : <span class="hljs-title">Hashable</span>, <span class="hljs-title">Failure</span> : <span class="hljs-title">Hashable</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果实现了 <code>Hashable</code> ，可以用来当做字典的 <code>key</code>。</p>
+<h3 id="辅助的-API"><a href="#辅助的-API" class="headerlink" title="辅助的 API"></a>辅助的 API</h3><h3 id="map、mapError"><a href="#map、mapError" class="headerlink" title="map、mapError"></a>map、mapError</h3><p>与 <code>Dictionary</code> 类似，<code>Swift</code> 为 <code>Result</code> 提供了几个 <code>map</code> <code>value</code> 和 <code>error</code> 的方法。<br><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> intResult: <span class="hljs-type">Result</span>&lt;<span class="hljs-type">Int</span>, <span class="hljs-type">Error</span>&gt; = <span class="hljs-type">Result</span>.success(<span class="hljs-number">4</span>)</span><br><span class="line"><span class="hljs-keyword">let</span> stringResult = x.<span class="hljs-built_in">map</span> &#123; (value) -&gt; <span class="hljs-type">Result</span>&lt;<span class="hljs-type">String</span>, <span class="hljs-type">Error</span>&gt; <span class="hljs-keyword">in</span></span><br><span class="line">    <span class="hljs-keyword">return</span>  .success(<span class="hljs-string">"map"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">let</span> originError = <span class="hljs-type">NSError</span>(domain: <span class="hljs-string">"origin error"</span>, code: -<span class="hljs-number">1</span>, userInfo: <span class="hljs-literal">nil</span>)</span><br><span class="line"><span class="hljs-keyword">let</span> errorResult: <span class="hljs-type">Result</span>&lt;<span class="hljs-type">Int</span>, <span class="hljs-type">Error</span>&gt; = .failure(originError)</span><br><span class="line"><span class="hljs-keyword">let</span> newErrorResult = errorResult.mapError &#123; (error) -&gt; <span class="hljs-type">Error</span> <span class="hljs-keyword">in</span></span><br><span class="line">    <span class="hljs-keyword">let</span> newError = <span class="hljs-type">NSError</span>(domain: <span class="hljs-string">"new error"</span>, code: -<span class="hljs-number">2</span>, userInfo: <span class="hljs-literal">nil</span>)</span><br><span class="line">    <span class="hljs-keyword">return</span> newError</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="flatMap、flatMapError"><a href="#flatMap、flatMapError" class="headerlink" title="flatMap、flatMapError"></a>flatMap、flatMapError</h3><p>map 返回的是具体的结果和错误， <code>flatMap</code> 闭包中返回的是 <code>Result</code> 类型。如果 <code>Result</code> 中包含的是数据，效果和 <code>map</code> 一致，替换数据；如果 <code>Result</code> 中包含的是错误，那么不替换结果。<br><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> intResult: <span class="hljs-type">Result</span>&lt;<span class="hljs-type">Int</span>, <span class="hljs-type">Error</span>&gt; = <span class="hljs-type">Result</span>.success(<span class="hljs-number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 替换成功</span></span><br><span class="line"><span class="hljs-keyword">let</span> flatMapResult = intResult.flatMap &#123; (value) -&gt; <span class="hljs-type">Result</span>&lt;<span class="hljs-type">String</span>, <span class="hljs-type">Error</span>&gt; <span class="hljs-keyword">in</span></span><br><span class="line">    <span class="hljs-keyword">return</span>  .success(<span class="hljs-string">"flatMap"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 没有执行替换操作，flatMapIntResult 值还是 intResult</span></span><br><span class="line"><span class="hljs-keyword">let</span> flatMapIntResult = intResult.flatMap &#123; (value) -&gt; <span class="hljs-type">Result</span>&lt;<span class="hljs-type">String</span>, <span class="hljs-type">Error</span>&gt; <span class="hljs-keyword">in</span></span><br><span class="line">    <span class="hljs-keyword">return</span>  .failure(<span class="hljs-type">NSError</span>(domain: <span class="hljs-string">"origin error"</span>, code: -<span class="hljs-number">1</span>, userInfo: <span class="hljs-literal">nil</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>很多时候只关心  <code>Result</code> 的值， <code>Swift</code> 提供了 <code>get()</code> 函数来便捷的直接获取值，需要注意的是这个函数被标记为 <code>throws</code>，使用时语句前需要加上 <code>try</code>：<br><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> intResult: <span class="hljs-type">Result</span>&lt;<span class="hljs-type">Int</span>, <span class="hljs-type">Error</span>&gt; = <span class="hljs-type">Result</span>.success(<span class="hljs-number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">let</span> value = <span class="hljs-keyword">try</span>? intResult.<span class="hljs-keyword">get</span>()</span><br></pre></td></tr></table></figure></p>
+<p>可抛出异常的闭包初始化器<br>很多时候获取返回值的闭包中可能会发生异常代表获取失败的错误，基于这个场景 <code>Swift</code> 提供了一个可抛出异常的闭包初始化器：<br><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">CustomError</span>: <span class="hljs-title">Error</span>, <span class="hljs-title">Equatable</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">case</span> inputNotValid</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">let</span> fetchInt = &#123; () -&gt; <span class="hljs-type">Int</span> <span class="hljs-keyword">in</span></span><br><span class="line">    <span class="hljs-keyword">if</span> <span class="hljs-literal">true</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-number">4</span></span><br><span class="line">    &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">throw</span> <span class="hljs-type">CustomError</span>.inputNotValid</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">let</span> result: <span class="hljs-type">Result</span>&lt;<span class="hljs-type">Int</span>, <span class="hljs-type">Error</span>&gt; = <span class="hljs-type">Result</span> &#123; <span class="hljs-keyword">try</span> fetchInt() &#125;</span><br></pre></td></tr></table></figure></p>
+<p>需要提醒是通过这种方式声明的 <code>Result</code> 的 <code>error</code> 类型只能是 <code>Error</code>，不能指定特定的 <code>Error</code>。</p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Swift/">Swift</a>, <a class="has-link-grey -link" href="/tags/iOS/">iOS</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/05/04/Swift面向协议-POP/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Swift面向协议 POP</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/03/26/Django-API插件类/">
+                <span class="level-item">Django-API插件类</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: 'ae39d0d8687422507629',
+        clientSecret: 'bed074f6cbba84322a1c82ebd7b6ae757aee9291',
+        id: '2bad00403b2f50327dcb6dcef8dca0e4',
+        repo: 'github.io',
+        owner: 'GuoTZ',
+        admin: ["GuoTZ"]
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left is-sticky">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="GuoTZ">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        GuoTZ
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        一个Github的搬运工
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>陕西西安</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        15
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        13
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        15
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="http://www.gtzh.work/read" target="_blank">
+                写文章</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/GuoTZ">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><ul class="menu-list"><li>
+        <a class="is-flex" href="#Swift-枚举类型">
+        <span class="has-mr-6">1.1</span>
+        <span>Swift 枚举类型</span>
+        </a></li></ul><li>
+        <a class="is-flex" href="#基本用法">
+        <span class="has-mr-6">2</span>
+        <span>基本用法</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#辅助的-API">
+        <span class="has-mr-6">2.1</span>
+        <span>辅助的 API</span>
+        </a></li><li>
+        <a class="is-flex" href="#map、mapError">
+        <span class="has-mr-6">2.2</span>
+        <span>map、mapError</span>
+        </a></li><li>
+        <a class="is-flex" href="#flatMap、flatMapError">
+        <span class="has-mr-6">2.3</span>
+        <span>flatMap、flatMapError</span>
+        </a></li><li>
+        <a class="is-flex" href="#get">
+        <span class="has-mr-6">2.4</span>
+        <span>get</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://www.jianshu.com/u/c7f424f6b259" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">简书地址</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.jianshu.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://github.com/GuoTZ" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Github</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">github.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Django/" style="font-size: 13.33px;">Django</a> <a href="/tags/MD5加密/" style="font-size: 10px;">MD5加密</a> <a href="/tags/Nginx/" style="font-size: 13.33px;">Nginx</a> <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/RSA加密/" style="font-size: 10px;">RSA加密</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swift/" style="font-size: 13.33px;">Swift</a> <a href="/tags/ftp/" style="font-size: 10px;">ftp</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/服务器/" style="font-size: 16.67px;">服务器</a> <a href="/tags/第三方库/" style="font-size: 10px;">第三方库</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/iOS/">
+            <span class="level-start">
+                <span class="level-item">iOS</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/iOS/Objective-C/">
+            <span class="level-start">
+                <span class="level-item">Objective-C</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/Swift/">
+            <span class="level-start">
+                <span class="level-item">Swift</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/编译/">
+            <span class="level-start">
+                <span class="level-item">编译</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/后端/">
+            <span class="level-start">
+                <span class="level-item">后端</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/后端/Apache服务器/">
+            <span class="level-start">
+                <span class="level-item">Apache服务器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/后端/Django/">
+            <span class="level-start">
+                <span class="level-item">Django</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/后端/Nginx服务器/">
+            <span class="level-start">
+                <span class="level-item">Nginx服务器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/算法/">
+            <span class="level-start">
+                <span class="level-item">算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/算法/排序算法/">
+            <span class="level-start">
+                <span class="level-item">排序算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/系统/">
+            <span class="level-start">
+                <span class="level-item">系统</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/系统/Linux/">
+            <span class="level-start">
+                <span class="level-item">Linux</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/系统/Mac/">
+            <span class="level-start">
+                <span class="level-item">Mac</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-05T09:44:03.000Z">2019-05-05</time></div>
+                    <a href="/2019/05/05/Django-RESTfulAPI-安全设计/" class="has-link-black-ter is-size-6">RESTAPI 安全设计</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-04T01:11:22.000Z">2019-05-04</time></div>
+                    <a href="/2019/05/04/Swift面向协议-POP/" class="has-link-black-ter is-size-6">Swift面向协议 POP</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-03T06:47:40.000Z">2019-05-03</time></div>
+                    <a href="/2019/05/03/Swift-Result-T-E-Error-枚举类型/" class="has-link-black-ter is-size-6">Swift  Result&lt;T, E: Error&gt; 枚举类型</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-03-26T03:03:47.000Z">2019-03-26</time></div>
+                    <a href="/2019/03/26/Django-API插件类/" class="has-link-black-ter is-size-6">Django-API插件类</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-03-12T02:28:44.000Z">2018-03-12</time></div>
+                    <a href="/2018/03/12/算法-：排序算法/" class="has-link-black-ter is-size-6">算法-：排序算法</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/算法/">算法</a> / <a class="has-link-grey -link" href="/categories/算法/排序算法/">排序算法</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Apache/">
+                        <span class="tag">Apache</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Django/">
+                        <span class="tag">Django</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/MD5加密/">
+                        <span class="tag">MD5加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Nginx/">
+                        <span class="tag">Nginx</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Python/">
+                        <span class="tag">Python</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/RSA加密/">
+                        <span class="tag">RSA加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swift/">
+                        <span class="tag">Swift</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ftp/">
+                        <span class="tag">ftp</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/iOS/">
+                        <span class="tag">iOS</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/svn/">
+                        <span class="tag">svn</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/排序/">
+                        <span class="tag">排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/服务器/">
+                        <span class="tag">服务器</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/第三方库/">
+                        <span class="tag">第三方库</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/算法/">
+                        <span class="tag">算法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/iOS/">
+            <span class="level-start">
+                <span class="level-item">iOS</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/iOS/Objective-C/">
+            <span class="level-start">
+                <span class="level-item">Objective-C</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/Swift/">
+            <span class="level-start">
+                <span class="level-item">Swift</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/编译/">
+            <span class="level-start">
+                <span class="level-item">编译</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/后端/">
+            <span class="level-start">
+                <span class="level-item">后端</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/后端/Apache服务器/">
+            <span class="level-start">
+                <span class="level-item">Apache服务器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/后端/Django/">
+            <span class="level-start">
+                <span class="level-item">Django</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/后端/Nginx服务器/">
+            <span class="level-start">
+                <span class="level-item">Nginx服务器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/算法/">
+            <span class="level-start">
+                <span class="level-item">算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/算法/排序算法/">
+            <span class="level-start">
+                <span class="level-item">排序算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/系统/">
+            <span class="level-start">
+                <span class="level-item">系统</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/系统/Linux/">
+            <span class="level-start">
+                <span class="level-item">Linux</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/系统/Mac/">
+            <span class="level-start">
+                <span class="level-item">Mac</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-05T09:44:03.000Z">2019-05-05</time></div>
+                    <a href="/2019/05/05/Django-RESTfulAPI-安全设计/" class="has-link-black-ter is-size-6">RESTAPI 安全设计</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-04T01:11:22.000Z">2019-05-04</time></div>
+                    <a href="/2019/05/04/Swift面向协议-POP/" class="has-link-black-ter is-size-6">Swift面向协议 POP</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-03T06:47:40.000Z">2019-05-03</time></div>
+                    <a href="/2019/05/03/Swift-Result-T-E-Error-枚举类型/" class="has-link-black-ter is-size-6">Swift  Result&lt;T, E: Error&gt; 枚举类型</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-03-26T03:03:47.000Z">2019-03-26</time></div>
+                    <a href="/2019/03/26/Django-API插件类/" class="has-link-black-ter is-size-6">Django-API插件类</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-03-12T02:28:44.000Z">2018-03-12</time></div>
+                    <a href="/2018/03/12/算法-：排序算法/" class="has-link-black-ter is-size-6">算法-：排序算法</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/算法/">算法</a> / <a class="has-link-grey -link" href="/categories/算法/排序算法/">排序算法</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Apache/">
+                        <span class="tag">Apache</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Django/">
+                        <span class="tag">Django</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/MD5加密/">
+                        <span class="tag">MD5加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Nginx/">
+                        <span class="tag">Nginx</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Python/">
+                        <span class="tag">Python</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/RSA加密/">
+                        <span class="tag">RSA加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swift/">
+                        <span class="tag">Swift</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ftp/">
+                        <span class="tag">ftp</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/iOS/">
+                        <span class="tag">iOS</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/svn/">
+                        <span class="tag">svn</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/排序/">
+                        <span class="tag">排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/服务器/">
+                        <span class="tag">服务器</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/第三方库/">
+                        <span class="tag">第三方库</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/算法/">
+                        <span class="tag">算法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Swift  Result&lt;T, E: Error&gt; 枚举类型" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 GuoTZ&nbsp;
+                <a href target="_blank"></a><a href target="_blank"></a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/GuoTZ">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

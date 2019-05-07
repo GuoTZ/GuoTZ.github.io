@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>博客</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta property="og:type" content="website">
+<meta property="og:title" content="博客">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="博客">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="博客">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/solarized-dark.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="博客" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item is-active" href="/">首页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+                <a class="navbar-item" href="/links">工具</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/GuoTZ">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-05-05T09:44:03.000Z">2019-05-05</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 分钟 读完 (大约 712 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/05/05/Django-RESTfulAPI-安全设计/">RESTAPI 安全设计</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="RESTAPI的安全处理—以Django为例"><a href="#RESTAPI的安全处理—以Django为例" class="headerlink" title="RESTAPI的安全处理—以Django为例"></a>RESTAPI的安全处理—以Django为例</h2><h2 id="1、使用Token机制"><a href="#1、使用Token机制" class="headerlink" title="1、使用Token机制"></a>1、使用Token机制</h2><h3 id="AES的加密方式加密"><a href="#AES的加密方式加密" class="headerlink" title="AES的加密方式加密"></a>AES的加密方式加密</h3><h3 id="token包含内容"><a href="#token包含内容" class="headerlink" title="token包含内容"></a>token包含内容</h3><ul>
+<li>包含加密密码字符串</li>
+</ul>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">appkey：双方约定值；用于AES加密的密码</span><br></pre></td></tr></table></figure>
+<ul>
+<li>包含设备相关信息，设备唯一码<ul>
+<li>可做踢下线功能</li>
+</ul>
+</li>
+<li>包含用户相关信息<ul>
+<li>可验证用户信息</li>
+</ul>
+</li>
+<li>包含时间相关信息<ul>
+<li>可判断登录时效</li>
+</ul>
+</li>
+<li>可包含其他相关信息<ul>
+<li>例如：经纬度等等</li></ul></li></ul>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2019/05/05/Django-RESTfulAPI-安全设计/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-05-04T01:11:22.000Z">2019-05-04</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/iOS/">iOS</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 261 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/05/04/Swift面向协议-POP/">Swift面向协议 POP</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="基于-Swift-的面向协议编程"><a href="#基于-Swift-的面向协议编程" class="headerlink" title="基于 Swift 的面向协议编程"></a>基于 Swift 的面向协议编程</h2><figure class="highlight objectivec hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">面向对象的设计和面向协议的设计都使用了多态让我们使用同样的接口来跟不同的类型进行交互。在面向对象的设计中，我们使用了基类提供的接口来跟所有的子类进行交互。在面向协议的设计中，我们使用了协议和协议扩展提供的接口来跟遵守该协议的类型进行交互。</span><br><span class="line">两种设计方式写出的代码都很好而且易懂。但个人感觉协议/协议扩展代码更好，因为协议/协议扩展的方法整体更干净和易懂些。<span class="hljs-string">'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight objectivec hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">在面向协议设计中我们更多的使用了值类型（结构体<span class="hljs-keyword">struct</span>）而非引用类型（类<span class="hljs-keyword">class</span>）。</span><br><span class="line">Apple已经说了我们应该在合适的地方尽可能地偏好使用值类型而非引用类型。</span><br></pre></td></tr></table></figure>
+<h3 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h3>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2019/05/04/Swift面向协议-POP/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-05-03T06:47:40.000Z">2019-05-03</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/iOS/">iOS</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 分钟 读完 (大约 857 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/05/03/Swift-Result-T-E-Error-枚举类型/">Swift  Result&lt;T, E: Error&gt; 枚举类型</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="Swift-枚举类型"><a href="#Swift-枚举类型" class="headerlink" title="Swift 枚举类型"></a>Swift 枚举类型</h3><p><code>Swift</code> 中枚举的能力相比 OC 有着很大的进步，每个枚举值除了可以是常规的基础类型，还可以是一个关联的类型。有了这样的特性后用枚举来优化返回结果的数据结构显得水到渠成：</p>
+<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Result</span>&lt;<span class="hljs-title">Success</span>, <span class="hljs-title">Failure</span>&gt; <span class="hljs-title">where</span> <span class="hljs-title">Failure</span> : <span class="hljs-title">Error</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/// A success, storing a `Success` value.</span></span><br><span class="line">    <span class="hljs-keyword">case</span> success(<span class="hljs-type">Success</span>)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/// A failure, storing a `Failure` value.</span></span><br><span class="line">    <span class="hljs-keyword">case</span> failure(<span class="hljs-type">Failure</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2019/05/03/Swift-Result-T-E-Error-枚举类型/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-03-26T03:03:47.000Z">2019-03-26</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 354 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/03/26/Django-API插件类/">Django-API插件类</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="Response的插件类"><a href="#Response的插件类" class="headerlink" title="Response的插件类"></a>Response的插件类</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-string">"""</span></span><br><span class="line"><span class="hljs-string">定义一个插件类，</span></span><br><span class="line"><span class="hljs-string">"""</span></span><br><span class="line"><span class="hljs-keyword">from</span> django.http <span class="hljs-keyword">import</span> JsonResponse, HttpResponse</span><br><span class="line"><span class="hljs-keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 自定义状态码</span></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HttpCode</span><span class="hljs-params">(object)</span>:</span></span><br><span class="line">    <span class="hljs-comment"># 正常登陆</span></span><br><span class="line">    ok = <span class="hljs-number">200</span></span><br><span class="line">    <span class="hljs-comment"># 参数错误</span></span><br><span class="line">    paramserror = <span class="hljs-number">400</span></span><br><span class="line">    <span class="hljs-comment"># 权限错误</span></span><br><span class="line">    unauth = <span class="hljs-number">401</span></span><br><span class="line">    <span class="hljs-comment"># 方法错误</span></span><br><span class="line">    methoderror = <span class="hljs-number">405</span></span><br><span class="line">    <span class="hljs-comment"># 服务器内部错误</span></span><br><span class="line">    servererror = <span class="hljs-number">500</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 定义统一的 json 字符串返回格式</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">result</span><span class="hljs-params">(code=HttpCode.ok, message=<span class="hljs-string">""</span>, data=&#123;&#125;, kwargs=None)</span>:</span></span><br><span class="line">    json_dict = &#123;&#125;</span><br><span class="line">    safe = <span class="hljs-literal">True</span></span><br><span class="line">    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> isinstance(data, dict):</span><br><span class="line">        json_dict = &#123;<span class="hljs-string">"code"</span>: code, <span class="hljs-string">"message"</span>: message, <span class="hljs-string">"data"</span>: list(data)&#125;</span><br><span class="line">        safe = <span class="hljs-literal">False</span></span><br><span class="line">    <span class="hljs-keyword">else</span>:</span><br><span class="line">        json_dict = &#123;<span class="hljs-string">"code"</span>: code, <span class="hljs-string">"message"</span>: message, <span class="hljs-string">"data"</span>: data&#125;</span><br><span class="line">    <span class="hljs-comment"># print('返回值'+json_dict)</span></span><br><span class="line">    <span class="hljs-keyword">return</span> JsonResponse(json_dict,safe=safe)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">ok</span><span class="hljs-params">(data=&#123;&#125;,message=<span class="hljs-string">""</span>)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">return</span> result(code=<span class="hljs-number">0</span>, message=message, data=data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 参数错误</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">params_error</span><span class="hljs-params">(message=<span class="hljs-string">""</span>, data=&#123;&#125;)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">return</span> result(code=<span class="hljs-number">1</span>, message=message, data=data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 权限错误</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">unauth</span><span class="hljs-params">(message=<span class="hljs-string">""</span>, data=&#123;&#125;)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">return</span> result(code=<span class="hljs-number">4</span>, message=message, data=data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 方法错误</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">method_error</span><span class="hljs-params">(message=<span class="hljs-string">""</span>, data=&#123;&#125;)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">return</span> result(code=<span class="hljs-number">2</span>, message=message, data=data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># 服务器内部错误</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">server_error</span><span class="hljs-params">(message=<span class="hljs-string">""</span>, data=&#123;&#125;)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">return</span> result(code=<span class="hljs-number">3</span>, message=message, data=data)</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2019/03/26/Django-API插件类/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-03-12T02:28:44.000Z">2018-03-12</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/算法/">算法</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/算法/排序算法/">排序算法</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 315 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2018/03/12/算法-：排序算法/">算法-：排序算法</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="比较排序"><a href="#比较排序" class="headerlink" title="比较排序"></a>比较排序</h2><ul>
+<li>定义1 (基于比较的排序)给定一个包含n个对象的待排序序列a1a2…an.  假设我们知道如何比较其中任意两个对象的大小关系。只如何对这一序列排序</li>
+</ul>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. 传递性：如果a&lt;=b ,b&lt;=c,则一定有a&lt;=c</span><br><span class="line">2. 全序性：对任意a和b，或者a&lt;=b，或者b&lt;=c</span><br></pre></td></tr></table></figure>
+<ul>
+<li>定义2 (合并多个有序列)将n个序列合并为一个序列。</li>
+<li>定义3(前k小数)给定一个包含n个对象的序列  找出前k个最小的数</li>
+</ul>
+<h3 id="1-梳排序"><a href="#1-梳排序" class="headerlink" title="1. 梳排序"></a>1. 梳排序</h3><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">冒泡排序</span><br><span class="line">for i＝0,2,…,n-1 do</span><br><span class="line">    for j＝1,2,…,n-i do</span><br><span class="line">        if aj＞aj+1 then</span><br><span class="line">            交换aj和aj+1</span><br><span class="line">        endif</span><br><span class="line">    endif</span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2018/03/12/算法-：排序算法/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-01-13T02:23:33.000Z">2018-01-13</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/后端/">后端</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/后端/Django/">Django</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 473 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2018/01/13/Django入门/">Django入门</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="Django-mysql配置"><a href="#Django-mysql配置" class="headerlink" title="Django mysql配置"></a>Django mysql配置</h2><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">底层使用 mysqlclient底层使用 mysqlclient底层使用 mysqlclient底层使用 mysqlclient底层使用 mysqlclient底层使用 mysqlclient底层使用 mysqlclient底层使用 mysqlclient底层使用 mysqlclient底层使用 mysqlclient</span><br><span class="line">DATABASES = &#123;</span><br><span class="line">    <span class="hljs-string">'default'</span>: &#123;</span><br><span class="line">        <span class="hljs-string">'ENGINE'</span>: <span class="hljs-string">'django.db.backends.mysql'</span>,</span><br><span class="line">        <span class="hljs-string">'NAME'</span>: <span class="hljs-string">'xxx'</span>,</span><br><span class="line">        <span class="hljs-string">'USER'</span>: <span class="hljs-string">'xxx'</span>,</span><br><span class="line">        <span class="hljs-string">'PASSWORD'</span>:<span class="hljs-string">'xxx'</span>,</span><br><span class="line">        <span class="hljs-string">'HOST'</span>: <span class="hljs-string">'localhost'</span>,</span><br><span class="line">        <span class="hljs-string">'PORT'</span>: <span class="hljs-string">'3306'</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2018/01/13/Django入门/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2017-05-18T10:44:03.000Z">2017-05-18</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/iOS/">iOS</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/iOS/编译/">编译</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 分钟 读完 (大约 866 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2017/05/18/iOS脚本自动打包发布及自动检测更新/">iOS脚本自动打包发布及自动检测更新</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="使用到的第三方平台-蒲公英"><a href="#使用到的第三方平台-蒲公英" class="headerlink" title="使用到的第三方平台 蒲公英"></a>使用到的第三方平台 蒲公英</h2><ul>
+<li>集成蒲公英SDK</li>
+</ul>
+<figure class="highlight objectivec hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pod 'PgyUpdate'</span><br><span class="line"><span class="hljs-comment">//启动更新检查SDK</span></span><br><span class="line">[[PgyUpdateManager sharedPgyManager] startManagerWithAppId:<span class="hljs-string">@"appkey"</span>];<span class="hljs-comment">//在蒲公英平台获取</span></span><br><span class="line">[[PgyUpdateManager sharedPgyManager] checkUpdate];</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2017/05/18/iOS脚本自动打包发布及自动检测更新/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2017-04-30T07:14:45.000Z">2017-04-30</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/后端/">后端</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/后端/Django/">Django</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 176 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2017/04/30/Python-虚拟机/">Python 虚拟机</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="virtualenvwrapper"><a href="#virtualenvwrapper" class="headerlink" title="virtualenvwrapper"></a>virtualenvwrapper</h2><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virtualenvwrapper 是一个基于 virtualenv 之上的工具，它将所有的虚拟环境集中起来管理。</span><br></pre></td></tr></table></figure>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p><code>sudo pip install virtualenvwrapper</code></p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bashrc</span><br><span class="line"><span class="hljs-built_in">export</span> WORKON_HOME=~/workspaces <span class="hljs-comment">#存放虚拟环境的位置</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">source</span> /usr/bin/virtualenvwrapper.sh</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2017/04/30/Python-虚拟机/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2017-01-29T02:44:03.000Z">2017-01-29</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/后端/">后端</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/后端/Nginx服务器/">Nginx服务器</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    几秒 读完 (大约 5 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2017/01/29/Nginx学习二/">Nginx学习二</a>
+            
+        </h1>
+        <div class="content">
+            <p>未完待续<br></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2017/01/29/Nginx学习二/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2017-01-27T07:50:31.000Z">2017-01-27</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/系统/">系统</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/系统/Linux/">Linux</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 292 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2017/01/27/centos下搭建svn/">centos下搭建svn</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="centos7-Linux"><a href="#centos7-Linux" class="headerlink" title="centos7 Linux"></a>centos7 Linux</h2><h3 id="svn安装配置"><a href="#svn安装配置" class="headerlink" title="svn安装配置"></a>svn安装配置</h3><ul>
+<li>安装svn <code>yum -y install subversion</code></li>
+</ul>
+<ul>
+<li>创建svn根文件夹<code>mkdir /var/svns</code></li>
+<li>配置文件夹</li>
+</ul>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/svnserve</span><br><span class="line"><span class="hljs-comment">#文件内容</span></span><br><span class="line">OPTIONS=<span class="hljs-string">"-r /var/svns"</span></span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2017/01/27/centos下搭建svn/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card card-transparent">
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <div class="pagination-previous is-invisible is-hidden-mobile">
+            <a class="is-flex-grow has-text-black-ter" href="/page/0/">上一页</a>
+        </div>
+        <div class="pagination-next">
+            <a class="is-flex-grow has-text-black-ter" href="/page/2/">下一页</a>
+        </div>
+        <ul class="pagination-list is-hidden-mobile">
+            
+            <li><a class="pagination-link is-current" href="/">1</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/page/2/">2</a></li>
+            
+        </ul>
+    </nav>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left is-sticky">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="GuoTZ">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        GuoTZ
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        一个Github的搬运工
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>陕西西安</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        15
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        13
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        15
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="http://www.gtzh.work/read" target="_blank">
+                写文章</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/GuoTZ">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://www.jianshu.com/u/c7f424f6b259" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">简书地址</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.jianshu.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://github.com/GuoTZ" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Github</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">github.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Django/" style="font-size: 13.33px;">Django</a> <a href="/tags/MD5加密/" style="font-size: 10px;">MD5加密</a> <a href="/tags/Nginx/" style="font-size: 13.33px;">Nginx</a> <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/RSA加密/" style="font-size: 10px;">RSA加密</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swift/" style="font-size: 13.33px;">Swift</a> <a href="/tags/ftp/" style="font-size: 10px;">ftp</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/服务器/" style="font-size: 16.67px;">服务器</a> <a href="/tags/第三方库/" style="font-size: 10px;">第三方库</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/iOS/">
+            <span class="level-start">
+                <span class="level-item">iOS</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/iOS/Objective-C/">
+            <span class="level-start">
+                <span class="level-item">Objective-C</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/Swift/">
+            <span class="level-start">
+                <span class="level-item">Swift</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/编译/">
+            <span class="level-start">
+                <span class="level-item">编译</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/后端/">
+            <span class="level-start">
+                <span class="level-item">后端</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/后端/Apache服务器/">
+            <span class="level-start">
+                <span class="level-item">Apache服务器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/后端/Django/">
+            <span class="level-start">
+                <span class="level-item">Django</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/后端/Nginx服务器/">
+            <span class="level-start">
+                <span class="level-item">Nginx服务器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/算法/">
+            <span class="level-start">
+                <span class="level-item">算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/算法/排序算法/">
+            <span class="level-start">
+                <span class="level-item">排序算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/系统/">
+            <span class="level-start">
+                <span class="level-item">系统</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/系统/Linux/">
+            <span class="level-start">
+                <span class="level-item">Linux</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/系统/Mac/">
+            <span class="level-start">
+                <span class="level-item">Mac</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-05T09:44:03.000Z">2019-05-05</time></div>
+                    <a href="/2019/05/05/Django-RESTfulAPI-安全设计/" class="has-link-black-ter is-size-6">RESTAPI 安全设计</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-04T01:11:22.000Z">2019-05-04</time></div>
+                    <a href="/2019/05/04/Swift面向协议-POP/" class="has-link-black-ter is-size-6">Swift面向协议 POP</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-03T06:47:40.000Z">2019-05-03</time></div>
+                    <a href="/2019/05/03/Swift-Result-T-E-Error-枚举类型/" class="has-link-black-ter is-size-6">Swift  Result&lt;T, E: Error&gt; 枚举类型</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-03-26T03:03:47.000Z">2019-03-26</time></div>
+                    <a href="/2019/03/26/Django-API插件类/" class="has-link-black-ter is-size-6">Django-API插件类</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-03-12T02:28:44.000Z">2018-03-12</time></div>
+                    <a href="/2018/03/12/算法-：排序算法/" class="has-link-black-ter is-size-6">算法-：排序算法</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/算法/">算法</a> / <a class="has-link-grey -link" href="/categories/算法/排序算法/">排序算法</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Apache/">
+                        <span class="tag">Apache</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Django/">
+                        <span class="tag">Django</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/MD5加密/">
+                        <span class="tag">MD5加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Nginx/">
+                        <span class="tag">Nginx</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Python/">
+                        <span class="tag">Python</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/RSA加密/">
+                        <span class="tag">RSA加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swift/">
+                        <span class="tag">Swift</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ftp/">
+                        <span class="tag">ftp</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/iOS/">
+                        <span class="tag">iOS</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/svn/">
+                        <span class="tag">svn</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/排序/">
+                        <span class="tag">排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/服务器/">
+                        <span class="tag">服务器</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/第三方库/">
+                        <span class="tag">第三方库</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/算法/">
+                        <span class="tag">算法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/iOS/">
+            <span class="level-start">
+                <span class="level-item">iOS</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/iOS/Objective-C/">
+            <span class="level-start">
+                <span class="level-item">Objective-C</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/Swift/">
+            <span class="level-start">
+                <span class="level-item">Swift</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/编译/">
+            <span class="level-start">
+                <span class="level-item">编译</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/后端/">
+            <span class="level-start">
+                <span class="level-item">后端</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/后端/Apache服务器/">
+            <span class="level-start">
+                <span class="level-item">Apache服务器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/后端/Django/">
+            <span class="level-start">
+                <span class="level-item">Django</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/后端/Nginx服务器/">
+            <span class="level-start">
+                <span class="level-item">Nginx服务器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/算法/">
+            <span class="level-start">
+                <span class="level-item">算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/算法/排序算法/">
+            <span class="level-start">
+                <span class="level-item">排序算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/系统/">
+            <span class="level-start">
+                <span class="level-item">系统</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/系统/Linux/">
+            <span class="level-start">
+                <span class="level-item">Linux</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/系统/Mac/">
+            <span class="level-start">
+                <span class="level-item">Mac</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-05T09:44:03.000Z">2019-05-05</time></div>
+                    <a href="/2019/05/05/Django-RESTfulAPI-安全设计/" class="has-link-black-ter is-size-6">RESTAPI 安全设计</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-04T01:11:22.000Z">2019-05-04</time></div>
+                    <a href="/2019/05/04/Swift面向协议-POP/" class="has-link-black-ter is-size-6">Swift面向协议 POP</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-03T06:47:40.000Z">2019-05-03</time></div>
+                    <a href="/2019/05/03/Swift-Result-T-E-Error-枚举类型/" class="has-link-black-ter is-size-6">Swift  Result&lt;T, E: Error&gt; 枚举类型</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-03-26T03:03:47.000Z">2019-03-26</time></div>
+                    <a href="/2019/03/26/Django-API插件类/" class="has-link-black-ter is-size-6">Django-API插件类</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-03-12T02:28:44.000Z">2018-03-12</time></div>
+                    <a href="/2018/03/12/算法-：排序算法/" class="has-link-black-ter is-size-6">算法-：排序算法</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/算法/">算法</a> / <a class="has-link-grey -link" href="/categories/算法/排序算法/">排序算法</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Apache/">
+                        <span class="tag">Apache</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Django/">
+                        <span class="tag">Django</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/MD5加密/">
+                        <span class="tag">MD5加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Nginx/">
+                        <span class="tag">Nginx</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Python/">
+                        <span class="tag">Python</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/RSA加密/">
+                        <span class="tag">RSA加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swift/">
+                        <span class="tag">Swift</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ftp/">
+                        <span class="tag">ftp</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/iOS/">
+                        <span class="tag">iOS</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/svn/">
+                        <span class="tag">svn</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/排序/">
+                        <span class="tag">排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/服务器/">
+                        <span class="tag">服务器</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/第三方库/">
+                        <span class="tag">第三方库</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/算法/">
+                        <span class="tag">算法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="博客" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 GuoTZ&nbsp;
+                <a href target="_blank"></a><a href target="_blank"></a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/GuoTZ">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
