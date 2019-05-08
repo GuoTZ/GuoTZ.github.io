@@ -221,19 +221,18 @@
         <h3 class="title is-5 has-text-weight-normal">评论</h3>
         
 <div id="comment-container"></div>
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
 <script>
-	var gitment = new Gitment({
-		id: '2019/05/08/VSCode插件化/',
-		owner: 'GuoTZ',
-		repo: 'guotz.github.io',
-		oauth: {
-			client_id: 'ae39d0d8687422507629',
-			client_secret: '1e0130c4c41a8448cc87988aa0f53cd96433add1',
-		},
-	})
-	gitment.render('comment-container')
+    var gitalk = new Gitalk({
+        clientID: 'ae39d0d8687422507629',
+        clientSecret: '1e0130c4c41a8448cc87988aa0f53cd96433add1',
+        id: '9fcbb6bac2576804b4d0f465c7d3fb38',
+        repo: 'guotz.github.io',
+        owner: 'GuoTZ',
+        admin: "GuoTZ"
+    })
+    gitalk.render('comment-container')
 </script>
 
     </div>

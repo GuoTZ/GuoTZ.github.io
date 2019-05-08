@@ -8,7 +8,7 @@
 
 
     <meta name="description" content="git - 简易指南安装下载 git OSX 版下载 git Windows 版下载 git Linux 版创建新仓库创建新文件夹，打开，然后执行git init以创建新的 git 仓库。">
-<meta name="keywords" content="版本控制,git">
+<meta name="keywords" content="git,版本控制">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git入门">
 <meta property="og:url" content="http://yoursite.com/2017/01/27/Git入门/index.html">
@@ -241,19 +241,18 @@
         <h3 class="title is-5 has-text-weight-normal">评论</h3>
         
 <div id="comment-container"></div>
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
 <script>
-	var gitment = new Gitment({
-		id: '2017/01/27/Git入门/',
-		owner: 'GuoTZ',
-		repo: 'guotz.github.io',
-		oauth: {
-			client_id: 'ae39d0d8687422507629',
-			client_secret: '1e0130c4c41a8448cc87988aa0f53cd96433add1',
-		},
-	})
-	gitment.render('comment-container')
+    var gitalk = new Gitalk({
+        clientID: 'ae39d0d8687422507629',
+        clientSecret: '1e0130c4c41a8448cc87988aa0f53cd96433add1',
+        id: '9c3adba75fc6b4a2ebc9e6cf39d8031d',
+        repo: 'guotz.github.io',
+        owner: 'GuoTZ',
+        admin: "GuoTZ"
+    })
+    gitalk.render('comment-container')
 </script>
 
     </div>
