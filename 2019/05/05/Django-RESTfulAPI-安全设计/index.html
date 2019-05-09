@@ -16,7 +16,7 @@
 <meta property="og:description" content="RESTAPI的安全处理—以Django为例1、使用Token机制AES的加密方式加密token包含内容 包含加密密码字符串  1appkey：双方约定值；用于AES加密的密码  包含设备相关信息，设备唯一码 可做踢下线功能   包含用户相关信息 可验证用户信息   包含时间相关信息 可判断登录时效   可包含其他相关信息 例如：经纬度等等">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-05-07T09:38:48.390Z">
+<meta property="og:updated_time" content="2019-05-09T05:37:46.679Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RESTAPI 安全设计">
 <meta name="twitter:description" content="RESTAPI的安全处理—以Django为例1、使用Token机制AES的加密方式加密token包含内容 包含加密密码字符串  1appkey：双方约定值；用于AES加密的密码  包含设备相关信息，设备唯一码 可做踢下线功能   包含用户相关信息 可验证用户信息   包含时间相关信息 可判断登录时效   可包含其他相关信息 例如：经纬度等等">
@@ -157,7 +157,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    5 分钟 读完 (大约 712 个字)
+                    6 分钟 读完 (大约 917 个字)
                 </span>
                 
                 
@@ -203,6 +203,7 @@
 </ul>
 <h3 id="iOS端使用"><a href="#iOS端使用" class="headerlink" title="iOS端使用"></a>iOS端使用</h3><p><a href="https://github.com/GuoTZ/encryption.git" target="_blank" rel="noopener">iOSRsa,Ase,Base64加密工具</a><br><figure class="highlight objectivec hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">UserModel *model = [UserModel new];</span><br><span class="line">model.Id = <span class="hljs-number">100</span>;</span><br><span class="line">model.name = <span class="hljs-string">@"hjaskdh"</span>;</span><br><span class="line">model.userName = <span class="hljs-string">@"hjkasfyhuisa"</span>;</span><br><span class="line"><span class="hljs-built_in">NSString</span> *pubkey = <span class="hljs-string">@"-----BEGIN PUBLIC KEY-----\</span></span><br><span class="line"><span class="hljs-string">MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCwRu9ANZ3OwzbgoszQxuF5MSUB\</span></span><br><span class="line"><span class="hljs-string">sBgYGX0KQ8xO+Qdd2cmrkw5QljcXdOAhKNYZbBEKxd8RmWVKF81ZEQgqIRKwcNEO\</span></span><br><span class="line"><span class="hljs-string">vv4mJTSfG0PJHXZj+racvWqSVEVl0IgglU+RpJ/W1pBNFzBwN6jW74eyof9epxUo\</span></span><br><span class="line"><span class="hljs-string">NmwSIThRcy5XIQ/P5QIDAQAB\</span></span><br><span class="line"><span class="hljs-string">-----END PUBLIC KEY-----"</span>;</span><br><span class="line"><span class="hljs-built_in">NSString</span> *jsonStr = [model modelToJSONString];<span class="hljs-comment">//转换层字符串</span></span><br><span class="line"><span class="hljs-built_in">NSString</span> *json = [[RSA encryptString:jsonStr publicKey:pubkey] base64EncodedString];<span class="hljs-comment">//加密</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="PHP端"><a href="#PHP端" class="headerlink" title="PHP端"></a>PHP端</h3><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">私钥</span></span><br><span class="line"><span class="hljs-comment">*/</span></span><br><span class="line">define(<span class="hljs-string">'RSA_PRIVATE'</span>,<span class="hljs-string">'-----BEGIN PRIVATE KEY-----</span></span><br><span class="line"><span class="hljs-string">MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALBG70A1nc7DNuCi</span></span><br><span class="line"><span class="hljs-string">zNDG4XkxJQGwGBgZfQpDzE75B13ZyauTDlCWNxd04CEo1hlsEQrF3xGZZUoXzVkR</span></span><br><span class="line"><span class="hljs-string">CCohErBw0Q6+/iYlNJ8bQ8kddmP6tpy9apJURWXQiCCVT5Gkn9bWkE0XMHA3qNbv</span></span><br><span class="line"><span class="hljs-string">h7Kh/16nFSg2bBIhOFFzLlchD8/lAgMBAAECgYAhD+zn2iaTFUJBt8c6kVLQ7ErI</span></span><br><span class="line"><span class="hljs-string">mkKqon01Y6n6VfLvw11z9M0GiGYk3CL9lS8y7XX001AXePHqh7RYND2XyUQ7y6YE</span></span><br><span class="line"><span class="hljs-string">AY/1Q8zOtp1ustSABt6QfmuVfBJ02tKEAxTkA/G94yKpO49Mbs5+PCXI6Z+K9COw</span></span><br><span class="line"><span class="hljs-string">qVYV9kH6qrisnwawsQJBAOj+VNfHkIA3KAapM+J8r5Zf1ywaREuBhU1d1t98psro</span></span><br><span class="line"><span class="hljs-string">6Oo9+dkX1r393NGd0Od2x5ZdJih3epDrdcoAk9mT7IcCQQDBrullgZWmR6N+pk0/</span></span><br><span class="line"><span class="hljs-string">ku24QfVdaYxwEOp7g53Q9oIIqaVDCCzKygq6VfulCS7Mmf00kZZRdaXim6V/ShnB</span></span><br><span class="line"><span class="hljs-string">4AczAkEAonoppEgQprjP+sUn33tf3xd6r9Cpa5Yo5WjZHQSKM9n0AtWxVAjhwaA0</span></span><br><span class="line"><span class="hljs-string">yyCou6EDUgInR/T5zfHFNFbuw736JQJAB49KMNoT+z+ElCbtkPOtL6nzZ8f84Urn</span></span><br><span class="line"><span class="hljs-string">vBZxDHzyql/kwW8KQIgOTyOYBOMM3pOMHIcqNNfAt82XchZ0VurlnQJBALmW42kR</span></span><br><span class="line"><span class="hljs-string">MNA0dR5zD5OBt5LDFux5Qiq9jus6dfcqF8LE4oH43WO/9mt987h7SyKngBiF+7Kg</span></span><br><span class="line"><span class="hljs-string">H8qJYECdDifODks=</span></span><br><span class="line"><span class="hljs-string">-----END PRIVATE KEY-----'</span>);</span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">公钥</span></span><br><span class="line"><span class="hljs-comment">*/</span></span><br><span class="line">define(<span class="hljs-string">'RSA_PUBLIC'</span>, <span class="hljs-string">'-----BEGIN PUBLIC KEY-----</span></span><br><span class="line"><span class="hljs-string">MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCwRu9ANZ3OwzbgoszQxuF5MSUB</span></span><br><span class="line"><span class="hljs-string">sBgYGX0KQ8xO+Qdd2cmrkw5QljcXdOAhKNYZbBEKxd8RmWVKF81ZEQgqIRKwcNEO</span></span><br><span class="line"><span class="hljs-string">vv4mJTSfG0PJHXZj+racvWqSVEVl0IgglU+RpJ/W1pBNFzBwN6jW74eyof9epxUo</span></span><br><span class="line"><span class="hljs-string">NmwSIThRcy5XIQ/P5QIDAQAB</span></span><br><span class="line"><span class="hljs-string">-----END PUBLIC KEY-----'</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test1</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Base</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 验证登录</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">protected</span> $uid;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">if</span> (is_numeric(<span class="hljs-keyword">parent</span>::__construct())) &#123;</span><br><span class="line">            <span class="hljs-keyword">$this</span>-&gt;uid = <span class="hljs-keyword">parent</span>::__construct();</span><br><span class="line">        &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">            <span class="hljs-keyword">echo</span> <span class="hljs-keyword">parent</span>::__construct();</span><br><span class="line">            <span class="hljs-keyword">exit</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//意见反馈提交</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">parent</span>::getMethod() != <span class="hljs-string">'true'</span>) &#123;</span><br><span class="line">            <span class="hljs-keyword">echo</span> <span class="hljs-keyword">parent</span>::getMethod();</span><br><span class="line">            <span class="hljs-keyword">exit</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        $uid = <span class="hljs-keyword">$this</span>-&gt;uid;</span><br><span class="line">        $orderId = input(<span class="hljs-string">'get.orderId'</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        $private_key = openssl_pkey_get_private(RSA_PRIVATE);</span><br><span class="line">        <span class="hljs-keyword">if</span> (!$private_key) &#123;</span><br><span class="line">            <span class="hljs-keyword">die</span>(<span class="hljs-string">'私钥不可用'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        $return_de = openssl_private_decrypt(base64_decode(base64_decode($orderId)), $decrypted, $private_key);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">if</span> (!$return_de) &#123;</span><br><span class="line">            <span class="hljs-keyword">return</span>(<span class="hljs-string">'解密失败,请检查RSA秘钥---------'</span>.$orderId);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        $arr = json_decode($decrypted,<span class="hljs-keyword">true</span>);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> jsonReturnApi(<span class="hljs-string">'操作失败'</span>, <span class="hljs-number">-1</span>, $arr);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> md5</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES</span><br><span class="line"><span class="hljs-keyword">from</span> Crypto <span class="hljs-keyword">import</span> Random</span><br><span class="line"><span class="hljs-keyword">from</span> Crypto.PublicKey <span class="hljs-keyword">import</span> RSA</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># # AES加密的密钥（长度32个字节）</span></span><br><span class="line"><span class="hljs-comment"># key = md5(b'1qaz2wsx').hexdigest()</span></span><br><span class="line"><span class="hljs-comment"># # AES加密的初始向量（随机生成）</span></span><br><span class="line"><span class="hljs-comment"># iv = Random.new().read(AES.block_size)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>:</span></span><br><span class="line">    <span class="hljs-string">"""主函数"""</span></span><br><span class="line">    <span class="hljs-comment"># 生成密钥对</span></span><br><span class="line">    key_pair = RSA.generate(<span class="hljs-number">1024</span>)</span><br><span class="line">    <span class="hljs-comment"># 导入公钥</span></span><br><span class="line">    pub_key = RSA.importKey(key_pair.publickey().exportKey())</span><br><span class="line">    <span class="hljs-comment"># 导入私钥</span></span><br><span class="line">    pri_key = RSA.importKey(key_pair.exportKey())</span><br><span class="line">    message1 = <span class="hljs-string">'hello, world!'</span></span><br><span class="line">    <span class="hljs-comment"># 加密数据</span></span><br><span class="line">    data = pub_key.encrypt(message1.encode(), <span class="hljs-literal">None</span>)</span><br><span class="line">    <span class="hljs-comment"># 对加密数据进行BASE64编码</span></span><br><span class="line">    message2 = base64.b64encode(data[<span class="hljs-number">0</span>])</span><br><span class="line">    print(message2)</span><br><span class="line">    <span class="hljs-comment"># 对加密数据进行BASE64解码</span></span><br><span class="line">    data = base64.b64decode(message2)</span><br><span class="line">    <span class="hljs-comment"># 解密数据</span></span><br><span class="line">    message3 = pri_key.decrypt(data)</span><br><span class="line">    print(message3.decode())</span><br><span class="line">    <span class="hljs-comment"># # AES - 对称加密</span></span><br><span class="line">    <span class="hljs-comment"># str1 = '我爱你们！'</span></span><br><span class="line">    <span class="hljs-comment"># cipher = AES.new(key, AES.MODE_CFB, iv)</span></span><br><span class="line">    <span class="hljs-comment"># # 加密</span></span><br><span class="line">    <span class="hljs-comment"># str2 = cipher.encrypt(str1)</span></span><br><span class="line">    <span class="hljs-comment"># print(str2)</span></span><br><span class="line">    <span class="hljs-comment"># # 解密</span></span><br><span class="line">    <span class="hljs-comment"># cipher = AES.new(key, AES.MODE_CFB, iv)</span></span><br><span class="line">    <span class="hljs-comment"># str3 = cipher.decrypt(str2)</span></span><br><span class="line">    <span class="hljs-comment"># print(str3.decode())</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
         </div>
         
         <div class="level is-size-7 is-uppercase">
@@ -310,7 +311,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        21
+                        28
                     </p>
                 </div>
             </div>
@@ -320,7 +321,7 @@
                         分类
                     </p>
                     <p class="title has-text-weight-normal">
-                        14
+                        17
                     </p>
                 </div>
             </div>
@@ -330,7 +331,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        21
+                        23
                     </p>
                 </div>
             </div>
@@ -393,6 +394,10 @@
         <a class="is-flex" href="#PHP端">
         <span class="has-mr-6">3.3</span>
         <span>PHP端</span>
+        </a></li><li>
+        <a class="is-flex" href="#Python">
+        <span class="has-mr-6">3.4</span>
+        <span>Python</span>
         </a></li></ul></li></ul>
         </div>
     </div>
@@ -444,7 +449,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Django/" style="font-size: 13.33px;">Django</a> <a href="/tags/MD5加密/" style="font-size: 10px;">MD5加密</a> <a href="/tags/Nginx/" style="font-size: 13.33px;">Nginx</a> <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/RSA加密/" style="font-size: 10px;">RSA加密</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swift/" style="font-size: 13.33px;">Swift</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/ftp/" style="font-size: 10px;">ftp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/服务器/" style="font-size: 16.67px;">服务器</a> <a href="/tags/版本控制/" style="font-size: 13.33px;">版本控制</a> <a href="/tags/第三方库/" style="font-size: 10px;">第三方库</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+        <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Django/" style="font-size: 12.5px;">Django</a> <a href="/tags/MD5加密/" style="font-size: 10px;">MD5加密</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 12.5px;">Nginx</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/RSA加密/" style="font-size: 10px;">RSA加密</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swift/" style="font-size: 12.5px;">Swift</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/ftp/" style="font-size: 10px;">ftp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/iOS/" style="font-size: 17.5px;">iOS</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/vim/" style="font-size: 15px;">vim</a> <a href="/tags/zsh/" style="font-size: 15px;">zsh</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/服务器/" style="font-size: 15px;">服务器</a> <a href="/tags/版本控制/" style="font-size: 12.5px;">版本控制</a> <a href="/tags/第三方库/" style="font-size: 10px;">第三方库</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
     </div>
 </div>
 
@@ -461,6 +466,30 @@
             </h3>
             <ul class="menu-list">
             <li>
+        <a class="level is-marginless" href="/categories/DataBase/">
+            <span class="level-start">
+                <span class="level-item">DataBase</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/DataBase/Mysql/">
+            <span class="level-start">
+                <span class="level-item">Mysql</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/DataBase/NoSQL/">
+            <span class="level-start">
+                <span class="level-item">NoSQL</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/iOS/">
             <span class="level-start">
                 <span class="level-item">iOS</span>
@@ -589,19 +618,6 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-09T04:01:58.000Z">2019-05-09</time></div>
-                    <a href="/2019/05/09/玩转Linux/" class="has-link-black-ter is-size-6">玩转Linux</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/系统/">系统</a> / <a class="has-link-grey -link" href="/categories/系统/Linux/">Linux</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-09T02:13:11.148Z">2019-05-09</time></div>
                     <a href="/2019/05/09/vim配置成IDE/" class="has-link-black-ter is-size-6">vim配置成IDE</a>
                     <p class="is-size-7 is-uppercase">
@@ -650,6 +666,19 @@
             </div>
         </article>
         
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-03T06:47:40.000Z">2019-05-03</time></div>
+                    <a href="/2019/05/03/Swift-Result-T-E-Error-枚举类型/" class="has-link-black-ter is-size-6">Swift  Result&lt;T, E: Error&gt; 枚举类型</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
     </div>
 </div>
 
@@ -668,7 +697,7 @@
                     <span class="level-item">五月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">6</span>
+                    <span class="level-item tag">5</span>
                 </span>
             </a>
         </li>
@@ -685,9 +714,31 @@
         </li>
         
         <li>
+            <a class="level is-marginless" href="/archives/2018/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2018/03/">
                 <span class="level-start">
                     <span class="level-item">三月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2018</span>
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
@@ -702,6 +753,17 @@
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
                 </span>
             </a>
         </li>
@@ -796,6 +858,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Mysql/">
+                        <span class="tag">Mysql</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/Nginx/">
                         <span class="tag">Nginx</span>
                         <span class="tag is-grey">2</span>
@@ -805,13 +874,20 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">7</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/RSA加密/">
                         <span class="tag">RSA加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Redis/">
+                        <span class="tag">Redis</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -946,6 +1022,30 @@
             </h3>
             <ul class="menu-list">
             <li>
+        <a class="level is-marginless" href="/categories/DataBase/">
+            <span class="level-start">
+                <span class="level-item">DataBase</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/DataBase/Mysql/">
+            <span class="level-start">
+                <span class="level-item">Mysql</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/DataBase/NoSQL/">
+            <span class="level-start">
+                <span class="level-item">NoSQL</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/iOS/">
             <span class="level-start">
                 <span class="level-item">iOS</span>
@@ -1074,19 +1174,6 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-09T04:01:58.000Z">2019-05-09</time></div>
-                    <a href="/2019/05/09/玩转Linux/" class="has-link-black-ter is-size-6">玩转Linux</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/系统/">系统</a> / <a class="has-link-grey -link" href="/categories/系统/Linux/">Linux</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-09T02:13:11.148Z">2019-05-09</time></div>
                     <a href="/2019/05/09/vim配置成IDE/" class="has-link-black-ter is-size-6">vim配置成IDE</a>
                     <p class="is-size-7 is-uppercase">
@@ -1135,6 +1222,19 @@
             </div>
         </article>
         
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-03T06:47:40.000Z">2019-05-03</time></div>
+                    <a href="/2019/05/03/Swift-Result-T-E-Error-枚举类型/" class="has-link-black-ter is-size-6">Swift  Result&lt;T, E: Error&gt; 枚举类型</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
     </div>
 </div>
 
@@ -1153,7 +1253,7 @@
                     <span class="level-item">五月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">6</span>
+                    <span class="level-item tag">5</span>
                 </span>
             </a>
         </li>
@@ -1170,9 +1270,31 @@
         </li>
         
         <li>
+            <a class="level is-marginless" href="/archives/2018/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2018/03/">
                 <span class="level-start">
                     <span class="level-item">三月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2018</span>
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
@@ -1187,6 +1309,17 @@
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
                 </span>
             </a>
         </li>
@@ -1281,6 +1414,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Mysql/">
+                        <span class="tag">Mysql</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/Nginx/">
                         <span class="tag">Nginx</span>
                         <span class="tag is-grey">2</span>
@@ -1290,13 +1430,20 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">7</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/RSA加密/">
                         <span class="tag">RSA加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Redis/">
+                        <span class="tag">Redis</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
