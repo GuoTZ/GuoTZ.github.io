@@ -7,19 +7,19 @@
 
 
 
-    <meta name="description" content="未完待续">
+    <meta name="description" content="日志管理">
 <meta name="keywords" content="服务器,Nginx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nginx学习二">
 <meta property="og:url" content="http://yoursite.com/2017/01/29/Nginx学习二/index.html">
 <meta property="og:site_name" content="博客">
-<meta property="og:description" content="未完待续">
+<meta property="og:description" content="日志管理">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-05-07T09:39:56.660Z">
+<meta property="og:updated_time" content="2019-05-09T03:58:29.707Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx学习二">
-<meta name="twitter:description" content="未完待续">
+<meta name="twitter:description" content="日志管理">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
 
@@ -161,7 +161,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    几秒 读完 (大约 5 个字)
+                    2 分钟 读完 (大约 321 个字)
                 </span>
                 
                 
@@ -174,8 +174,14 @@
             
         </h1>
         <div class="content">
-            <p>未完待续<br><a id="more"></a></p>
-
+            <h2 id="日志管理"><a href="#日志管理" class="headerlink" title="日志管理"></a>日志管理</h2><img src="/2017/01/29/Nginx学习二/nginx_log.png">
+<a id="more"></a>
+<figure class="highlight nginx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">http&#123;</span><br><span class="line">    <span class="hljs-attribute">log_format</span>  main  <span class="hljs-string">'<span class="hljs-variable">$remote_addr</span> - <span class="hljs-variable">$remote_user</span> [<span class="hljs-variable">$time_local</span>] "<span class="hljs-variable">$request</span>" '</span></span><br><span class="line">                      <span class="hljs-string">'<span class="hljs-variable">$status</span> <span class="hljs-variable">$body_bytes_sent</span> "<span class="hljs-variable">$http_referer</span>" '</span></span><br><span class="line">                      <span class="hljs-string">'"<span class="hljs-variable">$http_user_agent</span>" "<span class="hljs-variable">$http_x_forwarded_for</span>"'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">#access_log  logs/access.log  main;</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-attribute">sendfile</span>        <span class="hljs-literal">on</span>;</span><br><span class="line">    <span class="hljs-comment">#tcp_nopush     on;</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">#keepalive_timeout  0;</span></span><br><span class="line">    <span class="hljs-attribute">keepalive_timeout</span>  <span class="hljs-number">65</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">#gzip  on;</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-section">server</span> &#123;</span><br><span class="line">        <span class="hljs-attribute">listen</span>       <span class="hljs-number">5000</span>;</span><br><span class="line">        <span class="hljs-attribute">server_name</span>  localhost;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">#charset koi8-r;</span></span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">#access_log  logs/host.access.log  main;</span></span><br><span class="line"></span><br><span class="line">        <span class="hljs-attribute">location</span> / &#123;</span><br><span class="line">            <span class="hljs-comment">#自定义日志 路径、格式</span></span><br><span class="line">            <span class="hljs-attribute">access_log</span> logs/php.log main;</span><br><span class="line">            <span class="hljs-attribute">root</span>   /workspace/WebServer/php;</span><br><span class="line">            <span class="hljs-attribute">index</span>  index.html index.htm index.php;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="PathInfo"><a href="#PathInfo" class="headerlink" title="PathInfo"></a>PathInfo</h2><figure class="highlight nginx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="hljs-attribute">location</span> <span class="hljs-regexp">~ \.php(.*)$</span> &#123;<span class="hljs-comment">#使用正则抓取路径</span></span><br><span class="line">    <span class="hljs-attribute">root</span>           /Users/dingyd/workspace/WebServer/php;</span><br><span class="line">    <span class="hljs-attribute">fastcgi_pass</span>   <span class="hljs-number">127.0.0.1:9000</span>;</span><br><span class="line">    <span class="hljs-attribute">fastcgi_index</span>  index.php;</span><br><span class="line">    <span class="hljs-attribute">fastcgi_param</span>  SCRIPT_FILENAME  <span class="hljs-variable">$document_root</span><span class="hljs-variable">$fastcgi_script_name</span>;</span><br><span class="line">    <span class="hljs-attribute">fastcgi_param</span>  PATH_INFO <span class="hljs-variable">$1</span>;<span class="hljs-comment">#给后端服务器传递参数</span></span><br><span class="line">    <span class="hljs-attribute">include</span>        fastcgi_params;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Url重写"><a href="#Url重写" class="headerlink" title="Url重写"></a>Url重写</h2><p><code>(正则表达式) 支持简单的if判断 例如-e表示文件是否存在</code><br><figure class="highlight nginx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="hljs-attribute">location</span> / &#123;</span><br><span class="line">    <span class="hljs-comment">#自定义日志 路径、格式</span></span><br><span class="line">    <span class="hljs-attribute">access_log</span> logs/php.log main;</span><br><span class="line">    <span class="hljs-attribute">root</span>   /workspace/WebServer/php;</span><br><span class="line">    <span class="hljs-attribute">index</span>  index.html index.htm index.php;</span><br><span class="line">    <span class="hljs-attribute">rewrite</span> (&lt;*)$/index.php/<span class="hljs-variable">$1</span>; <span class="hljs-comment">#将www.baidu.com/user/login -&gt; www.baidu.com/index,php/user/login </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="try-files"><a href="#try-files" class="headerlink" title="try_files"></a>try_files</h2><figure class="highlight nginx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="hljs-attribute">location</span> / &#123;</span><br><span class="line">    <span class="hljs-comment">#自定义日志 路径、格式</span></span><br><span class="line">    <span class="hljs-attribute">access_log</span> logs/php.log main;</span><br><span class="line">    <span class="hljs-attribute">root</span>   /workspace/WebServer/php;</span><br><span class="line">    <span class="hljs-attribute">index</span>  index.html index.htm index.php;</span><br><span class="line">    <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> /index.php/<span class="hljs-variable">$url</span>; <span class="hljs-comment">#尝试www.baidu.com/user/login是否存在文件夹 如果不存在则指向www.baidu.com/index,php/user/login </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><figure class="highlight nginx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">## 动静分离</span></span><br><span class="line"> <span class="hljs-attribute">location</span> <span class="hljs-regexp">~ \.(jpg|png|jpeg|gif)</span> &#123;</span><br><span class="line">    <span class="hljs-attribute">proxy_set_header</span> X-Forwarded_For <span class="hljs-variable">$remote_addr</span>;<span class="hljs-comment">#代理地址</span></span><br><span class="line">    <span class="hljs-attribute">proxy_pass</span> https://ip:port;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="集群与负载均衡"><a href="#集群与负载均衡" class="headerlink" title="集群与负载均衡"></a>集群与负载均衡</h2>
         </div>
         
         <div class="level is-size-7 is-uppercase">
@@ -200,9 +206,9 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2017/04/30/Python-虚拟机/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2017/02/06/Mac应用shell启动/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">Python 虚拟机</span>
+                <span class="level-item">Mac应用shell启动</span>
             </a>
         </div>
         
@@ -283,7 +289,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        19
+                        20
                     </p>
                 </div>
             </div>
@@ -334,7 +340,31 @@
             <h3 class="menu-label">
                 目录
             </h3>
-            
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#日志管理">
+        <span class="has-mr-6">1</span>
+        <span>日志管理</span>
+        </a></li><li>
+        <a class="is-flex" href="#PathInfo">
+        <span class="has-mr-6">2</span>
+        <span>PathInfo</span>
+        </a></li><li>
+        <a class="is-flex" href="#Url重写">
+        <span class="has-mr-6">3</span>
+        <span>Url重写</span>
+        </a></li><li>
+        <a class="is-flex" href="#try-files">
+        <span class="has-mr-6">4</span>
+        <span>try_files</span>
+        </a></li><li>
+        <a class="is-flex" href="#反向代理">
+        <span class="has-mr-6">5</span>
+        <span>反向代理</span>
+        </a></li><li>
+        <a class="is-flex" href="#集群与负载均衡">
+        <span class="has-mr-6">6</span>
+        <span>集群与负载均衡</span>
+        </a></li></ul>
         </div>
     </div>
 </div>
@@ -385,7 +415,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Django/" style="font-size: 13.33px;">Django</a> <a href="/tags/MD5加密/" style="font-size: 10px;">MD5加密</a> <a href="/tags/Nginx/" style="font-size: 13.33px;">Nginx</a> <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/RSA加密/" style="font-size: 10px;">RSA加密</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swift/" style="font-size: 13.33px;">Swift</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/ftp/" style="font-size: 10px;">ftp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/vim/" style="font-size: 13.33px;">vim</a> <a href="/tags/zsh/" style="font-size: 13.33px;">zsh</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/服务器/" style="font-size: 16.67px;">服务器</a> <a href="/tags/版本控制/" style="font-size: 13.33px;">版本控制</a> <a href="/tags/第三方库/" style="font-size: 10px;">第三方库</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+        <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Django/" style="font-size: 13.33px;">Django</a> <a href="/tags/MD5加密/" style="font-size: 10px;">MD5加密</a> <a href="/tags/Nginx/" style="font-size: 13.33px;">Nginx</a> <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/RSA加密/" style="font-size: 10px;">RSA加密</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swift/" style="font-size: 13.33px;">Swift</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/ftp/" style="font-size: 10px;">ftp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/服务器/" style="font-size: 16.67px;">服务器</a> <a href="/tags/版本控制/" style="font-size: 13.33px;">版本控制</a> <a href="/tags/第三方库/" style="font-size: 10px;">第三方库</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
     </div>
 </div>
 
@@ -495,7 +525,7 @@
                 <span class="level-item">系统</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/系统/Linux/">
@@ -511,7 +541,7 @@
                 <span class="level-item">Mac</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">3</span>
+                <span class="level-item tag">4</span>
             </span>
         </a></li></ul></li>
             </ul>
@@ -530,7 +560,7 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-08T18:13:11.147Z">2019-05-09</time></div>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-09T02:13:11.148Z">2019-05-09</time></div>
                     <a href="/2019/05/09/vim配置成IDE/" class="has-link-black-ter is-size-6">vim配置成IDE</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/系统/">系统</a> / <a class="has-link-grey -link" href="/categories/系统/Mac/">Mac</a>
@@ -547,19 +577,6 @@
                     <a href="/2019/05/08/VSCode插件化/" class="has-link-black-ter is-size-6">VSCode插件化</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/插件/">插件</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-07T19:00:24.483Z">2019-05-08</time></div>
-                    <a href="/2019/05/08/Mac开发配置/" class="has-link-black-ter is-size-6">Mac开发配置</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/系统/">系统</a> / <a class="has-link-grey -link" href="/categories/系统/Mac/">Mac</a>
                     </p>
                 </div>
             </div>
@@ -591,6 +608,19 @@
             </div>
         </article>
         
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-03T06:47:40.000Z">2019-05-03</time></div>
+                    <a href="/2019/05/03/Swift-Result-T-E-Error-枚举类型/" class="has-link-black-ter is-size-6">Swift  Result&lt;T, E: Error&gt; 枚举类型</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
     </div>
 </div>
 
@@ -609,7 +639,7 @@
                     <span class="level-item">五月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">6</span>
+                    <span class="level-item tag">5</span>
                 </span>
             </a>
         </li>
@@ -670,12 +700,23 @@
         </li>
         
         <li>
+            <a class="level is-marginless" href="/archives/2017/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2017/01/">
                 <span class="level-start">
                     <span class="level-item">一月 2017</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">6</span>
+                    <span class="level-item tag">7</span>
                 </span>
             </a>
         </li>
@@ -798,14 +839,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/vim/">
                         <span class="tag">vim</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/zsh/">
                         <span class="tag">zsh</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -962,7 +1003,7 @@
                 <span class="level-item">系统</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/系统/Linux/">
@@ -978,7 +1019,7 @@
                 <span class="level-item">Mac</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">3</span>
+                <span class="level-item tag">4</span>
             </span>
         </a></li></ul></li>
             </ul>
@@ -997,7 +1038,7 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-08T18:13:11.147Z">2019-05-09</time></div>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-09T02:13:11.148Z">2019-05-09</time></div>
                     <a href="/2019/05/09/vim配置成IDE/" class="has-link-black-ter is-size-6">vim配置成IDE</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/系统/">系统</a> / <a class="has-link-grey -link" href="/categories/系统/Mac/">Mac</a>
@@ -1014,19 +1055,6 @@
                     <a href="/2019/05/08/VSCode插件化/" class="has-link-black-ter is-size-6">VSCode插件化</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/插件/">插件</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-07T19:00:24.483Z">2019-05-08</time></div>
-                    <a href="/2019/05/08/Mac开发配置/" class="has-link-black-ter is-size-6">Mac开发配置</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/系统/">系统</a> / <a class="has-link-grey -link" href="/categories/系统/Mac/">Mac</a>
                     </p>
                 </div>
             </div>
@@ -1058,6 +1086,19 @@
             </div>
         </article>
         
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-03T06:47:40.000Z">2019-05-03</time></div>
+                    <a href="/2019/05/03/Swift-Result-T-E-Error-枚举类型/" class="has-link-black-ter is-size-6">Swift  Result&lt;T, E: Error&gt; 枚举类型</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
     </div>
 </div>
 
@@ -1076,7 +1117,7 @@
                     <span class="level-item">五月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">6</span>
+                    <span class="level-item tag">5</span>
                 </span>
             </a>
         </li>
@@ -1137,12 +1178,23 @@
         </li>
         
         <li>
+            <a class="level is-marginless" href="/archives/2017/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2017/01/">
                 <span class="level-start">
                     <span class="level-item">一月 2017</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">6</span>
+                    <span class="level-item tag">7</span>
                 </span>
             </a>
         </li>
@@ -1265,14 +1317,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/vim/">
                         <span class="tag">vim</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/zsh/">
                         <span class="tag">zsh</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
