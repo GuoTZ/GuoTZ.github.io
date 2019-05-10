@@ -1,0 +1,2096 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>Django知识点概述2 - 博客</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="视图函数(Controller)如何设计视图函数 用户的每个操作（用户故事）对应一个视图函数。">
+<meta name="keywords" content="Python,Django">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django知识点概述2">
+<meta property="og:url" content="http://yoursite.com/2018/04/25/Django知识点概述2/index.html">
+<meta property="og:site_name" content="博客">
+<meta property="og:description" content="视图函数(Controller)如何设计视图函数 用户的每个操作（用户故事）对应一个视图函数。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="og:updated_time" content="2019-05-10T01:56:05.861Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Django知识点概述2">
+<meta name="twitter:description" content="视图函数(Controller)如何设计视图函数 用户的每个操作（用户故事）对应一个视图函数。">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/solarized-dark.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/myblog.png" alt="Django知识点概述2" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">首页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+                <a class="navbar-item" href="/links">工具</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/GuoTZ">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-04-25T06:23:33.000Z">2018-04-25</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/后端/">后端</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/后端/Django/">Django</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    25 分钟 读完 (大约 3751 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Django知识点概述2
+            
+        </h1>
+        <div class="content">
+            <h3 id="视图函数-Controller"><a href="#视图函数-Controller" class="headerlink" title="视图函数(Controller)"></a>视图函数(Controller)</h3><h4 id="如何设计视图函数"><a href="#如何设计视图函数" class="headerlink" title="如何设计视图函数"></a>如何设计视图函数</h4><ol>
+<li>用户的每个操作（用户故事）对应一个视图函数。<a id="more"></a></li>
+<li><a href="https://docs.djangoproject.com/en/2.1/ref/settings/" target="_blank" rel="noopener">每个视图函数可以构成一个事务边界</a>。</li>
+</ol>
+<ul>
+<li><p>事务的ACID特性。</p>
+</li>
+<li><p>原子性（Atomicity）：事务中各项的操作要么全做要么全不做；</p>
+</li>
+<li>一致性（Consistentcy）：事务前后系统的状态是一致的；</li>
+<li>隔离性（Isolation）：并发执行的事务无法看到彼此的中间状态；</li>
+<li><p>持久性（Duration）：事务完成后所做的改动都会被持久化。</p>
+</li>
+<li><p>事务隔离级别 - 设置事务隔离级别是为了数据库底层依据事务隔离级别为数据加上适当的锁。如果需要保证数据的强一致性，那么关系型数据库仍然是唯一的也是最好的选择，因为关系型数据库可以通过锁机制来保护数据。事务隔离级别从低到高依次是：Read Uncommitted（读未提交）、Read Committed（读提交）、Repeatable Read（可重复读）、Serializable（串行化）。事务隔离级别越高，数据并发访问的问题越少，但是性能越差；事务隔离级别越低，数据并发访问的问题越多，但是性能越好。</p>
+</li>
+<li><p>数据并发访问会产生5种问题（请参考我的<a href="https://blog.csdn.net/jackfrued/article/details/44921941" target="_blank" rel="noopener">《Java面试题全集（上）》</a>第80题对该问题的讲解）：</p>
+</li>
+<li><p>第1类丢失更新（A事务撤销覆盖B事务更新的数据）和第2类丢失更新（A事务提交覆盖B事务更新的数据）。</p>
+</li>
+<li>脏读（读脏数据）：一个事务读取到其他尚未提交的事务的数据。</li>
+<li>不可重复读： 一个事务在读取它的查询结果时，被另一个事务更新了它的查询记录导致无法读到数据。</li>
+<li>幻读：一个事务在读取它的查询结果时，发现读到了被另一个事务提交的新数据。</li>
+</ul>
+<figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">-- 设置全局默认的事务隔离级别</span></span><br><span class="line"><span class="hljs-keyword">set</span> <span class="hljs-keyword">global</span> <span class="hljs-keyword">transaction</span> <span class="hljs-keyword">isolation</span> <span class="hljs-keyword">level</span> repeatable <span class="hljs-keyword">read</span>;</span><br><span class="line"><span class="hljs-comment">-- 设置当前会话的事务隔离级别</span></span><br><span class="line"><span class="hljs-keyword">set</span> <span class="hljs-keyword">session</span> <span class="hljs-keyword">transaction</span> <span class="hljs-keyword">isolation</span> <span class="hljs-keyword">level</span> <span class="hljs-keyword">read</span> committed;</span><br><span class="line"><span class="hljs-comment">-- 查询当前会话的事务隔离级别</span></span><br><span class="line"><span class="hljs-keyword">select</span> @@tx_isolation;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Django中的事务控制。</p>
+</li>
+<li><p>给每个请求绑定事务环境（反模式）。</p>
+</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ATOMIC_REQUESTS = <span class="hljs-literal">True</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用事务装饰器（简单易用） - 粗粒度（控制不够精细）。</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@transaction.non_atomic_requests</span></span><br><span class="line"><span class="hljs-meta">@transaction.atomic</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用上下文语法（细粒度 - 事务控制的范围更加精准）。</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">with</span> transaction.atomic():</span><br><span class="line">   <span class="hljs-keyword">pass</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>关闭自动提交使用手动提交。</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AUTOCOMMIT = <span class="hljs-literal">False</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">transaction.commit()</span><br><span class="line">transaction.rollback()</span><br></pre></td></tr></table></figure>
+<h4 id="URL配置"><a href="#URL配置" class="headerlink" title="URL配置"></a>URL配置</h4><ol>
+<li>可以让部分URL只在调试模式下生效。</li>
+</ol>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">from</span> django.conf <span class="hljs-keyword">import</span> settings</span><br><span class="line">   </span><br><span class="line">urlpatterns = [</span><br><span class="line">...</span><br><span class="line">]</span><br><span class="line">   </span><br><span class="line"><span class="hljs-keyword">if</span> settings.DEBUG:</span><br><span class="line">urlpatterns += [ ... ]</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>可以使用命名捕获组捕获路径参数。</li>
+</ol>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url(<span class="hljs-string">r'api/code/(?P&lt;mobile&gt;1[3-9]\d&#123;9&#125;)'</span>),</span><br><span class="line">path(<span class="hljs-string">'api/code/&lt;str:mobile&gt;'</span>),</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><p>URL配置不关心请求使用的方法（一个视图函数可以处理不同的请求方式）。</p>
+</li>
+<li><p>如果使用<code>url</code>函数捕获的路径参数都是字符串，<code>path</code>函数可以指定路径参数类型。</p>
+</li>
+<li><p>可以使用<code>include</code>函数引入其他URL配置，捕获的参数会向下传递。</p>
+</li>
+<li><p>在<code>url</code>和<code>path</code>函数甚至是<code>include</code>函数中都可以用字典向视图传入额外的参数，如果参数与捕获的参数同名，则使用字典中的参数。</p>
+</li>
+<li><p>可以用<code>reverse</code>函数实现URL的逆向解析（从名字解析出URL），在模板中也可以用<code>url</code>实现同样的操作。</p>
+</li>
+</ol>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">path(<span class="hljs-string">''</span>, views.index, name=<span class="hljs-string">'index'</span>)</span><br><span class="line">   </span><br><span class="line"><span class="hljs-keyword">return</span> redirect(reverse(<span class="hljs-string">'index'</span>))</span><br><span class="line"><span class="hljs-keyword">return</span> redirect(<span class="hljs-string">'index'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="模板-View"><a href="#模板-View" class="headerlink" title="模板(View)"></a>模板(View)</h3><h4 id="后端渲染"><a href="#后端渲染" class="headerlink" title="后端渲染"></a>后端渲染</h4><ol>
+<li>模板的配置和渲染函数。</li>
+</ol>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">TEMPLATES = [</span><br><span class="line">&#123;</span><br><span class="line">   <span class="hljs-string">'BACKEND'</span>: <span class="hljs-string">'django.template.backends.django.DjangoTemplates'</span>,</span><br><span class="line">   <span class="hljs-string">'DIRS'</span>: [os.path.join(BASE_DIR, <span class="hljs-string">'templates'</span>), ],</span><br><span class="line">   <span class="hljs-string">'APP_DIRS'</span>: <span class="hljs-literal">True</span>,</span><br><span class="line">   <span class="hljs-string">'OPTIONS'</span>: &#123;</span><br><span class="line">       <span class="hljs-string">'context_processors'</span>: [</span><br><span class="line">           <span class="hljs-string">'django.template.context_processors.debug'</span>,</span><br><span class="line">           <span class="hljs-string">'django.template.context_processors.request'</span>,</span><br><span class="line">           <span class="hljs-string">'django.contrib.auth.context_processors.auth'</span>,</span><br><span class="line">           <span class="hljs-string">'django.contrib.messages.context_processors.messages'</span>,</span><br><span class="line">       ],</span><br><span class="line">   &#125;,</span><br><span class="line">&#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">resp = render(request, <span class="hljs-string">'index.html'</span>, &#123;<span class="hljs-string">'foo'</span>: ...&#125;)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>模板遇到变量名的查找顺序。</li>
+</ol>
+<ul>
+<li>字典查找（如：<code>foo[&#39;bar&#39;]</code>）</li>
+<li>属性查找（如：<code>foo.bar</code>）</li>
+<li>方法调用（如：<code>foo.bar()</code>）</li>
+<li>方法不能有必须传值的参数</li>
+<li>在模板中不能够给方法传参</li>
+<li>如果方法的<code>alters_data</code>被设置为<code>True</code>则不能调用该方法（避免误操作的风险），模型对象动态生成的<code>delete()</code>和<code>save()</code>方法都设定了<code>alters_data = True</code>。</li>
+<li>列表索引查找（如：<code>foo[0]</code>）</li>
+</ul>
+<ol start="3">
+<li>模板标签的使用。</li>
+</ol>
+<ul>
+<li><code>if</code> / <code>else</code> / <code>endif</code></li>
+<li><code>for</code> / <code>endfor</code></li>
+<li><code>ifequal</code> / <code>endifequal</code> / <code>ifnotequal</code> / <code>endifnotequal</code></li>
+<li><code></code> / <code>comment</code> / <code>endcomment</code></li>
+</ul>
+<ol start="4">
+<li>过滤器的使用。</li>
+</ol>
+<ul>
+<li><code>lower</code> / <code>upper</code> / <code>first</code> / <code>last</code> / <code>truncatewords</code> / <code>date</code>/ <code>time</code> / <code>length</code> / <code>pluralize</code> / <code>center</code> / <code>ljust</code> / <code>rjust</code> / <code>cut</code> / <code>urlencode</code> / <code>default_if_none</code> / <code>filesizeformat</code> / <code>join</code> / <code>slice</code> / <code>slugify</code></li>
+</ul>
+<ol start="5">
+<li>模板的包含和继承。</li>
+</ol>
+<ul>
+<li><code>include</code> / <code>block</code></li>
+<li><code>extends</code></li>
+</ul>
+<ol start="6">
+<li>模板加载器（后面优化部分会讲到）。</li>
+</ol>
+<ul>
+<li>文件系统加载器</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TEMPLATES = [&#123;</span><br><span class="line"> <span class="hljs-string">'BACKEND'</span>: <span class="hljs-string">'django.template.backends.django.DjangoTemplates'</span>,</span><br><span class="line"> <span class="hljs-string">'DIRS'</span>: [os.path.join(BASE_DIR, <span class="hljs-string">'templates'</span>)],</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>应用目录加载器</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TEMPLATES = [&#123;</span><br><span class="line"> <span class="hljs-string">'BACKEND'</span>: <span class="hljs-string">'django.template.backends.django.DjangoTemplates'</span>,</span><br><span class="line"> <span class="hljs-string">'APP_DIRS'</span>: <span class="hljs-literal">True</span>,</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+<h4 id="前端渲染"><a href="#前端渲染" class="headerlink" title="前端渲染"></a>前端渲染</h4><ol>
+<li>前端模板引擎：Handlebars / Mustache。</li>
+<li>前端MV*框架。</li>
+</ol>
+<ul>
+<li>MVC - AngularJS</li>
+<li>MVVM(Model-View-ViewModel) - Vue.js</li>
+</ul>
+<h4 id="其他视图"><a href="#其他视图" class="headerlink" title="其他视图"></a>其他视图</h4><ol>
+<li>MIME（多用途Internet邮件扩展）类型 - 告知浏览器传输的数据类型。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Content-Type</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>application/json</td>
+<td><a href="https://zh.wikipedia.org/wiki/JSON" target="_blank" rel="noopener">JSON</a>（JavaScript Object Notation）</td>
+</tr>
+<tr>
+<td>application/pdf</td>
+<td><a href="https://zh.wikipedia.org/wiki/PDF" target="_blank" rel="noopener">PDF</a>（Portable Document Format）</td>
+</tr>
+<tr>
+<td>audio/mpeg</td>
+<td><a href="https://zh.wikipedia.org/wiki/MP3" target="_blank" rel="noopener">MP3</a>或其他<a href="https://zh.wikipedia.org/wiki/MPEG" target="_blank" rel="noopener">MPEG</a>音频文件</td>
+</tr>
+<tr>
+<td>audio/vnd.wave</td>
+<td><a href="https://zh.wikipedia.org/wiki/WAV" target="_blank" rel="noopener">WAV</a>音频文件</td>
+</tr>
+<tr>
+<td>image/gif</td>
+<td><a href="https://zh.wikipedia.org/wiki/GIF" target="_blank" rel="noopener">GIF</a>图像文件</td>
+</tr>
+<tr>
+<td>image/jpeg</td>
+<td><a href="https://zh.wikipedia.org/wiki/JPEG" target="_blank" rel="noopener">JPEG</a>图像文件</td>
+</tr>
+<tr>
+<td>image/png</td>
+<td><a href="https://zh.wikipedia.org/wiki/PNG" target="_blank" rel="noopener">PNG</a>图像文件</td>
+</tr>
+<tr>
+<td>text/html</td>
+<td><a href="https://zh.wikipedia.org/wiki/HTML" target="_blank" rel="noopener">HTML</a>文件</td>
+</tr>
+<tr>
+<td>text/xml</td>
+<td><a href="https://zh.wikipedia.org/wiki/XML" target="_blank" rel="noopener">XML</a></td>
+</tr>
+<tr>
+<td>video/mp4</td>
+<td><a href="https://zh.wikipedia.org/wiki/MP4" target="_blank" rel="noopener">MP4</a>视频文件</td>
+</tr>
+<tr>
+<td>video/quicktime</td>
+<td><a href="https://zh.wikipedia.org/wiki/QuickTime" target="_blank" rel="noopener">QuickTime</a>视频文件</td>
+</tr>
+</tbody>
+</table>
+<ol start="2">
+<li>如何处置生成的内容（inline / attachment）。</li>
+</ol>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> urllib.parse <span class="hljs-keyword">import</span> quote</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="hljs-meta">&gt;&gt;&gt; </span>response[<span class="hljs-string">'content-type'</span>] = <span class="hljs-string">'application/pdf'</span></span><br><span class="line"><span class="hljs-meta">&gt;&gt;&gt; </span>filename = quote(<span class="hljs-string">'Python语言规范.pdf'</span>)</span><br><span class="line"><span class="hljs-meta">&gt;&gt;&gt; </span>filename</span><br><span class="line"><span class="hljs-string">'Python%E8%AF%AD%E8%A8%80%E8%A7%84%E8%8C%83.pdf'</span></span><br><span class="line"><span class="hljs-meta">&gt;&gt;&gt; </span>response[<span class="hljs-string">'content-disposition'</span>] = <span class="hljs-string">f'attachment; filename="<span class="hljs-subst">&#123;filename&#125;</span>"'</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>提醒：URL以及请求和响应头中的中文都应该处理成<a href="https://zh.wikipedia.org/zh-hans/%E7%99%BE%E5%88%86%E5%8F%B7%E7%BC%96%E7%A0%81" target="_blank" rel="noopener">百分号编码</a>。</p>
+</blockquote>
+<ol start="3">
+<li>生成CSV / Excel / PDF / 统计报表。</li>
+</ol>
+<ul>
+<li>向浏览器传输二进制数据。</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">buffer = ByteIO()</span><br><span class="line"> </span><br><span class="line">resp = HttpResponse(content_type=<span class="hljs-string">'...'</span>)</span><br><span class="line">resp[<span class="hljs-string">'Content-Disposition'</span>] = <span class="hljs-string">'attachment; filename="..."'</span></span><br><span class="line">resp.write(buffer.getvalue())</span><br></pre></td></tr></table></figure>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_style</span><span class="hljs-params">(name, color=<span class="hljs-number">0</span>, bold=False, italic=False)</span>:</span></span><br><span class="line"> style = xlwt.XFStyle()</span><br><span class="line"> font = xlwt.Font()</span><br><span class="line"> font.name = name</span><br><span class="line"> font.colour_index = color</span><br><span class="line"> font.bold = bold</span><br><span class="line"> font.italic = italic</span><br><span class="line"> style.font = font</span><br><span class="line"> <span class="hljs-keyword">return</span> style</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">export_emp_excel</span><span class="hljs-params">(request)</span>:</span></span><br><span class="line"> <span class="hljs-comment"># 创建Excel工作簿(使用三方库xlwt)</span></span><br><span class="line"> workbook = xlwt.Workbook()</span><br><span class="line"> <span class="hljs-comment"># 向工作簿中添加工作表</span></span><br><span class="line"> sheet = workbook.add_sheet(<span class="hljs-string">'员工详细信息'</span>)</span><br><span class="line"> <span class="hljs-comment"># 设置表头</span></span><br><span class="line"> titles = [<span class="hljs-string">'编号'</span>, <span class="hljs-string">'姓名'</span>, <span class="hljs-string">'主管'</span>, <span class="hljs-string">'职位'</span>, <span class="hljs-string">'工资'</span>, <span class="hljs-string">'部门名称'</span>]</span><br><span class="line"> <span class="hljs-keyword">for</span> col, title <span class="hljs-keyword">in</span> enumerate(titles):</span><br><span class="line">     sheet.write(<span class="hljs-number">0</span>, col, title, get_style(<span class="hljs-string">'HanziPenSC-W3'</span>, <span class="hljs-number">2</span>, <span class="hljs-literal">True</span>))</span><br><span class="line"> <span class="hljs-comment"># 使用Django的ORM框架查询员工数据</span></span><br><span class="line"> emps = Emp.objects.all().select_related(<span class="hljs-string">'dept'</span>).select_related(<span class="hljs-string">'mgr'</span>)</span><br><span class="line"> cols = [<span class="hljs-string">'no'</span>, <span class="hljs-string">'name'</span>, <span class="hljs-string">'mgr'</span>, <span class="hljs-string">'job'</span>, <span class="hljs-string">'sal'</span>, <span class="hljs-string">'dept'</span>]</span><br><span class="line"> <span class="hljs-comment"># 通过嵌套的循环将员工表的数据写入Excel工作表的单元格</span></span><br><span class="line"> <span class="hljs-keyword">for</span> row, emp <span class="hljs-keyword">in</span> enumerate(emps):</span><br><span class="line">     <span class="hljs-keyword">for</span> col, prop <span class="hljs-keyword">in</span> enumerate(cols):</span><br><span class="line">         val = getattr(emp, prop, <span class="hljs-string">''</span>)</span><br><span class="line">         <span class="hljs-keyword">if</span> isinstance(val, (Dept, Emp)):</span><br><span class="line">             val = val.name</span><br><span class="line">         sheet.write(row + <span class="hljs-number">1</span>, col, val)</span><br><span class="line"> <span class="hljs-comment"># 将Excel文件的二进制数据写入内存</span></span><br><span class="line"> buffer = BytesIO()</span><br><span class="line"> workbook.save(buffer)</span><br><span class="line"> <span class="hljs-comment"># 通过HttpResponse对象向浏览器输出Excel文件</span></span><br><span class="line"> resp = HttpResponse(buffer.getvalue())</span><br><span class="line"> resp[<span class="hljs-string">'content-type'</span>] = <span class="hljs-string">'application/msexcel'</span></span><br><span class="line"> <span class="hljs-comment"># 如果文件名有中文需要处理成百分号编码</span></span><br><span class="line"> resp[<span class="hljs-string">'content-disposition'</span>] = <span class="hljs-string">'attachment; filename="detail.xls"'</span></span><br><span class="line"> <span class="hljs-keyword">return</span> resp</span><br></pre></td></tr></table></figure>
+<ul>
+<li>大文件的流式处理：<code>StreamingHttpResponse</code>。</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">download_file</span><span class="hljs-params">(request)</span>:</span></span><br><span class="line"> file_stream = open(<span class="hljs-string">'...'</span>, <span class="hljs-string">'rb'</span>)</span><br><span class="line"> <span class="hljs-comment"># 如果文件的二进制数据较大则最好用迭代器进行处理避免过多的占用服务器内存</span></span><br><span class="line"> file_iter = iter(<span class="hljs-keyword">lambda</span>: file_stream.read(<span class="hljs-number">4096</span>), <span class="hljs-string">b''</span>)</span><br><span class="line"> resp = StreamingHttpResponse(file_iter)</span><br><span class="line"> <span class="hljs-comment"># 中文文件名要处理成百分号编码</span></span><br><span class="line"> filename = quote(<span class="hljs-string">'...'</span>, <span class="hljs-string">'utf-8'</span>)</span><br><span class="line"> resp[<span class="hljs-string">'Content-Type'</span>] = <span class="hljs-string">'...'</span></span><br><span class="line"> resp[<span class="hljs-string">'Content-Disposition'</span>] = <span class="hljs-string">f'attachment; filename="<span class="hljs-subst">&#123;filename&#125;</span>"'</span></span><br><span class="line"> <span class="hljs-keyword">return</span> resp</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>说明：如果需要生成PDF文件，可以需要安装<code>reportlab</code>。另外，使用StreamingHttpResponse只能减少内存的开销，但是如果下载一个大文件会导致一个请求长时间占用服务器资源，比较好的做法还是把报表提前生成好（可以考虑使用定时任务），放在静态资源服务器或者是云存储服务器上以访问静态资源的方式访问。</p>
+</blockquote>
+<ul>
+<li><p><a href="http://echarts.baidu.com/" target="_blank" rel="noopener">ECharts</a>或<a href="https://www.chartjs.org/" target="_blank" rel="noopener">Chart.js</a>。</p>
+</li>
+<li><p>思路：后端只提供JSON格式的数据，前端JavaScript渲染生成图表。</p>
+</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_charts_data</span><span class="hljs-params">(request)</span>:</span></span><br><span class="line"> <span class="hljs-string">"""获取统计图表JSON数据"""</span></span><br><span class="line"> names = []</span><br><span class="line"> totals = []</span><br><span class="line"> <span class="hljs-comment"># 通过connections获取指定数据库连接并创建游标对象</span></span><br><span class="line"> <span class="hljs-keyword">with</span> connections[<span class="hljs-string">'backend'</span>].cursor() <span class="hljs-keyword">as</span> cursor:</span><br><span class="line">     <span class="hljs-comment"># 在使用ORM框架时可以使用对象管理器的aggregate()和annotate()方法实现分组和聚合函数查询</span></span><br><span class="line">     <span class="hljs-comment"># 执行原生SQL查询(如果ORM框架不能满足业务或性能需求)</span></span><br><span class="line">     cursor.execute(<span class="hljs-string">'select dname, total from vw_dept_emp'</span>)</span><br><span class="line">     <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> cursor.fetchall():</span><br><span class="line">         names.append(row[<span class="hljs-number">0</span>])</span><br><span class="line">         totals.append(row[<span class="hljs-number">1</span>])</span><br><span class="line"> <span class="hljs-keyword">return</span> JsonResponse(&#123;<span class="hljs-string">'names'</span>: names, <span class="hljs-string">'totals'</span>: totals&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight html hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">"en"</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="line"> <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"UTF-8"</span>&gt;</span></span><br><span class="line"> <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>统计图表<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="line"> <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="hljs-undefined"></span></span><br><span class="line"><span class="hljs-undefined">     #main &#123;</span></span><br><span class="line"><span class="hljs-undefined">         width: 600px;</span></span><br><span class="line"><span class="hljs-undefined">         height: 400px;</span></span><br><span class="line"><span class="hljs-undefined">     &#125;</span></span><br><span class="line"><span class="hljs-undefined"> </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="line"> <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"main"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"> <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts.min.js"</span>&gt;</span><span class="hljs-undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"> <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"</span>&gt;</span><span class="hljs-undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"> <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="hljs-undefined"></span></span><br><span class="line"><span class="hljs-javascript">     <span class="hljs-keyword">var</span> myChart = echarts.init($(<span class="hljs-string">'#main'</span>)[<span class="hljs-number">0</span>]);</span></span><br><span class="line"><span class="hljs-javascript">     $.ajax(&#123;</span></span><br><span class="line"><span class="hljs-javascript">         <span class="hljs-string">'url'</span>: <span class="hljs-string">'charts_data'</span>,</span></span><br><span class="line"><span class="hljs-javascript">         <span class="hljs-string">'type'</span>: <span class="hljs-string">'get'</span>,</span></span><br><span class="line"><span class="hljs-javascript">         <span class="hljs-string">'data'</span>: &#123;&#125;,</span></span><br><span class="line"><span class="hljs-javascript">         <span class="hljs-string">'dataType'</span>: <span class="hljs-string">'json'</span>,</span></span><br><span class="line"><span class="hljs-javascript">         <span class="hljs-string">'success'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">json</span>) </span>&#123;</span></span><br><span class="line"><span class="hljs-javascript">             <span class="hljs-keyword">var</span> option = &#123;</span></span><br><span class="line"><span class="hljs-undefined">                 title: &#123;</span></span><br><span class="line"><span class="hljs-javascript">                     text: <span class="hljs-string">'员工分布统计图'</span></span></span><br><span class="line"><span class="hljs-undefined">                 &#125;,</span></span><br><span class="line"><span class="hljs-undefined">                 tooltip: &#123;&#125;,</span></span><br><span class="line"><span class="hljs-undefined">                 legend: &#123;</span></span><br><span class="line"><span class="hljs-javascript">                     data:[<span class="hljs-string">'人数'</span>]</span></span><br><span class="line"><span class="hljs-undefined">                 &#125;,</span></span><br><span class="line"><span class="hljs-undefined">                 xAxis: &#123;</span></span><br><span class="line"><span class="hljs-undefined">                     data: json.names</span></span><br><span class="line"><span class="hljs-undefined">                 &#125;,</span></span><br><span class="line"><span class="hljs-undefined">                 yAxis: &#123;&#125;,</span></span><br><span class="line"><span class="hljs-undefined">                 series: [&#123;</span></span><br><span class="line"><span class="hljs-javascript">                     name: <span class="hljs-string">'人数'</span>,</span></span><br><span class="line"><span class="hljs-javascript">                     type: <span class="hljs-string">'bar'</span>,</span></span><br><span class="line"><span class="hljs-undefined">                     data: json.totals</span></span><br><span class="line"><span class="hljs-undefined">                 &#125;]</span></span><br><span class="line"><span class="hljs-undefined">             &#125;;</span></span><br><span class="line"><span class="hljs-undefined">             myChart.setOption(option);</span></span><br><span class="line"><span class="hljs-undefined">         &#125;,</span></span><br><span class="line"><span class="hljs-javascript">         <span class="hljs-string">'error'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;&#125;</span></span><br><span class="line"><span class="hljs-undefined">     &#125;);</span></span><br><span class="line"><span class="hljs-undefined"> </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h3><p>问题1：中间件背后的设计理念是什么？（分离横切关注功能/拦截过滤器模式）</p>
+<p>问题2：中间件有哪些不同的实现方式？（参考下面的代码）</p>
+<p>问题3：描述Django内置的中间件及其执行顺序。（推荐阅读：<a href="https://docs.djangoproject.com/zh-hans/2.0/ref/middleware/#middleware-ordering" target="_blank" rel="noopener">Django官方文档 - 中间件 - 中间件顺序</a>）</p>
+<h4 id="激活中间件"><a href="#激活中间件" class="headerlink" title="激活中间件"></a>激活中间件</h4><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">MIDDLEWARE = [</span><br><span class="line"><span class="hljs-string">'django.middleware.security.SecurityMiddleware'</span>,</span><br><span class="line"><span class="hljs-string">'django.contrib.sessions.middleware.SessionMiddleware'</span>,</span><br><span class="line"><span class="hljs-string">'django.middleware.common.CommonMiddleware'</span>,</span><br><span class="line"><span class="hljs-string">'django.middleware.csrf.CsrfViewMiddleware'</span>,</span><br><span class="line"><span class="hljs-string">'django.contrib.auth.middleware.AuthenticationMiddleware'</span>,</span><br><span class="line"><span class="hljs-string">'django.contrib.messages.middleware.MessageMiddleware'</span>,</span><br><span class="line"><span class="hljs-string">'django.middleware.clickjacking.XFrameOptionsMiddleware'</span>,</span><br><span class="line"><span class="hljs-string">'common.middlewares.block_sms_middleware'</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h4 id="自定义中间件"><a href="#自定义中间件" class="headerlink" title="自定义中间件"></a>自定义中间件</h4><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">simple_middleware</span><span class="hljs-params">(get_response)</span>:</span></span><br><span class="line">    </span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">middleware</span><span class="hljs-params">(request, *args, **kwargs)</span>:</span></span><br><span class="line">    </span><br><span class="line">response = get_response(request, *args, **kwargs)</span><br><span class="line">    </span><br><span class="line"><span class="hljs-keyword">return</span> response</span><br><span class="line">    </span><br><span class="line"><span class="hljs-keyword">return</span> middleware</span><br></pre></td></tr></table></figure>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyMiddleware</span><span class="hljs-params">(object)</span>:</span></span><br><span class="line">    </span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, get_response)</span>:</span></span><br><span class="line">self.get_response = get_response</span><br><span class="line">    </span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__call__</span><span class="hljs-params">(self, request)</span>:</span></span><br><span class="line">    </span><br><span class="line">response = self.get_response(request)</span><br><span class="line">   </span><br><span class="line"><span class="hljs-keyword">return</span> response</span><br></pre></td></tr></table></figure>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyMiddleware</span><span class="hljs-params">(object)</span>:</span></span><br><span class="line">    </span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span></span><br><span class="line"><span class="hljs-keyword">pass</span></span><br><span class="line">    </span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_request</span><span class="hljs-params">(request)</span>:</span></span><br><span class="line"><span class="hljs-keyword">pass</span></span><br><span class="line">    </span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_view</span><span class="hljs-params">(request, view_func, view_args, view_kwargs)</span>:</span></span><br><span class="line"><span class="hljs-keyword">pass</span></span><br><span class="line">    </span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_template_response</span><span class="hljs-params">(request, response)</span>:</span></span><br><span class="line"><span class="hljs-keyword">pass</span></span><br><span class="line">    </span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_response</span><span class="hljs-params">(request, response)</span>:</span></span><br><span class="line"><span class="hljs-keyword">pass</span></span><br><span class="line">    </span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_exception</span><span class="hljs-params">(request, exception)</span>:</span></span><br><span class="line"><span class="hljs-keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h4 id="内置中间件"><a href="#内置中间件" class="headerlink" title="内置中间件"></a>内置中间件</h4><ol>
+<li>CommonMiddleware - 基础设置中间件</li>
+</ol>
+<ul>
+<li>DISALLOWED_USER_AGENTS - 不被允许的用户代理（浏览器）</li>
+<li>APPEND_SLASH - 是否追加<code>/</code></li>
+<li>USE_ETAG - 浏览器缓存相关</li>
+</ul>
+<ol start="2">
+<li>SecurityMiddleware - 安全相关中间件</li>
+</ol>
+<ul>
+<li>SECURE_HSTS_SECONDS - 强制使用HTTPS的时间</li>
+<li>SECURE_HSTS_INCLUDE_SUBDOMAINS - HTTPS是否覆盖子域名</li>
+<li>SECURE_CONTENT_TYPE_NOSNIFF - 是否允许浏览器推断内容类型</li>
+<li>SECURE_BROWSER_XSS_FILTER - 是否启用跨站脚本攻击过滤器</li>
+<li>SECURE_SSL_REDIRECT - 是否重定向到HTTPS连接</li>
+<li>SECURE_REDIRECT_EXEMPT - 免除重定向到HTTPS</li>
+</ul>
+<ol start="3">
+<li><p>SessionMiddleware - 会话中间件</p>
+</li>
+<li><p>CsrfViewMiddleware - 防范跨站身份伪造中间件</p>
+</li>
+<li><p>XFrameOptionsMiddleware - 防范点击劫持攻击中间件</p>
+</li>
+</ol>
+<p><img src="./res/click-jacking.png" alt></p>
+<p><img src="./res/builtin-middlewares.png" alt></p>
+<h3 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h3><ol>
+<li>用法：通常不要用来生成页面上的表单控件（耦合度太高不容易定制），主要用来验证数据。</li>
+<li>Form的属性和方法：</li>
+</ol>
+<ul>
+<li><code>is_valid()</code> / <code>is_multipart()</code></li>
+<li><code>errors</code> / <code>fields</code> / <code>is_bound</code> / <code>changed_data</code> / <code>cleaned_data</code></li>
+<li><code>add_error()</code> / <code>has_errors()</code> / <code>non_field_errors()</code></li>
+<li><code>clean()</code></li>
+</ul>
+<ol start="3">
+<li>Form.errors的方法：</li>
+</ol>
+<ul>
+<li><code>as_data()</code> / <code>as_json()</code> / <code>get_json_data()</code></li>
+</ul>
+<p>问题1：Django中的<code>Form</code>和<code>ModelForm</code>有什么作用？（通常不用来生成表单主要用来验证数据）</p>
+<p>问题2：表单上传文件时应该注意哪些问题？（表单的设置、多文件上传、图片预览（FileReader）、Ajax上传文件、上传后的文件如何存储、调用云存储（如<a href="https://www.aliyun.com/product/oss" target="_blank" rel="noopener">阿里云OSS</a>、<a href="https://www.qiniu.com/" target="_blank" rel="noopener">七牛云</a>、<a href="https://leancloud.cn/storage/" target="_blank" rel="noopener">LeanCloud</a>等））</p>
+<figure class="highlight html hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">""</span> <span class="hljs-attr">method</span>=<span class="hljs-string">"post"</span> <span class="hljs-attr">enctype</span>=<span class="hljs-string">"multipart/form-data"</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"file"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"..."</span> <span class="hljs-attr">multiple</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"file"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"foo"</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"file"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"foo"</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"file"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"foo"</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>说明：上传图片文件的预览效果可以通过HTML5的FileReader来实现。</p>
+</blockquote>
+<blockquote>
+<p>说明：使用云存储通常是比自己配置分布式文件系统这种方式更靠谱的做法，而且云存储通常成本并不太高，不仅如此大多数云存储还提供了如图片剪裁、生成水印、视频转码、CDN等服务。如果要自己做上传的视频文件转码，需要安装三方库ffmpeg，在程序中调用该三方库可以实现转码。</p>
+</blockquote>
+<h3 id="Cookie和Session"><a href="#Cookie和Session" class="headerlink" title="Cookie和Session"></a>Cookie和Session</h3><p>问题1：使用Cookie能解决什么问题？（用户跟踪，解决HTTP协议无状态问题）</p>
+<ol>
+<li>URL重写</li>
+</ol>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.abc.com/path/resource?foo=bar</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>隐藏域（隐式表单域）- 埋点</li>
+</ol>
+<figure class="highlight html hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">""</span> <span class="hljs-attr">method</span>=<span class="hljs-string">"post"</span>&gt;</span></span><br><span class="line">   </span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"hidden"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"foo"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"bar"</span>&gt;</span></span><br><span class="line">   </span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>Cookie - 浏览器中的临时文件（文本文件）- BASE64</li>
+</ol>
+<p>问题2：Cookie和Session之间关系是什么？（Session的标识通过Cookie保存和传输）</p>
+<h4 id="Session的配置"><a href="#Session的配置" class="headerlink" title="Session的配置"></a>Session的配置</h4><ol>
+<li><p>Session对应的中间件：<code>django.contrib.sessions.middleware.SessionMiddleware</code>。</p>
+</li>
+<li><p>Session引擎。</p>
+</li>
+</ol>
+<ul>
+<li>基于数据库（默认方式）</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line"> <span class="hljs-string">'django.contrib.sessions'</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>基于缓存（推荐使用）</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SESSION_ENGINE = <span class="hljs-string">'django.contrib.sessions.backends.cache'</span></span><br><span class="line">SESSION_CACHE_ALIAS = <span class="hljs-string">'session'</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>基于文件（基本不考虑）</p>
+</li>
+<li><p>基于Cookie（不靠谱）</p>
+</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SESSION_ENGINE = <span class="hljs-string">'django.contrib.sessions.backends.signed_cookies'</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>Cookie相关的配置。</li>
+</ol>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SESSION_COOKIE_NAME = <span class="hljs-string">'djang_session_id'</span></span><br><span class="line">SESSION_COOKIE_AGE = <span class="hljs-number">1209600</span></span><br><span class="line"><span class="hljs-comment"># 如果设置为True，Cookie就是基于浏览器窗口的Cookie，不会持久化</span></span><br><span class="line">SESSION_EXPIRE_AT_BROWSER_CLOSE = <span class="hljs-literal">False</span> </span><br><span class="line">SESSION_SAVE_EVERY_REQUEST = <span class="hljs-literal">False</span></span><br><span class="line">SESSION_COOKIE_HTTPONLY = <span class="hljs-literal">True</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>session的属性和方法。</li>
+</ol>
+<ul>
+<li><code>session_key</code> / <code>session_data</code> / <code>expire_date</code></li>
+<li><code>__getitem__</code> / <code>__setitem__</code> / <code>__delitem__</code> / <code>__contains__</code></li>
+<li><code>set_expiry()</code> / <code>get_expiry_age()</code> / <code>get_expiry_date()</code> - 设置/获取会话超期时间</li>
+<li><code>flush()</code> - 销毁会话</li>
+<li><code>set_test_cookie()</code> / <code>test_cookie_worked()</code> / <code>delete_test_cookie()</code> - 测试浏览器是否支持Cookie（提示用户如果浏览器禁用Cookie可能会影响网站的使用）</li>
+</ul>
+<ol start="5">
+<li>session的序列化。</li>
+</ol>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SESSION_SERIALIZER = <span class="hljs-string">'django.contrib.sessions.serializers.JSONSerializer'</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>JSONSerializer（1.6及以后默认）- 如果想将自定义的对象放到session中，会遇到“Object of type ‘XXX’ is not JSON serializable”的问题（如果配置使用Redis保存Session，django-redis使用了Pickle序列化，这个问题就不存在了）。</li>
+<li>PickleSerializer（1.6以前的默认）- 因为安全问题不推荐使用，但是只要不去反序列化用户构造的恶意的Payload其实也没有什么风险。关于这种方式的安全漏洞，可以参考《<a href="http://www.polaris-lab.com/index.php/archives/178/" target="_blank" rel="noopener">Python Pickle的任意代码执行漏洞实践和Payload构造》</a>一文或《软件架构-Python语言实现》上关于这个问题的讲解。</li>
+</ul>
+<blockquote>
+<p>说明：如果使用了django_redis整合Redis作为session的存储引擎，那么由于django_redis又封装了一个PickleSerializer来提供序列化，所以不会存在上述的问题，且Redis中保存的value是pickle序列化之后的结果。</p>
+</blockquote>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Django/">Django</a>, <a class="has-link-grey -link" href="/tags/Python/">Python</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/04/26/Django知识点概述3/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Django知识点概述3</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/03/12/算法-：排序算法/">
+                <span class="level-item">算法-：排序算法</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: 'ae39d0d8687422507629',
+        clientSecret: '1e0130c4c41a8448cc87988aa0f53cd96433add1',
+        id: '297c650f56b5d318c474b5f5cc77c056',
+        repo: 'guotz.github.io',
+        owner: 'GuoTZ',
+        admin: "GuoTZ"
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left is-sticky">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="GuoTZ">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        GuoTZ
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        一个Github的搬运工
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>陕西西安</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        35
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        17
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        23
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="http://www.gtzh.work/read" target="_blank">
+                写文章</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/GuoTZ">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#视图函数-Controller">
+        <span class="has-mr-6">1</span>
+        <span>视图函数(Controller)</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#如何设计视图函数">
+        <span class="has-mr-6">1.1</span>
+        <span>如何设计视图函数</span>
+        </a></li><li>
+        <a class="is-flex" href="#URL配置">
+        <span class="has-mr-6">1.2</span>
+        <span>URL配置</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#模板-View">
+        <span class="has-mr-6">2</span>
+        <span>模板(View)</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#后端渲染">
+        <span class="has-mr-6">2.1</span>
+        <span>后端渲染</span>
+        </a></li><li>
+        <a class="is-flex" href="#前端渲染">
+        <span class="has-mr-6">2.2</span>
+        <span>前端渲染</span>
+        </a></li><li>
+        <a class="is-flex" href="#其他视图">
+        <span class="has-mr-6">2.3</span>
+        <span>其他视图</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#中间件">
+        <span class="has-mr-6">3</span>
+        <span>中间件</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#激活中间件">
+        <span class="has-mr-6">3.1</span>
+        <span>激活中间件</span>
+        </a></li><li>
+        <a class="is-flex" href="#自定义中间件">
+        <span class="has-mr-6">3.2</span>
+        <span>自定义中间件</span>
+        </a></li><li>
+        <a class="is-flex" href="#内置中间件">
+        <span class="has-mr-6">3.3</span>
+        <span>内置中间件</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#表单">
+        <span class="has-mr-6">4</span>
+        <span>表单</span>
+        </a></li><li>
+        <a class="is-flex" href="#Cookie和Session">
+        <span class="has-mr-6">5</span>
+        <span>Cookie和Session</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Session的配置">
+        <span class="has-mr-6">5.1</span>
+        <span>Session的配置</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://www.jianshu.com/u/c7f424f6b259" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">简书地址</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.jianshu.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://github.com/GuoTZ" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Github</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">github.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Django/" style="font-size: 18px;">Django</a> <a href="/tags/MD5加密/" style="font-size: 10px;">MD5加密</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 12px;">Nginx</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/RSA加密/" style="font-size: 10px;">RSA加密</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swift/" style="font-size: 12px;">Swift</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/ftp/" style="font-size: 10px;">ftp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/iOS/" style="font-size: 16px;">iOS</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/zsh/" style="font-size: 14px;">zsh</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/服务器/" style="font-size: 14px;">服务器</a> <a href="/tags/版本控制/" style="font-size: 12px;">版本控制</a> <a href="/tags/第三方库/" style="font-size: 12px;">第三方库</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/DataBase/">
+            <span class="level-start">
+                <span class="level-item">DataBase</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/DataBase/Mysql/">
+            <span class="level-start">
+                <span class="level-item">Mysql</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/DataBase/NoSQL/">
+            <span class="level-start">
+                <span class="level-item">NoSQL</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/iOS/">
+            <span class="level-start">
+                <span class="level-item">iOS</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/iOS/Objective-C/">
+            <span class="level-start">
+                <span class="level-item">Objective-C</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/Swift/">
+            <span class="level-start">
+                <span class="level-item">Swift</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/编译/">
+            <span class="level-start">
+                <span class="level-item">编译</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/后端/">
+            <span class="level-start">
+                <span class="level-item">后端</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">11</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/后端/Apache服务器/">
+            <span class="level-start">
+                <span class="level-item">Apache服务器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/后端/Django/">
+            <span class="level-start">
+                <span class="level-item">Django</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/后端/Nginx服务器/">
+            <span class="level-start">
+                <span class="level-item">Nginx服务器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/插件/">
+            <span class="level-start">
+                <span class="level-item">插件</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/算法/">
+            <span class="level-start">
+                <span class="level-item">算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/算法/排序算法/">
+            <span class="level-start">
+                <span class="level-item">排序算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/系统/">
+            <span class="level-start">
+                <span class="level-item">系统</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/系统/Linux/">
+            <span class="level-start">
+                <span class="level-item">Linux</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/系统/Mac/">
+            <span class="level-start">
+                <span class="level-item">Mac</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-09T02:13:11.148Z">2019-05-09</time></div>
+                    <a href="/2019/05/09/vim配置成IDE/" class="has-link-black-ter is-size-6">vim配置成IDE</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/系统/">系统</a> / <a class="has-link-grey -link" href="/categories/系统/Mac/">Mac</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-07T20:49:41.937Z">2019-05-08</time></div>
+                    <a href="/2019/05/08/VSCode插件化/" class="has-link-black-ter is-size-6">VSCode插件化</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/插件/">插件</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-05T09:44:03.000Z">2019-05-05</time></div>
+                    <a href="/2019/05/05/Django-RESTfulAPI-安全设计/" class="has-link-black-ter is-size-6">RESTAPI 安全设计</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-04T01:11:22.000Z">2019-05-04</time></div>
+                    <a href="/2019/05/04/Swift面向协议-POP/" class="has-link-black-ter is-size-6">Swift面向协议 POP</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-03T06:47:40.000Z">2019-05-03</time></div>
+                    <a href="/2019/05/03/Swift-Result-T-E-Error-枚举类型/" class="has-link-black-ter is-size-6">Swift  Result&lt;T, E: Error&gt; 枚举类型</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Apache/">
+                        <span class="tag">Apache</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Django/">
+                        <span class="tag">Django</span>
+                        <span class="tag is-grey">8</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/MD5加密/">
+                        <span class="tag">MD5加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Mysql/">
+                        <span class="tag">Mysql</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Nginx/">
+                        <span class="tag">Nginx</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Python/">
+                        <span class="tag">Python</span>
+                        <span class="tag is-grey">13</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/RSA加密/">
+                        <span class="tag">RSA加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Redis/">
+                        <span class="tag">Redis</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swift/">
+                        <span class="tag">Swift</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/VSCode/">
+                        <span class="tag">VSCode</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ftp/">
+                        <span class="tag">ftp</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/git/">
+                        <span class="tag">git</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/iOS/">
+                        <span class="tag">iOS</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/shell/">
+                        <span class="tag">shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/svn/">
+                        <span class="tag">svn</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/vim/">
+                        <span class="tag">vim</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/zsh/">
+                        <span class="tag">zsh</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/排序/">
+                        <span class="tag">排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/服务器/">
+                        <span class="tag">服务器</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/版本控制/">
+                        <span class="tag">版本控制</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/第三方库/">
+                        <span class="tag">第三方库</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/算法/">
+                        <span class="tag">算法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/DataBase/">
+            <span class="level-start">
+                <span class="level-item">DataBase</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/DataBase/Mysql/">
+            <span class="level-start">
+                <span class="level-item">Mysql</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/DataBase/NoSQL/">
+            <span class="level-start">
+                <span class="level-item">NoSQL</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/iOS/">
+            <span class="level-start">
+                <span class="level-item">iOS</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/iOS/Objective-C/">
+            <span class="level-start">
+                <span class="level-item">Objective-C</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/Swift/">
+            <span class="level-start">
+                <span class="level-item">Swift</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/编译/">
+            <span class="level-start">
+                <span class="level-item">编译</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/后端/">
+            <span class="level-start">
+                <span class="level-item">后端</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">11</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/后端/Apache服务器/">
+            <span class="level-start">
+                <span class="level-item">Apache服务器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/后端/Django/">
+            <span class="level-start">
+                <span class="level-item">Django</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/后端/Nginx服务器/">
+            <span class="level-start">
+                <span class="level-item">Nginx服务器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/插件/">
+            <span class="level-start">
+                <span class="level-item">插件</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/算法/">
+            <span class="level-start">
+                <span class="level-item">算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/算法/排序算法/">
+            <span class="level-start">
+                <span class="level-item">排序算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/系统/">
+            <span class="level-start">
+                <span class="level-item">系统</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/系统/Linux/">
+            <span class="level-start">
+                <span class="level-item">Linux</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/系统/Mac/">
+            <span class="level-start">
+                <span class="level-item">Mac</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-09T02:13:11.148Z">2019-05-09</time></div>
+                    <a href="/2019/05/09/vim配置成IDE/" class="has-link-black-ter is-size-6">vim配置成IDE</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/系统/">系统</a> / <a class="has-link-grey -link" href="/categories/系统/Mac/">Mac</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-07T20:49:41.937Z">2019-05-08</time></div>
+                    <a href="/2019/05/08/VSCode插件化/" class="has-link-black-ter is-size-6">VSCode插件化</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/插件/">插件</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-05T09:44:03.000Z">2019-05-05</time></div>
+                    <a href="/2019/05/05/Django-RESTfulAPI-安全设计/" class="has-link-black-ter is-size-6">RESTAPI 安全设计</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-04T01:11:22.000Z">2019-05-04</time></div>
+                    <a href="/2019/05/04/Swift面向协议-POP/" class="has-link-black-ter is-size-6">Swift面向协议 POP</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-03T06:47:40.000Z">2019-05-03</time></div>
+                    <a href="/2019/05/03/Swift-Result-T-E-Error-枚举类型/" class="has-link-black-ter is-size-6">Swift  Result&lt;T, E: Error&gt; 枚举类型</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Apache/">
+                        <span class="tag">Apache</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Django/">
+                        <span class="tag">Django</span>
+                        <span class="tag is-grey">8</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/MD5加密/">
+                        <span class="tag">MD5加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Mysql/">
+                        <span class="tag">Mysql</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Nginx/">
+                        <span class="tag">Nginx</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Python/">
+                        <span class="tag">Python</span>
+                        <span class="tag is-grey">13</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/RSA加密/">
+                        <span class="tag">RSA加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Redis/">
+                        <span class="tag">Redis</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swift/">
+                        <span class="tag">Swift</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/VSCode/">
+                        <span class="tag">VSCode</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ftp/">
+                        <span class="tag">ftp</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/git/">
+                        <span class="tag">git</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/iOS/">
+                        <span class="tag">iOS</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/shell/">
+                        <span class="tag">shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/svn/">
+                        <span class="tag">svn</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/vim/">
+                        <span class="tag">vim</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/zsh/">
+                        <span class="tag">zsh</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/排序/">
+                        <span class="tag">排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/服务器/">
+                        <span class="tag">服务器</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/版本控制/">
+                        <span class="tag">版本控制</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/第三方库/">
+                        <span class="tag">第三方库</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/算法/">
+                        <span class="tag">算法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/myblog.png" alt="Django知识点概述2" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 GuoTZ&nbsp;
+                <a href target="_blank"></a><a href target="_blank"></a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/GuoTZ">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

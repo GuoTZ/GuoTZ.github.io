@@ -16,7 +16,7 @@
 <meta property="og:description" content="安装和配置（以CentOS Linux环境为例）使用安装命令 ：yum -y install mysql mysql-server mysql-devel安装完成却发现Myserver安装缺失，在网上找原因，原来是因为CentOS 7上把MySQL从默认软件列表中移除了，用MariaDB来代替，所以这导致我们必须要去官网上进行下载，找到链接，">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-05-09T05:35:33.475Z">
+<meta property="og:updated_time" content="2019-05-09T06:02:05.917Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关系数据库Mysql">
 <meta name="twitter:description" content="安装和配置（以CentOS Linux环境为例）使用安装命令 ：yum -y install mysql mysql-server mysql-devel安装完成却发现Myserver安装缺失，在网上找原因，原来是因为CentOS 7上把MySQL从默认软件列表中移除了，用MariaDB来代替，所以这导致我们必须要去官网上进行下载，找到链接，">
@@ -94,7 +94,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="关系数据库Mysql" height="28">
+                <img src="/images/myblog.png" alt="关系数据库Mysql" height="28">
             
             </a>
         </div>
@@ -161,7 +161,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    4 分钟 读完 (大约 598 个字)
+                    8 分钟 读完 (大约 1130 个字)
                 </span>
                 
                 
@@ -228,7 +228,89 @@
 <li>获取帮助。在mysql&gt;执行</li>
 </ul>
 <figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">? contents;</span><br><span class="line">? functions;</span><br><span class="line">? numeric functions;</span><br><span class="line">? round;</span><br><span class="line"></span><br><span class="line">? data types;</span><br><span class="line">? longblob;</span><br></pre></td></tr></table></figure>
-
+<h2 id="MySQL相关知识"><a href="#MySQL相关知识" class="headerlink" title="MySQL相关知识"></a>MySQL相关知识</h2><h3 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h3><ol>
+<li>InnoDB</li>
+<li>MyISAM</li>
+</ol>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><h4 id="索引的类型"><a href="#索引的类型" class="headerlink" title="索引的类型"></a>索引的类型</h4><ol>
+<li>B-Tree索引</li>
+<li>HASH索引</li>
+<li>R-Tree索引（空间索引）</li>
+<li>Full-text索引（全文索引）</li>
+</ol>
+<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><p>查询的快照，可以将访问权限控制到列上。</p>
+<figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">create</span> <span class="hljs-keyword">view</span> ... <span class="hljs-keyword">as</span> <span class="hljs-keyword">select</span> ...</span><br><span class="line"><span class="hljs-keyword">drop</span> <span class="hljs-keyword">view</span> ...</span><br></pre></td></tr></table></figure>
+<h3 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h3><figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">create</span> <span class="hljs-keyword">procedure</span> ... (params)</span><br><span class="line"><span class="hljs-keyword">begin</span></span><br><span class="line">...</span><br><span class="line"><span class="hljs-keyword">end</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">call</span> ...</span><br></pre></td></tr></table></figure>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cursor.callproc(<span class="hljs-string">'...'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h3><p>不能用，因为多个行锁可能直接升级为表锁，导致性能低下。</p>
+<h3 id="事务控制"><a href="#事务控制" class="headerlink" title="事务控制"></a>事务控制</h3><h3 id="SQL注入攻击"><a href="#SQL注入攻击" class="headerlink" title="SQL注入攻击"></a>SQL注入攻击</h3><h3 id="数据分区"><a href="#数据分区" class="headerlink" title="数据分区"></a>数据分区</h3><h3 id="SQL优化"><a href="#SQL优化" class="headerlink" title="SQL优化"></a>SQL优化</h3><h4 id="优化步骤"><a href="#优化步骤" class="headerlink" title="优化步骤"></a>优化步骤</h4><ol>
+<li><p>通过<code>show status</code>了解各种SQL的执行频率。</p>
+<figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">show</span> <span class="hljs-keyword">status</span> <span class="hljs-keyword">like</span> <span class="hljs-string">'com_%'</span>;</span><br><span class="line"><span class="hljs-keyword">show</span> <span class="hljs-keyword">status</span> <span class="hljs-keyword">like</span> <span class="hljs-string">'innodb_%'</span>;</span><br><span class="line"><span class="hljs-keyword">show</span> <span class="hljs-keyword">status</span> <span class="hljs-keyword">like</span> <span class="hljs-string">'connections'</span>;</span><br><span class="line"><span class="hljs-keyword">show</span> <span class="hljs-keyword">status</span> <span class="hljs-keyword">like</span> <span class="hljs-string">'slow_queries'</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>定位低效率的SQL语句 - 慢查询日志。</p>
+<figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">show</span> <span class="hljs-keyword">processlist</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过<code>explain</code>了解SQL的执行计划。</p>
+<ul>
+<li>select_type：查询类型（simple、primary、union、subquery）</li>
+<li>table：输出结果集的表</li>
+<li>type：访问类型（ALL、index、range、ref、eq_ref、const、NULL）</li>
+<li>possible_keys：查询时可能用到的索引</li>
+<li>key：实际使用的索引</li>
+<li>key_len：索引字段的长度</li>
+<li>rows：扫描的行数</li>
+<li>extra：额外信息</li>
+</ul>
+</li>
+<li><p>通过<code>show profiles</code>和<code>show profile for query</code>分析SQL。</p>
+</li>
+</ol>
+<h4 id="SQL优化-1"><a href="#SQL优化-1" class="headerlink" title="SQL优化"></a>SQL优化</h4><ol>
+<li>优化insert语句</li>
+<li>优化order by语句</li>
+<li>优化group by语句</li>
+<li>优化嵌套查询</li>
+<li>优化or条件</li>
+<li>优化分页查询</li>
+<li>使用SQL提示<ul>
+<li>USE INDEX</li>
+<li>IGNORE INDEX</li>
+<li>FORCE INDEX</li>
+</ul>
+</li>
+</ol>
+<h4 id="配置优化"><a href="#配置优化" class="headerlink" title="配置优化"></a>配置优化</h4><ol>
+<li>调整max_connections</li>
+<li>调整back_log</li>
+<li>调整table_open_cache</li>
+<li>调整thread_cache_size</li>
+<li>调整innodb_lock_wait_timeout</li>
+</ol>
+<h4 id="架构优化"><a href="#架构优化" class="headerlink" title="架构优化"></a>架构优化</h4><ol>
+<li>通过拆分提高表的访问效率<ul>
+<li>垂直拆分</li>
+<li>水平拆分</li>
+</ul>
+</li>
+<li>逆范式理论<ul>
+<li>数据表设计的规范程度称之为范式（Normal Form）<ul>
+<li>1NF：列不能再拆分</li>
+<li>2NF：所有的属性都依赖于主键</li>
+<li>3NF：所有的属性都直接依赖于主键（消除传递依赖）</li>
+<li>BCNF：消除非平凡多值依赖</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>使用中间表提高统计查询速度</li>
+</ol>
+<h3 id="数据备份"><a href="#数据备份" class="headerlink" title="数据备份"></a>数据备份</h3><h4 id="导入和导出"><a href="#导入和导出" class="headerlink" title="导入和导出"></a>导入和导出</h4><ol>
+<li>select … into outfile …</li>
+<li>load data infile … into table …</li>
+<li>mysqldump</li>
+<li>mysqlimport</li>
+</ol>
+<h4 id="ibbackup工具"><a href="#ibbackup工具" class="headerlink" title="ibbackup工具"></a>ibbackup工具</h4><h4 id="xtrabackup工具"><a href="#xtrabackup工具" class="headerlink" title="xtrabackup工具"></a>xtrabackup工具</h4><h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><h3 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h3>
         </div>
         
         <div class="level is-size-7 is-uppercase">
@@ -261,8 +343,8 @@
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2018/03/12/算法-：排序算法/">
-                <span class="level-item">算法-：排序算法</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/05/02/Django知识点概述6/">
+                <span class="level-item">Django知识点概述6</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -336,7 +418,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        28
+                        35
                     </p>
                 </div>
             </div>
@@ -403,6 +485,94 @@
         <a class="is-flex" href="#安装MySQL服务器">
         <span class="has-mr-6">1.3</span>
         <span>安装MySQL服务器</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#MySQL相关知识">
+        <span class="has-mr-6">2</span>
+        <span>MySQL相关知识</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#存储引擎">
+        <span class="has-mr-6">2.1</span>
+        <span>存储引擎</span>
+        </a></li><li>
+        <a class="is-flex" href="#数据类型">
+        <span class="has-mr-6">2.2</span>
+        <span>数据类型</span>
+        </a></li><li>
+        <a class="is-flex" href="#索引">
+        <span class="has-mr-6">2.3</span>
+        <span>索引</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#索引的类型">
+        <span class="has-mr-6">2.3.1</span>
+        <span>索引的类型</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#视图">
+        <span class="has-mr-6">2.4</span>
+        <span>视图</span>
+        </a></li><li>
+        <a class="is-flex" href="#存储过程">
+        <span class="has-mr-6">2.5</span>
+        <span>存储过程</span>
+        </a></li><li>
+        <a class="is-flex" href="#触发器">
+        <span class="has-mr-6">2.6</span>
+        <span>触发器</span>
+        </a></li><li>
+        <a class="is-flex" href="#事务控制">
+        <span class="has-mr-6">2.7</span>
+        <span>事务控制</span>
+        </a></li><li>
+        <a class="is-flex" href="#SQL注入攻击">
+        <span class="has-mr-6">2.8</span>
+        <span>SQL注入攻击</span>
+        </a></li><li>
+        <a class="is-flex" href="#数据分区">
+        <span class="has-mr-6">2.9</span>
+        <span>数据分区</span>
+        </a></li><li>
+        <a class="is-flex" href="#SQL优化">
+        <span class="has-mr-6">2.10</span>
+        <span>SQL优化</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#优化步骤">
+        <span class="has-mr-6">2.10.1</span>
+        <span>优化步骤</span>
+        </a></li><li>
+        <a class="is-flex" href="#SQL优化-1">
+        <span class="has-mr-6">2.10.2</span>
+        <span>SQL优化</span>
+        </a></li><li>
+        <a class="is-flex" href="#配置优化">
+        <span class="has-mr-6">2.10.3</span>
+        <span>配置优化</span>
+        </a></li><li>
+        <a class="is-flex" href="#架构优化">
+        <span class="has-mr-6">2.10.4</span>
+        <span>架构优化</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#数据备份">
+        <span class="has-mr-6">2.11</span>
+        <span>数据备份</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#导入和导出">
+        <span class="has-mr-6">2.11.1</span>
+        <span>导入和导出</span>
+        </a></li><li>
+        <a class="is-flex" href="#ibbackup工具">
+        <span class="has-mr-6">2.11.2</span>
+        <span>ibbackup工具</span>
+        </a></li><li>
+        <a class="is-flex" href="#xtrabackup工具">
+        <span class="has-mr-6">2.11.3</span>
+        <span>xtrabackup工具</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#主从复制">
+        <span class="has-mr-6">2.12</span>
+        <span>主从复制</span>
+        </a></li><li>
+        <a class="is-flex" href="#集群">
+        <span class="has-mr-6">2.13</span>
+        <span>集群</span>
         </a></li></ul></li></ul>
         </div>
     </div>
@@ -454,7 +624,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Django/" style="font-size: 12.5px;">Django</a> <a href="/tags/MD5加密/" style="font-size: 10px;">MD5加密</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 12.5px;">Nginx</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/RSA加密/" style="font-size: 10px;">RSA加密</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swift/" style="font-size: 12.5px;">Swift</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/ftp/" style="font-size: 10px;">ftp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/iOS/" style="font-size: 17.5px;">iOS</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/vim/" style="font-size: 15px;">vim</a> <a href="/tags/zsh/" style="font-size: 15px;">zsh</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/服务器/" style="font-size: 15px;">服务器</a> <a href="/tags/版本控制/" style="font-size: 12.5px;">版本控制</a> <a href="/tags/第三方库/" style="font-size: 10px;">第三方库</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+        <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Django/" style="font-size: 18px;">Django</a> <a href="/tags/MD5加密/" style="font-size: 10px;">MD5加密</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 12px;">Nginx</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/RSA加密/" style="font-size: 10px;">RSA加密</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swift/" style="font-size: 12px;">Swift</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/ftp/" style="font-size: 10px;">ftp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/iOS/" style="font-size: 16px;">iOS</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/zsh/" style="font-size: 14px;">zsh</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/服务器/" style="font-size: 14px;">服务器</a> <a href="/tags/版本控制/" style="font-size: 12px;">版本控制</a> <a href="/tags/第三方库/" style="font-size: 12px;">第三方库</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
     </div>
 </div>
 
@@ -500,7 +670,7 @@
                 <span class="level-item">iOS</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/iOS/Objective-C/">
@@ -508,7 +678,7 @@
                 <span class="level-item">Objective-C</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/iOS/Swift/">
@@ -532,7 +702,7 @@
                 <span class="level-item">后端</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">11</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/后端/Apache服务器/">
@@ -548,7 +718,7 @@
                 <span class="level-item">Django</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">8</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/后端/Nginx服务器/">
@@ -730,6 +900,28 @@
         </li>
         
         <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2018/03/">
                 <span class="level-start">
                     <span class="level-item">三月 2018</span>
@@ -746,7 +938,7 @@
                     <span class="level-item">二月 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -823,7 +1015,7 @@
                     <span class="level-item">十二月 2016</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -851,7 +1043,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Django/">
                         <span class="tag">Django</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">8</span>
                     </a>
                 </div>
                 
@@ -879,7 +1071,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">7</span>
+                        <span class="tag is-grey">13</span>
                     </a>
                 </div>
                 
@@ -935,7 +1127,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/iOS/">
                         <span class="tag">iOS</span>
-                        <span class="tag is-grey">4</span>
+                        <span class="tag is-grey">5</span>
                     </a>
                 </div>
                 
@@ -991,7 +1183,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/第三方库/">
                         <span class="tag">第三方库</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1056,7 +1248,7 @@
                 <span class="level-item">iOS</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/iOS/Objective-C/">
@@ -1064,7 +1256,7 @@
                 <span class="level-item">Objective-C</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/iOS/Swift/">
@@ -1088,7 +1280,7 @@
                 <span class="level-item">后端</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">11</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/后端/Apache服务器/">
@@ -1104,7 +1296,7 @@
                 <span class="level-item">Django</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">8</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/后端/Nginx服务器/">
@@ -1286,6 +1478,28 @@
         </li>
         
         <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2018/03/">
                 <span class="level-start">
                     <span class="level-item">三月 2018</span>
@@ -1302,7 +1516,7 @@
                     <span class="level-item">二月 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1379,7 +1593,7 @@
                     <span class="level-item">十二月 2016</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1407,7 +1621,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Django/">
                         <span class="tag">Django</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">8</span>
                     </a>
                 </div>
                 
@@ -1435,7 +1649,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">7</span>
+                        <span class="tag is-grey">13</span>
                     </a>
                 </div>
                 
@@ -1491,7 +1705,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/iOS/">
                         <span class="tag">iOS</span>
-                        <span class="tag is-grey">4</span>
+                        <span class="tag is-grey">5</span>
                     </a>
                 </div>
                 
@@ -1547,7 +1761,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/第三方库/">
                         <span class="tag">第三方库</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1575,7 +1789,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="关系数据库Mysql" height="28">
+                    <img src="/images/myblog.png" alt="关系数据库Mysql" height="28">
                 
                 </a>
                 <p class="is-size-7">

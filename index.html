@@ -89,7 +89,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="博客" height="28">
+                <img src="/images/myblog.png" alt="博客" height="28">
             
             </a>
         </div>
@@ -566,7 +566,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    4 分钟 读完 (大约 598 个字)
+                    8 分钟 读完 (大约 1130 个字)
                 </span>
                 
                 
@@ -608,17 +608,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-03-12T02:28:44.000Z">2018-03-12</time>
+                <time class="level-item has-text-grey" datetime="2018-05-02T14:02:12.000Z">2018-05-02</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/算法/">算法</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/算法/排序算法/">排序算法</a>
+                <a class="has-link-grey -link" href="/categories/后端/">后端</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/后端/Django/">Django</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    2 分钟 读完 (大约 315 个字)
+                    7 分钟 读完 (大约 1091 个字)
                 </span>
                 
                 
@@ -627,26 +627,26 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2018/03/12/算法-：排序算法/">算法-：排序算法</a>
+                <a class="has-link-black-ter" href="/2018/05/02/Django知识点概述6/">Django知识点概述6</a>
             
         </h1>
         <div class="content">
-            <h2 id="比较排序"><a href="#比较排序" class="headerlink" title="比较排序"></a>比较排序</h2><ul>
-<li>定义1 (基于比较的排序)给定一个包含n个对象的待排序序列a1a2…an.  假设我们知道如何比较其中任意两个对象的大小关系。只如何对这一序列排序</li>
-</ul>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. 传递性：如果a&lt;=b ,b&lt;=c,则一定有a&lt;=c</span><br><span class="line">2. 全序性：对任意a和b，或者a&lt;=b，或者b&lt;=c</span><br></pre></td></tr></table></figure>
-<ul>
-<li>定义2 (合并多个有序列)将n个序列合并为一个序列。</li>
-<li>定义3(前k小数)给定一个包含n个对象的序列  找出前k个最小的数</li>
-</ul>
-<h3 id="1-梳排序"><a href="#1-梳排序" class="headerlink" title="1. 梳排序"></a>1. 梳排序</h3><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">冒泡排序</span><br><span class="line">for i＝0,2,…,n-1 do</span><br><span class="line">    for j＝1,2,…,n-i do</span><br><span class="line">        if aj＞aj+1 then</span><br><span class="line">            交换aj和aj+1</span><br><span class="line">        endif</span><br><span class="line">    endif</span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
+            <h3 id="项目调试"><a href="#项目调试" class="headerlink" title="项目调试"></a>项目调试</h3><p>可以使用django-debug-toolbar来辅助项目调试。</p>
+<ol>
+<li>安装</li>
+</ol>
+<figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install django-debug-toolbar</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>配置 - 修改settings.py。</li>
+</ol>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">   <span class="hljs-string">'debug_toolbar'</span>,</span><br><span class="line">]</span><br><span class="line">   </span><br><span class="line">MIDDLEWARE = [</span><br><span class="line">   <span class="hljs-string">'debug_toolbar.middleware.DebugToolbarMiddleware'</span>,</span><br><span class="line">]</span><br><span class="line">   </span><br><span class="line">DEBUG_TOOLBAR_CONFIG = &#123;</span><br><span class="line">   <span class="hljs-comment"># 引入jQuery库</span></span><br><span class="line">   <span class="hljs-string">'JQUERY_URL'</span>: <span class="hljs-string">'https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js'</span>,</span><br><span class="line">   <span class="hljs-comment"># 工具栏是否折叠</span></span><br><span class="line">   <span class="hljs-string">'SHOW_COLLAPSED'</span>: <span class="hljs-literal">True</span>,</span><br><span class="line">   <span class="hljs-comment"># 是否显示工具栏</span></span><br><span class="line">   <span class="hljs-string">'SHOW_TOOLBAR_CALLBACK'</span>: <span class="hljs-keyword">lambda</span> x: <span class="hljs-literal">True</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         </div>
         
         
         <div class="level is-mobile">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2018/03/12/算法-：排序算法/#more">阅读更多</a>
+                <a class="button is-size-7 is-light" href="/2018/05/02/Django知识点概述6/#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -668,17 +668,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-02-09T04:01:58.000Z">2018-02-09</time>
+                <time class="level-item has-text-grey" datetime="2018-04-29T12:43:12.000Z">2018-04-29</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/系统/">系统</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/系统/Linux/">Linux</a>
+                <a class="has-link-grey -link" href="/categories/后端/">后端</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/后端/Django/">Django</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    1 小时 读完 (大约 7596 个字)
+                    7 分钟 读完 (大约 1088 个字)
                 </span>
                 
                 
@@ -687,19 +687,27 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2018/02/09/玩转Linux/">玩转Linux</a>
+                <a class="has-link-black-ter" href="/2018/04/29/Django知识点概述5/">Django知识点概述5</a>
             
         </h1>
         <div class="content">
-            <h3 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h3><p>Linux系统的命令通常都是如下所示的格式：</p>
-<figure class="highlight shell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">命令名称 [命名参数] [命令对象]</span><br></pre></td></tr></table></figure>
+            <h4 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h4><ol>
+<li>用ID生成器代替自增主键（性能更好、适用于分布式环境）。</li>
+</ol>
+<ul>
+<li><p>自定义ID生成器</p>
+</li>
+<li><p>UUID</p>
+</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&gt;&gt;&gt; </span>my_uuid = uuid.uuid1()</span><br><span class="line"><span class="hljs-meta">&gt;&gt;&gt; </span>my_uuid</span><br><span class="line">UUID(<span class="hljs-string">'63f859d0-a03a-11e8-b0ad-60f81da8d840'</span>)</span><br><span class="line"><span class="hljs-meta">&gt;&gt;&gt; </span>my_uuid.hex</span><br><span class="line"><span class="hljs-string">'63f859d0a03a11e8b0ad60f81da8d840'</span></span><br></pre></td></tr></table></figure>
         </div>
         
         
         <div class="level is-mobile">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2018/02/09/玩转Linux/#more">阅读更多</a>
+                <a class="button is-size-7 is-light" href="/2018/04/29/Django知识点概述5/#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -732,6 +740,8 @@
             <li><a class="pagination-link has-text-black-ter" href="/page/2/">2</a></li>
             
             <li><a class="pagination-link has-text-black-ter" href="/page/3/">3</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/page/4/">4</a></li>
             
         </ul>
     </nav>
@@ -779,7 +789,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        28
+                        35
                     </p>
                 </div>
             </div>
@@ -870,7 +880,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Django/" style="font-size: 12.5px;">Django</a> <a href="/tags/MD5加密/" style="font-size: 10px;">MD5加密</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 12.5px;">Nginx</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/RSA加密/" style="font-size: 10px;">RSA加密</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swift/" style="font-size: 12.5px;">Swift</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/ftp/" style="font-size: 10px;">ftp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/iOS/" style="font-size: 17.5px;">iOS</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/vim/" style="font-size: 15px;">vim</a> <a href="/tags/zsh/" style="font-size: 15px;">zsh</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/服务器/" style="font-size: 15px;">服务器</a> <a href="/tags/版本控制/" style="font-size: 12.5px;">版本控制</a> <a href="/tags/第三方库/" style="font-size: 10px;">第三方库</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+        <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Django/" style="font-size: 18px;">Django</a> <a href="/tags/MD5加密/" style="font-size: 10px;">MD5加密</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 12px;">Nginx</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/RSA加密/" style="font-size: 10px;">RSA加密</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swift/" style="font-size: 12px;">Swift</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/ftp/" style="font-size: 10px;">ftp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/iOS/" style="font-size: 16px;">iOS</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/zsh/" style="font-size: 14px;">zsh</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/服务器/" style="font-size: 14px;">服务器</a> <a href="/tags/版本控制/" style="font-size: 12px;">版本控制</a> <a href="/tags/第三方库/" style="font-size: 12px;">第三方库</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
     </div>
 </div>
 
@@ -916,7 +926,7 @@
                 <span class="level-item">iOS</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/iOS/Objective-C/">
@@ -924,7 +934,7 @@
                 <span class="level-item">Objective-C</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/iOS/Swift/">
@@ -948,7 +958,7 @@
                 <span class="level-item">后端</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">11</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/后端/Apache服务器/">
@@ -964,7 +974,7 @@
                 <span class="level-item">Django</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">8</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/后端/Nginx服务器/">
@@ -1146,6 +1156,28 @@
         </li>
         
         <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2018/03/">
                 <span class="level-start">
                     <span class="level-item">三月 2018</span>
@@ -1162,7 +1194,7 @@
                     <span class="level-item">二月 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1239,7 +1271,7 @@
                     <span class="level-item">十二月 2016</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1267,7 +1299,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Django/">
                         <span class="tag">Django</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">8</span>
                     </a>
                 </div>
                 
@@ -1295,7 +1327,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">7</span>
+                        <span class="tag is-grey">13</span>
                     </a>
                 </div>
                 
@@ -1351,7 +1383,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/iOS/">
                         <span class="tag">iOS</span>
-                        <span class="tag is-grey">4</span>
+                        <span class="tag is-grey">5</span>
                     </a>
                 </div>
                 
@@ -1407,7 +1439,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/第三方库/">
                         <span class="tag">第三方库</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1472,7 +1504,7 @@
                 <span class="level-item">iOS</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/iOS/Objective-C/">
@@ -1480,7 +1512,7 @@
                 <span class="level-item">Objective-C</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/iOS/Swift/">
@@ -1504,7 +1536,7 @@
                 <span class="level-item">后端</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">11</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/后端/Apache服务器/">
@@ -1520,7 +1552,7 @@
                 <span class="level-item">Django</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">8</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/后端/Nginx服务器/">
@@ -1702,6 +1734,28 @@
         </li>
         
         <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2018/03/">
                 <span class="level-start">
                     <span class="level-item">三月 2018</span>
@@ -1718,7 +1772,7 @@
                     <span class="level-item">二月 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1795,7 +1849,7 @@
                     <span class="level-item">十二月 2016</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1823,7 +1877,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Django/">
                         <span class="tag">Django</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">8</span>
                     </a>
                 </div>
                 
@@ -1851,7 +1905,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">7</span>
+                        <span class="tag is-grey">13</span>
                     </a>
                 </div>
                 
@@ -1907,7 +1961,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/iOS/">
                         <span class="tag">iOS</span>
-                        <span class="tag is-grey">4</span>
+                        <span class="tag is-grey">5</span>
                     </a>
                 </div>
                 
@@ -1963,7 +2017,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/第三方库/">
                         <span class="tag">第三方库</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1991,7 +2045,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="博客" height="28">
+                    <img src="/images/myblog.png" alt="博客" height="28">
                 
                 </a>
                 <p class="is-size-7">
