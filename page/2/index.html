@@ -536,17 +536,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2017-10-01T04:08:44.000Z">2017-10-01</time>
+                <time class="level-item has-text-grey" datetime="2017-10-03T12:12:09.000Z">2017-10-03</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/数据结构/">数据结构</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据结构/二叉树/">二叉树</a>
+                <a class="has-link-grey -link" href="/categories/数据结构/">数据结构</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据结构/字典Map/">字典Map</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    5 分钟 读完 (大约 695 个字)
+                    6 分钟 读完 (大约 827 个字)
                 </span>
                 
                 
@@ -555,129 +555,130 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2017/10/01/数据结构之二分搜索树/">数据结构之二分搜索树</a>
+                <a class="has-link-black-ter" href="/2017/10/03/数据结构之字典Map实现/">数据结构之字典LinkedMap实现</a>
             
         </h1>
         <div class="content">
-            <h2 id="二分搜索树"><a href="#二分搜索树" class="headerlink" title="二分搜索树"></a>二分搜索树</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p><code>二叉查找树（Binary Search Tree），也称有序二叉树（ordered binary tree）,排序二叉树（sorted binary tree），是指一棵空树或者具有下列性质的二叉树：</code></p>
+            <h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java里映射<span class="hljs-type">Map</span>(<span class="hljs-type">HashMap</span>、<span class="hljs-type">TreeMap</span>(红黑树))</span><br><span class="line">oc、swift、python里的字典dict</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/GuoTZ/MapImplementation" target="_blank" rel="noopener">swift实现代码地址</a><em>**</em></p>
+<h3 id="定义字典的接口"><a href="#定义字典的接口" class="headerlink" title="定义字典的接口"></a>定义字典的接口</h3><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">protocol</span>  <span class="hljs-title">MapAble</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">associatedtype</span> <span class="hljs-type">K</span></span><br><span class="line">    <span class="hljs-keyword">associatedtype</span> <span class="hljs-type">V</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">add</span><span class="hljs-params">(key:K,Value:V)</span></span>         <span class="hljs-comment">// 添加key、value</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">contains</span><span class="hljs-params">(key:K)</span></span> -&gt;<span class="hljs-type">Bool</span>     <span class="hljs-comment">// 检查是否存在key</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">remove</span><span class="hljs-params">(key:K)</span></span> -&gt; <span class="hljs-type">V?</span>        <span class="hljs-comment">// 移除key</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getSize</span><span class="hljs-params">()</span></span> -&gt;<span class="hljs-type">Int</span>            <span class="hljs-comment">// 获取字典的大小</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">isEmpty</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-type">Bool</span>          <span class="hljs-comment">// 判断字典是否为空</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">get</span><span class="hljs-params">(key:K)</span></span> -&gt; <span class="hljs-type">V?</span>           <span class="hljs-comment">// 根据key获取value 不存在key返回nill</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">set</span><span class="hljs-params">(key:K,value:V)</span></span> <span class="hljs-keyword">throws</span>  <span class="hljs-comment">// 更新key对应的value 不存在key抛出异常</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2017/10/03/数据结构之字典Map实现/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2017-10-03T12:12:09.000Z">2017-10-03</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/数据结构/">数据结构</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据结构/字典Map/">字典Map</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 分钟 读完 (大约 1376 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2017/10/03/数据结构之字典TreeMap实现/">数据结构之字典TreeMap实现</a>
+            
+        </h1>
+        <div class="content">
+            <p><a href="https://github.com/GuoTZ/MapImplementation" target="_blank" rel="noopener">swift实现代码地址</a></p>
+<h3 id="实现基于二分搜索树的TreeMap字典"><a href="#实现基于二分搜索树的TreeMap字典" class="headerlink" title="实现基于二分搜索树的TreeMap字典"></a>实现基于二分搜索树的TreeMap字典</h3><h4 id="实现每个节点存放key，value的二叉搜索树"><a href="#实现每个节点存放key，value的二叉搜索树" class="headerlink" title="实现每个节点存放key，value的二叉搜索树"></a><code>实现每个节点存放key，value的二叉搜索树</code></h4><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-comment">/// 二分上搜索树的节点</span></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BstNode</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; :<span class="hljs-title">CustomDebugStringConvertible</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">var</span> key:<span class="hljs-type">K?</span></span><br><span class="line">    <span class="hljs-keyword">var</span> value:<span class="hljs-type">V?</span></span><br><span class="line">    <span class="hljs-keyword">var</span> <span class="hljs-keyword">left</span>:<span class="hljs-type">BstNode</span>&lt;<span class="hljs-type">K</span>,<span class="hljs-type">V</span>&gt;?</span><br><span class="line">    <span class="hljs-keyword">var</span> <span class="hljs-keyword">right</span>:<span class="hljs-type">BstNode</span>&lt;<span class="hljs-type">K</span>,<span class="hljs-type">V</span>&gt;?</span><br><span class="line">    <span class="hljs-keyword">init</span>() &#123;</span><br><span class="line">        <span class="hljs-keyword">self</span>.<span class="hljs-keyword">right</span> = <span class="hljs-literal">nil</span></span><br><span class="line">        <span class="hljs-keyword">self</span>.<span class="hljs-keyword">left</span> = <span class="hljs-literal">nil</span></span><br><span class="line">        <span class="hljs-keyword">self</span>.key = <span class="hljs-literal">nil</span></span><br><span class="line">        <span class="hljs-keyword">self</span>.value = <span class="hljs-literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">init</span>(key:<span class="hljs-type">K</span>,value:<span class="hljs-type">V</span>) &#123;</span><br><span class="line">        <span class="hljs-keyword">self</span>.key = key</span><br><span class="line">        <span class="hljs-keyword">self</span>.value = value</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">var</span> debugDescription: <span class="hljs-type">String</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">var</span> keyStr = <span class="hljs-string">"nil"</span></span><br><span class="line">        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> key = <span class="hljs-keyword">self</span>.key &#123;</span><br><span class="line">            keyStr = <span class="hljs-string">"\"\(key)\""</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">var</span> vStr = <span class="hljs-string">"nil"</span></span><br><span class="line">        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> v = <span class="hljs-keyword">self</span>.value &#123;</span><br><span class="line">            vStr = <span class="hljs-string">"\"\(v)\""</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> keyStr+<span class="hljs-string">":"</span>+vStr</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2017/10/03/数据结构之字典TreeMap实现/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2017-10-01T12:12:09.000Z">2017-10-01</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/数据结构/">数据结构</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据结构/集合/">集合</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 300 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2017/10/01/数据结构之集合实现/">数据结构之集合实现</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h3><p><a href="https://github.com/GuoTZ/SetImplementation" target="_blank" rel="noopener">swift实现代码</a></p>
 <ul>
-<li>若任意节点的左子树不空，则左子树上所有结点的值均小于它的根结点的值；</li>
-<li>任意节点的右子树不空，则右子树上所有结点的值均大于它的根结点的值；</li>
-<li>任意节点的左、右子树也分别为二叉查找树。</li>
-<li>没有键值相等的节点（no duplicate nodes）。</li>
+<li><code>集合（Set）是用来存储相同类型、没有确定顺序、且不重复的值。</code></li>
+<li><code>也就是说当元素顺序不重要时，或者希望确保每个元素只出现一次时，可以使用集合而不是数组。</code></li>
 </ul>
-<h3 id="二分搜索树的结构"><a href="#二分搜索树的结构" class="headerlink" title="二分搜索树的结构"></a>二分搜索树的结构</h3><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/// 元查找树的节点</span></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span>&lt;<span class="hljs-title">E</span>&gt;:<span class="hljs-title">CustomDebugStringConvertible</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">///数据域</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-keyword">var</span> e:<span class="hljs-type">E</span></span><br><span class="line">    <span class="hljs-comment">/// 左子树</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-keyword">var</span> <span class="hljs-keyword">left</span>: <span class="hljs-type">Node</span>&lt;<span class="hljs-type">E</span>&gt;?</span><br><span class="line">    <span class="hljs-comment">/// 右子树</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-keyword">var</span> <span class="hljs-keyword">right</span>: <span class="hljs-type">Node</span>&lt;<span class="hljs-type">E</span>&gt;?</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">init</span>(e:<span class="hljs-type">E</span>) &#123;</span><br><span class="line">        <span class="hljs-keyword">self</span>.e = e</span><br><span class="line">        <span class="hljs-keyword">self</span>.<span class="hljs-keyword">left</span> = <span class="hljs-literal">nil</span></span><br><span class="line">        <span class="hljs-keyword">self</span>.<span class="hljs-keyword">right</span> = <span class="hljs-literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">var</span> debugDescription: <span class="hljs-type">String</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">"\(e)"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="链表实现集合"><a href="#链表实现集合" class="headerlink" title="链表实现集合"></a>链表实现集合</h3><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LinkedListSet</span>&lt;<span class="hljs-title">E</span>&gt;: <span class="hljs-title">SetAble</span>,<span class="hljs-title">CustomDebugStringConvertible</span> <span class="hljs-title">where</span> <span class="hljs-title">E</span>:<span class="hljs-title">Equatable</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> data: <span class="hljs-type">LinkedList</span>&lt;<span class="hljs-type">E</span>&gt;</span><br><span class="line">    <span class="hljs-keyword">init</span>() &#123;</span><br><span class="line">        <span class="hljs-keyword">self</span>.data = <span class="hljs-type">LinkedList</span>&lt;<span class="hljs-type">E</span>&gt;()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">add</span><span class="hljs-params">(e: E)</span></span> &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span> !<span class="hljs-keyword">self</span>.data.<span class="hljs-built_in">contains</span>(e: e) &#123;</span><br><span class="line">            <span class="hljs-keyword">self</span>.data.addFirst(e: e)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">contains</span><span class="hljs-params">(e: E)</span></span> -&gt; <span class="hljs-type">Bool</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.data.<span class="hljs-built_in">contains</span>(e: e)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">remove</span><span class="hljs-params">(e: E)</span></span> &#123;</span><br><span class="line">        <span class="hljs-keyword">self</span>.data.removeElement(e: e)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getSize</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-type">Int</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.data.getSize()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">isEmpty</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-type">Bool</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.data.isEmpty()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">var</span> debugDescription: <span class="hljs-type">String</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.data.debugDescription</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         </div>
         
         
         <div class="level is-mobile">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2017/10/01/数据结构之二分搜索树/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2017-09-16T02:28:44.000Z">2017-09-16</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/数据结构/">数据结构</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据结构/链表/">链表</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    5 分钟 读完 (大约 738 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2017/09/16/数据结构之链表实现/">数据结构之链表实现</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h2><h3 id="线性表的链式存储表示的特点是用一组任意的存储单元存储线性表的数据元素（这组存储单元可以是连续的，也可以是不连续的）"><a href="#线性表的链式存储表示的特点是用一组任意的存储单元存储线性表的数据元素（这组存储单元可以是连续的，也可以是不连续的）" class="headerlink" title="线性表的链式存储表示的特点是用一组任意的存储单元存储线性表的数据元素（这组存储单元可以是连续的，也可以是不连续的）"></a><code>线性表的链式存储表示的特点是用一组任意的存储单元存储线性表的数据元素（这组存储单元可以是连续的，也可以是不连续的）</code></h3><h3 id="链表的结构"><a href="#链表的结构" class="headerlink" title="链表的结构"></a>链表的结构</h3><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span>&lt;<span class="hljs-title">Element</span>&gt;: <span class="hljs-title">CustomDebugStringConvertible</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-keyword">var</span> e: <span class="hljs-type">Element?</span>  <span class="hljs-comment">//数据域</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-keyword">var</span> node: <span class="hljs-type">Node</span>&lt;<span class="hljs-type">Element</span>&gt;? <span class="hljs-comment">//指针域</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">init</span>(e:<span class="hljs-type">Element?</span>,node:<span class="hljs-type">Node</span>&lt;<span class="hljs-type">Element</span>&gt;?) &#123;</span><br><span class="line">        <span class="hljs-keyword">self</span>.e = e</span><br><span class="line">        <span class="hljs-keyword">self</span>.node = node</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">convenience</span> <span class="hljs-keyword">init</span>(e:<span class="hljs-type">Element?</span>) &#123;</span><br><span class="line">        <span class="hljs-keyword">self</span>.<span class="hljs-keyword">init</span>(e: e,node: <span class="hljs-literal">nil</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">convenience</span> <span class="hljs-keyword">init</span>() &#123;</span><br><span class="line">        <span class="hljs-keyword">self</span>.<span class="hljs-keyword">init</span>(e: <span class="hljs-literal">nil</span>,node: <span class="hljs-literal">nil</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-keyword">var</span> debugDescription: <span class="hljs-type">String</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.e == <span class="hljs-literal">nil</span> ? <span class="hljs-string">"nil"</span> : <span class="hljs-type">String</span>(describing: <span class="hljs-keyword">self</span>.e!)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2017/09/16/数据结构之链表实现/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2017-09-14T02:28:44.000Z">2017-09-14</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/数据结构/">数据结构</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据结构/栈/">栈</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 474 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2017/09/14/数据结构之栈实现/">数据结构之栈实现</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><h3 id="定义：栈是限定仅在表头进行插入和删除操作的线性表"><a href="#定义：栈是限定仅在表头进行插入和删除操作的线性表" class="headerlink" title="定义：栈是限定仅在表头进行插入和删除操作的线性表"></a><code>定义：栈是限定仅在表头进行插入和删除操作的线性表</code></h3><h3 id="栈的功能协议接口"><a href="#栈的功能协议接口" class="headerlink" title="栈的功能协议接口"></a>栈的功能协议接口</h3><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">protocol</span> <span class="hljs-title">StackAble</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">associatedtype</span> <span class="hljs-type">E</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/// 查询栈的个数</span></span><br><span class="line">    <span class="hljs-comment">///</span></span><br><span class="line">    <span class="hljs-comment">/// - Returns: func</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getSize</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-type">Int</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/// 查询栈是否为空</span></span><br><span class="line">    <span class="hljs-comment">///</span></span><br><span class="line">    <span class="hljs-comment">/// - Returns: true false</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">isEmpty</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-type">Bool</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/// 入栈</span></span><br><span class="line">    <span class="hljs-comment">///</span></span><br><span class="line">    <span class="hljs-comment">/// - Parameter e: 入栈的数据</span></span><br><span class="line">    <span class="hljs-comment">/// - Returns: return value description</span></span><br><span class="line">    <span class="hljs-keyword">mutating</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">push</span><span class="hljs-params">(e:E)</span></span> <span class="hljs-keyword">throws</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/// 出栈</span></span><br><span class="line">    <span class="hljs-comment">///</span></span><br><span class="line">    <span class="hljs-comment">/// - Returns: 值</span></span><br><span class="line">    <span class="hljs-keyword">mutating</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">pop</span><span class="hljs-params">()</span></span> <span class="hljs-keyword">throws</span> -&gt; <span class="hljs-type">E?</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/// 查看栈顶的数据</span></span><br><span class="line">    <span class="hljs-comment">///</span></span><br><span class="line">    <span class="hljs-comment">/// - Returns: return value description</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">peek</span><span class="hljs-params">()</span></span> <span class="hljs-keyword">throws</span> -&gt; <span class="hljs-type">E?</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2017/09/14/数据结构之栈实现/#more">阅读更多</a>
+                <a class="button is-size-7 is-light" href="/2017/10/01/数据结构之集合实现/#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -761,7 +762,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        41
+                        45
                     </p>
                 </div>
             </div>
@@ -771,7 +772,7 @@
                         分类
                     </p>
                     <p class="title has-text-weight-normal">
-                        23
+                        25
                     </p>
                 </div>
             </div>
@@ -781,7 +782,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        29
+                        35
                     </p>
                 </div>
             </div>
@@ -852,7 +853,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Django/" style="font-size: 18.33px;">Django</a> <a href="/tags/MD5加密/" style="font-size: 10px;">MD5加密</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 11.67px;">Nginx</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/RSA加密/" style="font-size: 10px;">RSA加密</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swift/" style="font-size: 11.67px;">Swift</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/ftp/" style="font-size: 10px;">ftp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/iOS/" style="font-size: 15px;">iOS</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/vim/" style="font-size: 13.33px;">vim</a> <a href="/tags/zsh/" style="font-size: 13.33px;">zsh</a> <a href="/tags/二分搜索树/" style="font-size: 10px;">二分搜索树</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/数据结构/" style="font-size: 16.67px;">数据结构</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/服务器/" style="font-size: 13.33px;">服务器</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/版本控制/" style="font-size: 11.67px;">版本控制</a> <a href="/tags/第三方库/" style="font-size: 11.67px;">第三方库</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a> <a href="/tags/队列/" style="font-size: 10px;">队列</a>
+        <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Django/" style="font-size: 18px;">Django</a> <a href="/tags/LinkedMap/" style="font-size: 10px;">LinkedMap</a> <a href="/tags/MD5加密/" style="font-size: 10px;">MD5加密</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 12px;">Nginx</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/RSA加密/" style="font-size: 10px;">RSA加密</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swift/" style="font-size: 12px;">Swift</a> <a href="/tags/TreeMap/" style="font-size: 10px;">TreeMap</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/dict/" style="font-size: 12px;">dict</a> <a href="/tags/ftp/" style="font-size: 10px;">ftp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/iOS/" style="font-size: 16px;">iOS</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/zsh/" style="font-size: 14px;">zsh</a> <a href="/tags/二分搜索树/" style="font-size: 14px;">二分搜索树</a> <a href="/tags/字典/" style="font-size: 12px;">字典</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/数据结构/" style="font-size: 18px;">数据结构</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/映射/" style="font-size: 12px;">映射</a> <a href="/tags/服务器/" style="font-size: 14px;">服务器</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/版本控制/" style="font-size: 12px;">版本控制</a> <a href="/tags/第三方库/" style="font-size: 12px;">第三方库</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a> <a href="/tags/队列/" style="font-size: 10px;">队列</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
     </div>
 </div>
 
@@ -970,7 +971,7 @@
                 <span class="level-item">数据结构</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">6</span>
+                <span class="level-item tag">10</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/数据结构/二叉树/">
@@ -978,7 +979,15 @@
                 <span class="level-item">二叉树</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/字典Map/">
+            <span class="level-start">
+                <span class="level-item">字典Map</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/数据结构/数组/">
@@ -1008,6 +1017,14 @@
         <a class="level is-marginless" href="/categories/数据结构/队列/">
             <span class="level-start">
                 <span class="level-item">队列</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/集合/">
+            <span class="level-start">
+                <span class="level-item">集合</span>
             </span>
             <span class="level-end">
                 <span class="level-item tag">1</span>
@@ -1236,7 +1253,7 @@
                     <span class="level-item">十月 2017</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">5</span>
                 </span>
             </a>
         </li>
@@ -1346,6 +1363,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/LinkedMap/">
+                        <span class="tag">LinkedMap</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/MD5加密/">
                         <span class="tag">MD5加密</span>
                         <span class="tag is-grey">1</span>
@@ -1402,9 +1426,23 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/TreeMap/">
+                        <span class="tag">TreeMap</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/VSCode/">
                         <span class="tag">VSCode</span>
                         <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dict/">
+                        <span class="tag">dict</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1460,7 +1498,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/二分搜索树/">
                         <span class="tag">二分搜索树</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/字典/">
+                        <span class="tag">字典</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1474,7 +1519,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/数据结构/">
                         <span class="tag">数据结构</span>
-                        <span class="tag is-grey">6</span>
+                        <span class="tag is-grey">8</span>
                     </a>
                 </div>
                 
@@ -1482,6 +1527,13 @@
                     <a class="tags has-addons" href="/tags/数组/">
                         <span class="tag">数组</span>
                         <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/映射/">
+                        <span class="tag">映射</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1530,6 +1582,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/队列/">
                         <span class="tag">队列</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/集合/">
+                        <span class="tag">集合</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1660,7 +1719,7 @@
                 <span class="level-item">数据结构</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">6</span>
+                <span class="level-item tag">10</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/数据结构/二叉树/">
@@ -1668,7 +1727,15 @@
                 <span class="level-item">二叉树</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/字典Map/">
+            <span class="level-start">
+                <span class="level-item">字典Map</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/数据结构/数组/">
@@ -1698,6 +1765,14 @@
         <a class="level is-marginless" href="/categories/数据结构/队列/">
             <span class="level-start">
                 <span class="level-item">队列</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/集合/">
+            <span class="level-start">
+                <span class="level-item">集合</span>
             </span>
             <span class="level-end">
                 <span class="level-item tag">1</span>
@@ -1926,7 +2001,7 @@
                     <span class="level-item">十月 2017</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">5</span>
                 </span>
             </a>
         </li>
@@ -2036,6 +2111,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/LinkedMap/">
+                        <span class="tag">LinkedMap</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/MD5加密/">
                         <span class="tag">MD5加密</span>
                         <span class="tag is-grey">1</span>
@@ -2092,9 +2174,23 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/TreeMap/">
+                        <span class="tag">TreeMap</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/VSCode/">
                         <span class="tag">VSCode</span>
                         <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dict/">
+                        <span class="tag">dict</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -2150,7 +2246,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/二分搜索树/">
                         <span class="tag">二分搜索树</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/字典/">
+                        <span class="tag">字典</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -2164,7 +2267,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/数据结构/">
                         <span class="tag">数据结构</span>
-                        <span class="tag is-grey">6</span>
+                        <span class="tag is-grey">8</span>
                     </a>
                 </div>
                 
@@ -2172,6 +2275,13 @@
                     <a class="tags has-addons" href="/tags/数组/">
                         <span class="tag">数组</span>
                         <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/映射/">
+                        <span class="tag">映射</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -2220,6 +2330,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/队列/">
                         <span class="tag">队列</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/集合/">
+                        <span class="tag">集合</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
