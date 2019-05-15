@@ -1,0 +1,2216 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>数据结构之哈希表实现1+链表 - 随笔</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="基于两个线性结构构建哈希表数组+链表代码地址 实现带有键值对的链表123456789101112131415161718192021222324252627/// 链表的节点class Node&amp;lt;K,V&amp;gt;:CustomDebugStringConvertible &amp;#123;    var key:K?    var value:V?    var node:Node&amp;lt;K,V&amp;g">
+<meta name="keywords" content="数据结构,哈希表,散列表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构之哈希表实现1+链表">
+<meta property="og:url" content="http://yoursite.com/2019/05/12/数据结构之哈希表实现1-链表/index.html">
+<meta property="og:site_name" content="随笔">
+<meta property="og:description" content="基于两个线性结构构建哈希表数组+链表代码地址 实现带有键值对的链表123456789101112131415161718192021222324252627/// 链表的节点class Node&amp;lt;K,V&amp;gt;:CustomDebugStringConvertible &amp;#123;    var key:K?    var value:V?    var node:Node&amp;lt;K,V&amp;g">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="og:updated_time" content="2019-05-15T06:30:12.678Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构之哈希表实现1+链表">
+<meta name="twitter:description" content="基于两个线性结构构建哈希表数组+链表代码地址 实现带有键值对的链表123456789101112131415161718192021222324252627/// 链表的节点class Node&amp;lt;K,V&amp;gt;:CustomDebugStringConvertible &amp;#123;    var key:K?    var value:V?    var node:Node&amp;lt;K,V&amp;g">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/solarized-dark.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/myblog.png" alt="数据结构之哈希表实现1+链表" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">首页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+                <a class="navbar-item" href="/links">工具</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/GuoTZ">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-05-12T12:32:32.000Z">2019-05-12</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/数据结构/">数据结构</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据结构/哈希表/">哈希表</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    12 分钟 读完 (大约 1791 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                数据结构之哈希表实现1+链表
+            
+        </h1>
+        <div class="content">
+            <h3 id="基于两个线性结构构建哈希表"><a href="#基于两个线性结构构建哈希表" class="headerlink" title="基于两个线性结构构建哈希表"></a>基于两个线性结构构建哈希表</h3><p><code>数组+链表</code><a href="https://github.com/GuoTZ/HashTable_LinkedList" target="_blank" rel="noopener">代码地址</a></p>
+<h4 id="实现带有键值对的链表"><a href="#实现带有键值对的链表" class="headerlink" title="实现带有键值对的链表"></a>实现带有键值对的链表</h4><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/// 链表的节点</span></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt;:<span class="hljs-title">CustomDebugStringConvertible</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">var</span> key:<span class="hljs-type">K?</span></span><br><span class="line">    <span class="hljs-keyword">var</span> value:<span class="hljs-type">V?</span></span><br><span class="line">    <span class="hljs-keyword">var</span> node:<span class="hljs-type">Node</span>&lt;<span class="hljs-type">K</span>,<span class="hljs-type">V</span>&gt;?</span><br><span class="line">    <span class="hljs-keyword">init</span>(key:<span class="hljs-type">K?</span>,value:<span class="hljs-type">V?</span>, node:<span class="hljs-type">Node</span>&lt;<span class="hljs-type">K</span>,<span class="hljs-type">V</span>&gt;?) &#123;</span><br><span class="line">        <span class="hljs-keyword">self</span>.key = key</span><br><span class="line">        <span class="hljs-keyword">self</span>.value = value</span><br><span class="line">        <span class="hljs-keyword">self</span>.node = node</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">init</span>() &#123;</span><br><span class="line">        <span class="hljs-keyword">self</span>.key = <span class="hljs-literal">nil</span></span><br><span class="line">        <span class="hljs-keyword">self</span>.value = <span class="hljs-literal">nil</span></span><br><span class="line">        <span class="hljs-keyword">self</span>.node = <span class="hljs-literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">var</span> debugDescription: <span class="hljs-type">String</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">var</span> keyStr = <span class="hljs-string">"nil"</span></span><br><span class="line">        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> key = <span class="hljs-keyword">self</span>.key &#123;</span><br><span class="line">            keyStr = <span class="hljs-string">"\"\(key)\""</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">var</span> vStr = <span class="hljs-string">"nil"</span></span><br><span class="line">        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> v = <span class="hljs-keyword">self</span>.value &#123;</span><br><span class="line">            vStr = <span class="hljs-string">"\"\(v)\""</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> keyStr+<span class="hljs-string">":"</span>+vStr</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/// 每个节点存放key，value的链表</span></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LinkedList</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt;:<span class="hljs-title">CustomDebugStringConvertible</span> <span class="hljs-title">where</span> <span class="hljs-title">K</span>:<span class="hljs-title">Equatable</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> dummyHead:<span class="hljs-type">Node</span>&lt;<span class="hljs-type">K</span>,<span class="hljs-type">V</span>&gt;</span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> size:<span class="hljs-type">Int</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">init</span>()&#123;</span><br><span class="line">        <span class="hljs-keyword">self</span>.dummyHead = <span class="hljs-type">Node</span>&lt;<span class="hljs-type">K</span>,<span class="hljs-type">V</span>&gt;()</span><br><span class="line">        <span class="hljs-keyword">self</span>.size = <span class="hljs-number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">// 获取链表中的元素个数</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getSize</span><span class="hljs-params">()</span></span>-&gt;<span class="hljs-type">Int</span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> size</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">// 返回链表是否为空</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">isEmpty</span><span class="hljs-params">()</span></span>-&gt;<span class="hljs-type">Bool</span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> size == <span class="hljs-number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/// 查找key对应的节点</span></span><br><span class="line">    <span class="hljs-comment">///</span></span><br><span class="line">    <span class="hljs-comment">/// - Parameter key: key description</span></span><br><span class="line">    <span class="hljs-comment">/// - Returns: return value description</span></span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getNode</span><span class="hljs-params">(key:K)</span></span> -&gt; <span class="hljs-type">Node</span>&lt;<span class="hljs-type">K</span>, <span class="hljs-type">V</span>&gt;? &#123;</span><br><span class="line">        <span class="hljs-keyword">var</span> cur:<span class="hljs-type">Node</span>&lt;<span class="hljs-type">K</span>,<span class="hljs-type">V</span>&gt;? = <span class="hljs-keyword">self</span>.dummyHead.node</span><br><span class="line">        <span class="hljs-keyword">while</span> cur != <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> curKey = cur?.key &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span> curKey == key &#123;</span><br><span class="line">                    <span class="hljs-keyword">return</span> cur</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            cur = cur?.node</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/// 添加键值对</span></span><br><span class="line">    <span class="hljs-comment">///</span></span><br><span class="line">    <span class="hljs-comment">/// - Parameters:</span></span><br><span class="line">    <span class="hljs-comment">///   - key: key description</span></span><br><span class="line">    <span class="hljs-comment">///   - value: value description</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">add</span><span class="hljs-params">(key:K,value:V)</span></span> &#123;</span><br><span class="line">        <span class="hljs-keyword">let</span> node = getNode(key: key)</span><br><span class="line">        <span class="hljs-keyword">if</span> node == <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">            <span class="hljs-keyword">self</span>.dummyHead.node = <span class="hljs-type">Node</span>&lt;<span class="hljs-type">K</span>,<span class="hljs-type">V</span>&gt;.<span class="hljs-keyword">init</span>(key: key, value: value, node: <span class="hljs-keyword">self</span>.dummyHead.node)</span><br><span class="line">            <span class="hljs-keyword">self</span>.size += <span class="hljs-number">1</span></span><br><span class="line">        &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">            node?.value = value</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/// 查询key是否存在</span></span><br><span class="line">    <span class="hljs-comment">///</span></span><br><span class="line">    <span class="hljs-comment">/// - Parameter key: key description</span></span><br><span class="line">    <span class="hljs-comment">/// - Returns: return value description</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">contains</span><span class="hljs-params">(key:K)</span></span> -&gt; <span class="hljs-type">Bool</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> (<span class="hljs-keyword">self</span>.getNode(key: key) != <span class="hljs-literal">nil</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/// 查询key对应的value</span></span><br><span class="line">    <span class="hljs-comment">///</span></span><br><span class="line">    <span class="hljs-comment">/// - Parameter key: key description</span></span><br><span class="line">    <span class="hljs-comment">/// - Returns: return value description</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">get</span><span class="hljs-params">(key:K)</span></span> -&gt; <span class="hljs-type">V?</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.getNode(key: key)?.value</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/// 获取所有的key</span></span><br><span class="line">    <span class="hljs-comment">///</span></span><br><span class="line">    <span class="hljs-comment">/// - Returns: return value description</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">allKeys</span><span class="hljs-params">()</span></span> -&gt; [<span class="hljs-type">K</span>]? &#123;</span><br><span class="line">        <span class="hljs-keyword">var</span> list:<span class="hljs-type">Array</span>&lt;<span class="hljs-type">K</span>&gt; = []</span><br><span class="line">        <span class="hljs-keyword">var</span> prev:<span class="hljs-type">Node</span>&lt;<span class="hljs-type">K</span>,<span class="hljs-type">V</span>&gt;? = <span class="hljs-keyword">self</span>.dummyHead;</span><br><span class="line">        <span class="hljs-keyword">while</span>(prev?.node != <span class="hljs-literal">nil</span>)&#123;</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> nodeKey = prev?.node?.key &#123;</span><br><span class="line">                list.append(nodeKey)</span><br><span class="line">            &#125;</span><br><span class="line">            prev = prev?.node</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> list</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-comment">/// 设置简直对吗</span></span><br><span class="line">    <span class="hljs-comment">///</span></span><br><span class="line">    <span class="hljs-comment">/// - Parameters:</span></span><br><span class="line">    <span class="hljs-comment">///   - key: key description</span></span><br><span class="line">    <span class="hljs-comment">///   - value: value description</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">set</span><span class="hljs-params">(key:K,value:V)</span></span>&#123;</span><br><span class="line">        <span class="hljs-keyword">let</span> node = <span class="hljs-keyword">self</span>.getNode(key: key)</span><br><span class="line">        <span class="hljs-keyword">if</span> node==<span class="hljs-literal">nil</span> &#123;</span><br><span class="line">            <span class="hljs-keyword">return</span> </span><br><span class="line">        &#125;</span><br><span class="line">        node?.value = value</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/// 移除key对应的节点</span></span><br><span class="line">    <span class="hljs-comment">///</span></span><br><span class="line">    <span class="hljs-comment">/// - Parameter key: key description</span></span><br><span class="line">    <span class="hljs-comment">/// - Returns: return value description</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">remove</span><span class="hljs-params">(key:K)</span></span> -&gt; <span class="hljs-type">V?</span> &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">var</span> prev:<span class="hljs-type">Node</span>&lt;<span class="hljs-type">K</span>,<span class="hljs-type">V</span>&gt;? = <span class="hljs-keyword">self</span>.dummyHead;</span><br><span class="line">        <span class="hljs-keyword">while</span>(prev?.node != <span class="hljs-literal">nil</span>)&#123;</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> nodeKey = prev?.node?.key &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span> (nodeKey == key) &#123;</span><br><span class="line">                    <span class="hljs-keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            prev = prev?.node</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">if</span>(prev?.node != <span class="hljs-literal">nil</span>)&#123;</span><br><span class="line">            <span class="hljs-keyword">let</span> delNode = prev?.node</span><br><span class="line">            prev?.node = delNode?.node</span><br><span class="line">            delNode?.node = <span class="hljs-literal">nil</span></span><br><span class="line">            size -= <span class="hljs-number">1</span></span><br><span class="line">            <span class="hljs-keyword">return</span> delNode?.value</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">var</span> debugDescription: <span class="hljs-type">String</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">var</span> str = <span class="hljs-string">"&#123;"</span></span><br><span class="line">        <span class="hljs-keyword">var</span> node:<span class="hljs-type">Node</span>&lt;<span class="hljs-type">K</span>,<span class="hljs-type">V</span>&gt;? = <span class="hljs-keyword">self</span>.dummyHead</span><br><span class="line">        <span class="hljs-keyword">for</span> <span class="hljs-number">_</span> <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..&lt;<span class="hljs-keyword">self</span>.getSize() &#123;</span><br><span class="line">            node = node?.node</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> nodeNoNull = node &#123;</span><br><span class="line">                str.append(<span class="hljs-string">"\(String(describing: nodeNoNull))"</span> + <span class="hljs-string">","</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> str+<span class="hljs-string">"&#125;"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="实现哈希表"><a href="#实现哈希表" class="headerlink" title="实现哈希表"></a>实现哈希表</h4><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-comment">/// 哈希表 k必须x实现 Hashable协议</span></span><br><span class="line"><span class="hljs-comment">/// 实现Hashable的哈希值hashValue</span></span><br><span class="line"><span class="hljs-comment">/// Equatable 实现 == isEqual</span></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HashTable</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt;:<span class="hljs-title">CustomDebugStringConvertible</span> <span class="hljs-title">where</span> <span class="hljs-title">K</span> :<span class="hljs-title">Hashable</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">let</span> capacitys = [<span class="hljs-number">53</span>,<span class="hljs-number">97</span>,<span class="hljs-number">193</span>,<span class="hljs-number">389</span>,<span class="hljs-number">769</span>,<span class="hljs-number">1543</span>,<span class="hljs-number">3079</span>,<span class="hljs-number">6151</span>,<span class="hljs-number">12289</span>,<span class="hljs-number">24593</span>,<span class="hljs-number">49157</span>,<span class="hljs-number">98317</span>,<span class="hljs-number">196613</span>,<span class="hljs-number">393241</span>,<span class="hljs-number">786433</span>,<span class="hljs-number">1572869</span>,<span class="hljs-number">3145739</span>,</span><br><span class="line">                             <span class="hljs-number">6291469</span>,<span class="hljs-number">12582917</span>,<span class="hljs-number">25165843</span>,<span class="hljs-number">50331653</span>,<span class="hljs-number">100663319</span>,<span class="hljs-number">201326611</span>,<span class="hljs-number">402653189</span>,<span class="hljs-number">805306457</span>,<span class="hljs-number">1610612741</span>,]</span><br><span class="line">    <span class="hljs-comment">/// 平均每个索引哈希冲突的上限值</span></span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">let</span> upperTol = <span class="hljs-number">10</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/// 平均每个索引哈希冲突的下限值</span></span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">let</span> lowerTol = <span class="hljs-number">2</span></span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">let</span> initCapacity = <span class="hljs-number">7</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> lienkedTables: <span class="hljs-type">Array</span>&lt;<span class="hljs-type">LinkedList</span>&lt;<span class="hljs-type">K</span>,<span class="hljs-type">V</span>&gt;&gt;</span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> size:<span class="hljs-type">Int</span></span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> <span class="hljs-type">M</span>:<span class="hljs-type">Int</span></span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> capacityIndex:<span class="hljs-type">Int</span> = <span class="hljs-number">0</span></span><br><span class="line">    <span class="hljs-keyword">init</span>() &#123;</span><br><span class="line">        <span class="hljs-keyword">self</span>.<span class="hljs-type">M</span> = capacitys[<span class="hljs-keyword">self</span>.capacityIndex]</span><br><span class="line">        <span class="hljs-keyword">self</span>.size = <span class="hljs-number">0</span></span><br><span class="line">        <span class="hljs-keyword">self</span>.lienkedTables = <span class="hljs-type">Array</span>&lt;<span class="hljs-type">LinkedList</span>&lt;<span class="hljs-type">K</span>,<span class="hljs-type">V</span>&gt;&gt;()</span><br><span class="line">        <span class="hljs-keyword">for</span> <span class="hljs-number">_</span> <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..&lt;<span class="hljs-type">M</span> &#123;</span><br><span class="line">            <span class="hljs-keyword">self</span>.lienkedTables.append(<span class="hljs-type">LinkedList</span>&lt;<span class="hljs-type">K</span>,<span class="hljs-type">V</span>&gt;())</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getSize</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-type">Int</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.size</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-comment">/// 哈希函数</span></span><br><span class="line">    <span class="hljs-comment">///</span></span><br><span class="line">    <span class="hljs-comment">/// - Parameter key: key description</span></span><br><span class="line">    <span class="hljs-comment">/// - Returns: return value description</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">hash</span><span class="hljs-params">(key:K)</span></span> -&gt; <span class="hljs-type">Int</span> &#123;</span><br><span class="line">        <span class="hljs-comment">// 对key的哈希值转成正数 再取模</span></span><br><span class="line">        <span class="hljs-keyword">return</span> (key.hashValue &amp; <span class="hljs-number">0x7fffffff</span>) % <span class="hljs-type">M</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">add</span><span class="hljs-params">(key:K,value:V)</span></span> &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-comment">/// 再哈希表里面获取对key哈希处理后的链表</span></span><br><span class="line">        <span class="hljs-keyword">let</span> linked = <span class="hljs-keyword">self</span>.lienkedTables[hash(key: key)]</span><br><span class="line">        <span class="hljs-keyword">if</span> linked.<span class="hljs-built_in">contains</span>(key: key) &#123;</span><br><span class="line">            <span class="hljs-comment">//如果链表中存在key对应的节点</span></span><br><span class="line">            linked.<span class="hljs-keyword">set</span>(key: key, value: value)</span><br><span class="line">        &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">            linked.add(key: key, value: value)</span><br><span class="line">            size += <span class="hljs-number">1</span>;</span><br><span class="line">            </span><br><span class="line">            <span class="hljs-comment">/// 用静态数组实现时进行扩容</span></span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-keyword">self</span>.size &gt;= <span class="hljs-keyword">self</span>.upperTol*<span class="hljs-type">M</span> &amp;&amp; capacityIndex + <span class="hljs-number">1</span> &lt; capacitys.<span class="hljs-built_in">count</span> &#123;</span><br><span class="line">                capacityIndex += <span class="hljs-number">1</span></span><br><span class="line">                <span class="hljs-keyword">self</span>.resize(newM: <span class="hljs-keyword">self</span>.capacitys[<span class="hljs-keyword">self</span>.capacityIndex])</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">set</span><span class="hljs-params">(key:K,value:V)</span></span> &#123;</span><br><span class="line">        <span class="hljs-comment">/// 再哈希表里面获取对key哈希处理后的链表</span></span><br><span class="line">        <span class="hljs-keyword">let</span> linked = <span class="hljs-keyword">self</span>.lienkedTables[hash(key: key)]</span><br><span class="line">        <span class="hljs-keyword">if</span> linked.<span class="hljs-built_in">contains</span>(key: key) &#123;</span><br><span class="line">            linked.<span class="hljs-keyword">set</span>(key: key, value: value)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/// 判断哈希表中是否存在key</span></span><br><span class="line">    <span class="hljs-comment">///</span></span><br><span class="line">    <span class="hljs-comment">/// - Parameter key: key description</span></span><br><span class="line">    <span class="hljs-comment">/// - Returns: return value description</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">contains</span><span class="hljs-params">(key:K)</span></span> -&gt; <span class="hljs-type">Bool</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.lienkedTables[<span class="hljs-keyword">self</span>.hash(key: key)].<span class="hljs-built_in">contains</span>(key: key)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/// 获取某个key对应的value</span></span><br><span class="line">    <span class="hljs-comment">///</span></span><br><span class="line">    <span class="hljs-comment">/// - Parameter key: key description</span></span><br><span class="line">    <span class="hljs-comment">/// - Returns: return value description</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">get</span><span class="hljs-params">(key:K)</span></span> -&gt; <span class="hljs-type">V?</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.lienkedTables[<span class="hljs-keyword">self</span>.hash(key: key)].<span class="hljs-keyword">get</span>(key: key)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/// 删除某个键值对</span></span><br><span class="line">    <span class="hljs-comment">///</span></span><br><span class="line">    <span class="hljs-comment">/// - Parameter key: key description</span></span><br><span class="line">    <span class="hljs-comment">/// - Returns: return value description</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">remove</span><span class="hljs-params">(key:K)</span></span> -&gt; <span class="hljs-type">V?</span> &#123;</span><br><span class="line">        <span class="hljs-comment">/// 再哈希表里面获取对key哈希处理后的链表</span></span><br><span class="line">        <span class="hljs-keyword">let</span> linked = <span class="hljs-keyword">self</span>.lienkedTables[hash(key: key)]</span><br><span class="line">        <span class="hljs-keyword">var</span> data:<span class="hljs-type">V?</span></span><br><span class="line">        <span class="hljs-keyword">if</span> linked.<span class="hljs-built_in">contains</span>(key: key) &#123;</span><br><span class="line">            data =  linked.remove(key: key)</span><br><span class="line">            <span class="hljs-keyword">self</span>.size -= <span class="hljs-number">1</span></span><br><span class="line">            </span><br><span class="line">            <span class="hljs-comment">/// 用静态数组实现时进行缩容</span></span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-keyword">self</span>.size &lt; <span class="hljs-keyword">self</span>.lowerTol*<span class="hljs-type">M</span> &amp;&amp; capacityIndex - <span class="hljs-number">1</span> &gt; <span class="hljs-number">0</span> &#123;</span><br><span class="line">                capacityIndex -= <span class="hljs-number">1</span></span><br><span class="line">                <span class="hljs-keyword">self</span>.resize(newM: <span class="hljs-keyword">self</span>.capacitys[<span class="hljs-keyword">self</span>.capacityIndex])</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> data</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">var</span> debugDescription: <span class="hljs-type">String</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">var</span> str = <span class="hljs-string">"["</span></span><br><span class="line">        <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> <span class="hljs-keyword">self</span>.lienkedTables &#123;</span><br><span class="line">            str.append(item.debugDescription+<span class="hljs-string">",\n"</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> str + <span class="hljs-string">"]"</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">resize</span><span class="hljs-params">(newM:Int)</span></span> &#123;</span><br><span class="line">        <span class="hljs-built_in">print</span>(<span class="hljs-string">"开始扩展容量----\(newM)"</span>)</span><br><span class="line">        <span class="hljs-keyword">var</span> newLienkedTables=<span class="hljs-type">Array</span>&lt;<span class="hljs-type">LinkedList</span>&lt;<span class="hljs-type">K</span>,<span class="hljs-type">V</span>&gt;&gt;()</span><br><span class="line">        <span class="hljs-keyword">for</span> <span class="hljs-number">_</span> <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..&lt;newM &#123;</span><br><span class="line">            newLienkedTables.append(<span class="hljs-type">LinkedList</span>&lt;<span class="hljs-type">K</span>,<span class="hljs-type">V</span>&gt;())</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">let</span> oleM = <span class="hljs-keyword">self</span>.<span class="hljs-type">M</span></span><br><span class="line">        <span class="hljs-keyword">self</span>.<span class="hljs-type">M</span> = newM</span><br><span class="line">        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..&lt;oleM &#123;</span><br><span class="line">            <span class="hljs-keyword">let</span> <span class="hljs-built_in">map</span> = <span class="hljs-keyword">self</span>.lienkedTables[i]</span><br><span class="line">            <span class="hljs-keyword">for</span> key <span class="hljs-keyword">in</span> <span class="hljs-built_in">map</span>.allKeys() ?? [] &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> v = <span class="hljs-built_in">map</span>.<span class="hljs-keyword">get</span>(key: key)  &#123;</span><br><span class="line">                    </span><br><span class="line">                    newLienkedTables[hash(key: key)].add(key: key, value: v)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">self</span>.lienkedTables = newLienkedTables</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="哈希表的使用"><a href="#哈希表的使用" class="headerlink" title="哈希表的使用"></a>哈希表的使用</h4><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Dog</span>: <span class="hljs-title">Hashable</span>,<span class="hljs-title">CustomDebugStringConvertible</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">var</span> name = <span class="hljs-string">""</span></span><br><span class="line">    <span class="hljs-keyword">var</span> age = <span class="hljs-number">0</span></span><br><span class="line">    <span class="hljs-keyword">init</span>(name:<span class="hljs-type">String</span>,age:<span class="hljs-type">Int</span>) &#123;</span><br><span class="line">        <span class="hljs-keyword">self</span>.name = name</span><br><span class="line">        <span class="hljs-keyword">self</span>.age = age</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">static</span> <span class="hljs-function"><span class="hljs-keyword">func</span> == <span class="hljs-params">(lhs: Dog, rhs: Dog)</span></span> -&gt; <span class="hljs-type">Bool</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> (lhs.age - rhs.age) &gt;= <span class="hljs-number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">var</span> hashValue: <span class="hljs-type">Int</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.name.hashValue ^ <span class="hljs-keyword">self</span>.age.hashValue</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">hash</span><span class="hljs-params">(into hasher: <span class="hljs-keyword">inout</span> Hasher)</span></span> &#123;</span><br><span class="line">        <span class="hljs-built_in">print</span>(hasher)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">var</span> debugDescription: <span class="hljs-type">String</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">"狗名是"</span>+<span class="hljs-keyword">self</span>.name+<span class="hljs-string">"年龄是\(self.age)"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">var</span> ht = <span class="hljs-type">HashTable</span>&lt;<span class="hljs-type">Dog</span>,<span class="hljs-type">Int</span>&gt;()</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>...<span class="hljs-number">100</span> &#123;</span><br><span class="line">    <span class="hljs-keyword">let</span> dog = <span class="hljs-type">Dog</span>(name: <span class="hljs-string">"张\(i)"</span>, age: i)</span><br><span class="line">    ht.add(key: dog, value: i)</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-built_in">print</span>(ht)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>...<span class="hljs-number">1000000</span> &#123;</span><br><span class="line">    <span class="hljs-keyword">let</span> dog = <span class="hljs-type">Dog</span>(name: <span class="hljs-string">"TString\(i)"</span>, age: i)</span><br><span class="line">    ht.add(key: dog, value: i)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">print</span>(<span class="hljs-string">"当前哈希表的大小\(ht.getSize())"</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="三方用例打印的结果"><a href="#三方用例打印的结果" class="headerlink" title="三方用例打印的结果"></a>三方用例打印的结果</h4><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张86年龄是86"</span>:<span class="hljs-string">"86"</span>,<span class="hljs-string">"狗名是张31年龄是31"</span>:<span class="hljs-string">"31"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张88年龄是88"</span>:<span class="hljs-string">"88"</span>,<span class="hljs-string">"狗名是张36年龄是36"</span>:<span class="hljs-string">"36"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张58年龄是58"</span>:<span class="hljs-string">"58"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张54年龄是54"</span>:<span class="hljs-string">"54"</span>,<span class="hljs-string">"狗名是张51年龄是51"</span>:<span class="hljs-string">"51"</span>,<span class="hljs-string">"狗名是张48年龄是48"</span>:<span class="hljs-string">"48"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张94年龄是94"</span>:<span class="hljs-string">"94"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张34年龄是34"</span>:<span class="hljs-string">"34"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张45年龄是45"</span>:<span class="hljs-string">"45"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张3年龄是3"</span>:<span class="hljs-string">"3"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张74年龄是74"</span>:<span class="hljs-string">"74"</span>,<span class="hljs-string">"狗名是张62年龄是62"</span>:<span class="hljs-string">"62"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张38年龄是38"</span>:<span class="hljs-string">"38"</span>,<span class="hljs-string">"狗名是张16年龄是16"</span>:<span class="hljs-string">"16"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张0年龄是0"</span>:<span class="hljs-string">"0"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张70年龄是70"</span>:<span class="hljs-string">"70"</span>,<span class="hljs-string">"狗名是张68年龄是68"</span>:<span class="hljs-string">"68"</span>,<span class="hljs-string">"狗名是张5年龄是5"</span>:<span class="hljs-string">"5"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张18年龄是18"</span>:<span class="hljs-string">"18"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张92年龄是92"</span>:<span class="hljs-string">"92"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张52年龄是52"</span>:<span class="hljs-string">"52"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张99年龄是99"</span>:<span class="hljs-string">"99"</span>,<span class="hljs-string">"狗名是张91年龄是91"</span>:<span class="hljs-string">"91"</span>,<span class="hljs-string">"狗名是张60年龄是60"</span>:<span class="hljs-string">"60"</span>,<span class="hljs-string">"狗名是张22年龄是22"</span>:<span class="hljs-string">"22"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张93年龄是93"</span>:<span class="hljs-string">"93"</span>,<span class="hljs-string">"狗名是张82年龄是82"</span>:<span class="hljs-string">"82"</span>,<span class="hljs-string">"狗名是张42年龄是42"</span>:<span class="hljs-string">"42"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张50年龄是50"</span>:<span class="hljs-string">"50"</span>,<span class="hljs-string">"狗名是张19年龄是19"</span>:<span class="hljs-string">"19"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张89年龄是89"</span>:<span class="hljs-string">"89"</span>,<span class="hljs-string">"狗名是张72年龄是72"</span>:<span class="hljs-string">"72"</span>,<span class="hljs-string">"狗名是张59年龄是59"</span>:<span class="hljs-string">"59"</span>,<span class="hljs-string">"狗名是张39年龄是39"</span>:<span class="hljs-string">"39"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张84年龄是84"</span>:<span class="hljs-string">"84"</span>,<span class="hljs-string">"狗名是张71年龄是71"</span>:<span class="hljs-string">"71"</span>,<span class="hljs-string">"狗名是张44年龄是44"</span>:<span class="hljs-string">"44"</span>,<span class="hljs-string">"狗名是张2年龄是2"</span>:<span class="hljs-string">"2"</span>,&#125;,</span><br><span class="line">    &#123;&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张75年龄是75"</span>:<span class="hljs-string">"75"</span>,<span class="hljs-string">"狗名是张47年龄是47"</span>:<span class="hljs-string">"47"</span>,<span class="hljs-string">"狗名是张43年龄是43"</span>:<span class="hljs-string">"43"</span>,<span class="hljs-string">"狗名是张17年龄是17"</span>:<span class="hljs-string">"17"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张64年龄是64"</span>:<span class="hljs-string">"64"</span>,<span class="hljs-string">"狗名是张32年龄是32"</span>:<span class="hljs-string">"32"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张100年龄是100"</span>:<span class="hljs-string">"100"</span>,<span class="hljs-string">"狗名是张41年龄是41"</span>:<span class="hljs-string">"41"</span>,<span class="hljs-string">"狗名是张10年龄是10"</span>:<span class="hljs-string">"10"</span>,<span class="hljs-string">"狗名是张8年龄是8"</span>:<span class="hljs-string">"8"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张69年龄是69"</span>:<span class="hljs-string">"69"</span>,<span class="hljs-string">"狗名是张49年龄是49"</span>:<span class="hljs-string">"49"</span>,<span class="hljs-string">"狗名是张28年龄是28"</span>:<span class="hljs-string">"28"</span>,<span class="hljs-string">"狗名是张25年龄是25"</span>:<span class="hljs-string">"25"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张96年龄是96"</span>:<span class="hljs-string">"96"</span>,<span class="hljs-string">"狗名是张78年龄是78"</span>:<span class="hljs-string">"78"</span>,<span class="hljs-string">"狗名是张13年龄是13"</span>:<span class="hljs-string">"13"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张85年龄是85"</span>:<span class="hljs-string">"85"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张95年龄是95"</span>:<span class="hljs-string">"95"</span>,<span class="hljs-string">"狗名是张67年龄是67"</span>:<span class="hljs-string">"67"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张83年龄是83"</span>:<span class="hljs-string">"83"</span>,<span class="hljs-string">"狗名是张53年龄是53"</span>:<span class="hljs-string">"53"</span>,<span class="hljs-string">"狗名是张4年龄是4"</span>:<span class="hljs-string">"4"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张24年龄是24"</span>:<span class="hljs-string">"24"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张79年龄是79"</span>:<span class="hljs-string">"79"</span>,<span class="hljs-string">"狗名是张66年龄是66"</span>:<span class="hljs-string">"66"</span>,<span class="hljs-string">"狗名是张46年龄是46"</span>:<span class="hljs-string">"46"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张33年龄是33"</span>:<span class="hljs-string">"33"</span>,<span class="hljs-string">"狗名是张20年龄是20"</span>:<span class="hljs-string">"20"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张26年龄是26"</span>:<span class="hljs-string">"26"</span>,&#125;,</span><br><span class="line">    &#123;&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张81年龄是81"</span>:<span class="hljs-string">"81"</span>,<span class="hljs-string">"狗名是张30年龄是30"</span>:<span class="hljs-string">"30"</span>,&#125;,</span><br><span class="line">    &#123;&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张76年龄是76"</span>:<span class="hljs-string">"76"</span>,&#125;,</span><br><span class="line">    &#123;&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张7年龄是7"</span>:<span class="hljs-string">"7"</span>,<span class="hljs-string">"狗名是张6年龄是6"</span>:<span class="hljs-string">"6"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张65年龄是65"</span>:<span class="hljs-string">"65"</span>,<span class="hljs-string">"狗名是张40年龄是40"</span>:<span class="hljs-string">"40"</span>,<span class="hljs-string">"狗名是张29年龄是29"</span>:<span class="hljs-string">"29"</span>,<span class="hljs-string">"狗名是张14年龄是14"</span>:<span class="hljs-string">"14"</span>,<span class="hljs-string">"狗名是张12年龄是12"</span>:<span class="hljs-string">"12"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张90年龄是90"</span>:<span class="hljs-string">"90"</span>,<span class="hljs-string">"狗名是张77年龄是77"</span>:<span class="hljs-string">"77"</span>,<span class="hljs-string">"狗名是张37年龄是37"</span>:<span class="hljs-string">"37"</span>,<span class="hljs-string">"狗名是张15年龄是15"</span>:<span class="hljs-string">"15"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张80年龄是80"</span>:<span class="hljs-string">"80"</span>,<span class="hljs-string">"狗名是张63年龄是63"</span>:<span class="hljs-string">"63"</span>,<span class="hljs-string">"狗名是张57年龄是57"</span>:<span class="hljs-string">"57"</span>,<span class="hljs-string">"狗名是张27年龄是27"</span>:<span class="hljs-string">"27"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张56年龄是56"</span>:<span class="hljs-string">"56"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张73年龄是73"</span>:<span class="hljs-string">"73"</span>,&#125;,</span><br><span class="line">    &#123;&#125;,</span><br><span class="line">    &#123;&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张55年龄是55"</span>:<span class="hljs-string">"55"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张98年龄是98"</span>:<span class="hljs-string">"98"</span>,<span class="hljs-string">"狗名是张87年龄是87"</span>:<span class="hljs-string">"87"</span>,<span class="hljs-string">"狗名是张11年龄是11"</span>:<span class="hljs-string">"11"</span>,<span class="hljs-string">"狗名是张1年龄是1"</span>:<span class="hljs-string">"1"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张21年龄是21"</span>:<span class="hljs-string">"21"</span>,<span class="hljs-string">"狗名是张9年龄是9"</span>:<span class="hljs-string">"9"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张23年龄是23"</span>:<span class="hljs-string">"23"</span>,&#125;,</span><br><span class="line">    &#123;&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张97年龄是97"</span>:<span class="hljs-string">"97"</span>,&#125;,</span><br><span class="line">    &#123;<span class="hljs-string">"狗名是张61年龄是61"</span>:<span class="hljs-string">"61"</span>,<span class="hljs-string">"狗名是张35年龄是35"</span>:<span class="hljs-string">"35"</span>,&#125;,</span><br><span class="line">]</span><br><span class="line">开始扩展容量----<span class="hljs-number">97</span></span><br><span class="line">开始扩展容量----<span class="hljs-number">193</span></span><br><span class="line">开始扩展容量----<span class="hljs-number">389</span></span><br><span class="line">开始扩展容量----<span class="hljs-number">769</span></span><br><span class="line">开始扩展容量----<span class="hljs-number">1543</span></span><br><span class="line">开始扩展容量----<span class="hljs-number">3079</span></span><br><span class="line">开始扩展容量----<span class="hljs-number">6151</span></span><br><span class="line">开始扩展容量----<span class="hljs-number">12289</span></span><br><span class="line">开始扩展容量----<span class="hljs-number">24593</span></span><br><span class="line">开始扩展容量----<span class="hljs-number">49157</span></span><br><span class="line">开始扩展容量----<span class="hljs-number">98317</span></span><br><span class="line">开始扩展容量----<span class="hljs-number">196613</span></span><br><span class="line"><span class="hljs-type">Program</span> ended with exit code: <span class="hljs-number">0</span></span><br></pre></td></tr></table></figure>
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/哈希表/">哈希表</a>, <a class="has-link-grey -link" href="/tags/散列表/">散列表</a>, <a class="has-link-grey -link" href="/tags/数据结构/">数据结构</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/05/14/iOS实现markdown预览/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">iOS实现markdown预览</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/05/11/数据结构之哈希表/">
+                <span class="level-item">数据结构之哈希表</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: 'ae39d0d8687422507629',
+        clientSecret: '1e0130c4c41a8448cc87988aa0f53cd96433add1',
+        id: 'dacbd38da253d69a1f4302046440d31f',
+        repo: 'guotz.github.io',
+        owner: 'GuoTZ',
+        admin: "GuoTZ"
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left is-sticky">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="GuoTZ">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        GuoTZ
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        一个Github的搬运工
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>陕西西安</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        50
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        28
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        40
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="http://www.gtzh.work/read" target="_blank">
+                写文章</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/GuoTZ">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#基于两个线性结构构建哈希表">
+        <span class="has-mr-6">1</span>
+        <span>基于两个线性结构构建哈希表</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#实现带有键值对的链表">
+        <span class="has-mr-6">1.1</span>
+        <span>实现带有键值对的链表</span>
+        </a></li><li>
+        <a class="is-flex" href="#实现哈希表">
+        <span class="has-mr-6">1.2</span>
+        <span>实现哈希表</span>
+        </a></li><li>
+        <a class="is-flex" href="#哈希表的使用">
+        <span class="has-mr-6">1.3</span>
+        <span>哈希表的使用</span>
+        </a></li><li>
+        <a class="is-flex" href="#三方用例打印的结果">
+        <span class="has-mr-6">1.4</span>
+        <span>三方用例打印的结果</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://www.jianshu.com/u/c7f424f6b259" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">简书地址</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.jianshu.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://github.com/GuoTZ" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Github</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">github.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Django/" style="font-size: 16.67px;">Django</a> <a href="/tags/LinkedMap/" style="font-size: 10px;">LinkedMap</a> <a href="/tags/MD5加密/" style="font-size: 10px;">MD5加密</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 11.67px;">Nginx</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/RSA加密/" style="font-size: 10px;">RSA加密</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Swift/" style="font-size: 11.67px;">Swift</a> <a href="/tags/TreeMap/" style="font-size: 10px;">TreeMap</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/dict/" style="font-size: 11.67px;">dict</a> <a href="/tags/ftp/" style="font-size: 10px;">ftp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/iOS/" style="font-size: 15px;">iOS</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/vim/" style="font-size: 13.33px;">vim</a> <a href="/tags/zsh/" style="font-size: 13.33px;">zsh</a> <a href="/tags/二分搜索树/" style="font-size: 13.33px;">二分搜索树</a> <a href="/tags/二叉堆/" style="font-size: 10px;">二叉堆</a> <a href="/tags/优先队列/" style="font-size: 10px;">优先队列</a> <a href="/tags/哈希表/" style="font-size: 11.67px;">哈希表</a> <a href="/tags/字典/" style="font-size: 11.67px;">字典</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/散列表/" style="font-size: 11.67px;">散列表</a> <a href="/tags/数据结构/" style="font-size: 18.33px;">数据结构</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/映射/" style="font-size: 11.67px;">映射</a> <a href="/tags/服务器/" style="font-size: 13.33px;">服务器</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/版本控制/" style="font-size: 11.67px;">版本控制</a> <a href="/tags/第三方库/" style="font-size: 11.67px;">第三方库</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a> <a href="/tags/队列/" style="font-size: 10px;">队列</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/DataBase/">
+            <span class="level-start">
+                <span class="level-item">DataBase</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/DataBase/Mysql/">
+            <span class="level-start">
+                <span class="level-item">Mysql</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/DataBase/NoSQL/">
+            <span class="level-start">
+                <span class="level-item">NoSQL</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/iOS/">
+            <span class="level-start">
+                <span class="level-item">iOS</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/iOS/Objective-C/">
+            <span class="level-start">
+                <span class="level-item">Objective-C</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/Swift/">
+            <span class="level-start">
+                <span class="level-item">Swift</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/swift/">
+            <span class="level-start">
+                <span class="level-item">swift</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/编译/">
+            <span class="level-start">
+                <span class="level-item">编译</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/后端/">
+            <span class="level-start">
+                <span class="level-item">后端</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">11</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/后端/Apache服务器/">
+            <span class="level-start">
+                <span class="level-item">Apache服务器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/后端/Django/">
+            <span class="level-start">
+                <span class="level-item">Django</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/后端/Nginx服务器/">
+            <span class="level-start">
+                <span class="level-item">Nginx服务器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/插件/">
+            <span class="level-start">
+                <span class="level-item">插件</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/">
+            <span class="level-start">
+                <span class="level-item">数据结构</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">13</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/数据结构/二叉堆/">
+            <span class="level-start">
+                <span class="level-item">二叉堆</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/二叉树/">
+            <span class="level-start">
+                <span class="level-item">二叉树</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/哈希表/">
+            <span class="level-start">
+                <span class="level-item">哈希表</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/字典Map/">
+            <span class="level-start">
+                <span class="level-item">字典Map</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/数组/">
+            <span class="level-start">
+                <span class="level-item">数组</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/栈/">
+            <span class="level-start">
+                <span class="level-item">栈</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/链表/">
+            <span class="level-start">
+                <span class="level-item">链表</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/队列/">
+            <span class="level-start">
+                <span class="level-item">队列</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/集合/">
+            <span class="level-start">
+                <span class="level-item">集合</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/算法/">
+            <span class="level-start">
+                <span class="level-item">算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/算法/排序算法/">
+            <span class="level-start">
+                <span class="level-item">排序算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/系统/">
+            <span class="level-start">
+                <span class="level-item">系统</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/系统/Linux/">
+            <span class="level-start">
+                <span class="level-item">Linux</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/系统/Mac/">
+            <span class="level-start">
+                <span class="level-item">Mac</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-15T00:49:46.000Z">2019-05-15</time></div>
+                    <a href="/2019/05/15/iOS之hash与isEqual/" class="has-link-black-ter is-size-6">iOS之hash与isEqual</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-14T10:04:38.000Z">2019-05-14</time></div>
+                    <a href="/2019/05/14/iOS实现markdown预览/" class="has-link-black-ter is-size-6">iOS实现markdown预览</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/swift/">swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-12T12:32:32.000Z">2019-05-12</time></div>
+                    <a href="/2019/05/12/数据结构之哈希表实现1-链表/" class="has-link-black-ter is-size-6">数据结构之哈希表实现1+链表</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据结构/">数据结构</a> / <a class="has-link-grey -link" href="/categories/数据结构/哈希表/">哈希表</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-11T12:32:32.000Z">2019-05-11</time></div>
+                    <a href="/2019/05/11/数据结构之哈希表/" class="has-link-black-ter is-size-6">数据结构之哈希表</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据结构/">数据结构</a> / <a class="has-link-grey -link" href="/categories/数据结构/哈希表/">哈希表</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-09T02:13:11.148Z">2019-05-09</time></div>
+                    <a href="/2019/05/09/vim配置成IDE/" class="has-link-black-ter is-size-6">vim配置成IDE</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/系统/">系统</a> / <a class="has-link-grey -link" href="/categories/系统/Mac/">Mac</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">9</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Apache/">
+                        <span class="tag">Apache</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Django/">
+                        <span class="tag">Django</span>
+                        <span class="tag is-grey">8</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/LinkedMap/">
+                        <span class="tag">LinkedMap</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/MD5加密/">
+                        <span class="tag">MD5加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Mysql/">
+                        <span class="tag">Mysql</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Nginx/">
+                        <span class="tag">Nginx</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Python/">
+                        <span class="tag">Python</span>
+                        <span class="tag is-grey">13</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/RSA加密/">
+                        <span class="tag">RSA加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Redis/">
+                        <span class="tag">Redis</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swift/">
+                        <span class="tag">Swift</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/TreeMap/">
+                        <span class="tag">TreeMap</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/VSCode/">
+                        <span class="tag">VSCode</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dict/">
+                        <span class="tag">dict</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ftp/">
+                        <span class="tag">ftp</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/git/">
+                        <span class="tag">git</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/iOS/">
+                        <span class="tag">iOS</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/shell/">
+                        <span class="tag">shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/svn/">
+                        <span class="tag">svn</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/vim/">
+                        <span class="tag">vim</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/zsh/">
+                        <span class="tag">zsh</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/二分搜索树/">
+                        <span class="tag">二分搜索树</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/二叉堆/">
+                        <span class="tag">二叉堆</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/优先队列/">
+                        <span class="tag">优先队列</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/哈希表/">
+                        <span class="tag">哈希表</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/字典/">
+                        <span class="tag">字典</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/工具/">
+                        <span class="tag">工具</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/排序/">
+                        <span class="tag">排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/散列表/">
+                        <span class="tag">散列表</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/数据结构/">
+                        <span class="tag">数据结构</span>
+                        <span class="tag is-grey">11</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/数组/">
+                        <span class="tag">数组</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/映射/">
+                        <span class="tag">映射</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/服务器/">
+                        <span class="tag">服务器</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/栈/">
+                        <span class="tag">栈</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/版本控制/">
+                        <span class="tag">版本控制</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/第三方库/">
+                        <span class="tag">第三方库</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/算法/">
+                        <span class="tag">算法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/链表/">
+                        <span class="tag">链表</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/队列/">
+                        <span class="tag">队列</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/集合/">
+                        <span class="tag">集合</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/DataBase/">
+            <span class="level-start">
+                <span class="level-item">DataBase</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/DataBase/Mysql/">
+            <span class="level-start">
+                <span class="level-item">Mysql</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/DataBase/NoSQL/">
+            <span class="level-start">
+                <span class="level-item">NoSQL</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/iOS/">
+            <span class="level-start">
+                <span class="level-item">iOS</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/iOS/Objective-C/">
+            <span class="level-start">
+                <span class="level-item">Objective-C</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/Swift/">
+            <span class="level-start">
+                <span class="level-item">Swift</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/swift/">
+            <span class="level-start">
+                <span class="level-item">swift</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/编译/">
+            <span class="level-start">
+                <span class="level-item">编译</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/后端/">
+            <span class="level-start">
+                <span class="level-item">后端</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">11</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/后端/Apache服务器/">
+            <span class="level-start">
+                <span class="level-item">Apache服务器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/后端/Django/">
+            <span class="level-start">
+                <span class="level-item">Django</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/后端/Nginx服务器/">
+            <span class="level-start">
+                <span class="level-item">Nginx服务器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/插件/">
+            <span class="level-start">
+                <span class="level-item">插件</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/">
+            <span class="level-start">
+                <span class="level-item">数据结构</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">13</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/数据结构/二叉堆/">
+            <span class="level-start">
+                <span class="level-item">二叉堆</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/二叉树/">
+            <span class="level-start">
+                <span class="level-item">二叉树</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/哈希表/">
+            <span class="level-start">
+                <span class="level-item">哈希表</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/字典Map/">
+            <span class="level-start">
+                <span class="level-item">字典Map</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/数组/">
+            <span class="level-start">
+                <span class="level-item">数组</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/栈/">
+            <span class="level-start">
+                <span class="level-item">栈</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/链表/">
+            <span class="level-start">
+                <span class="level-item">链表</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/队列/">
+            <span class="level-start">
+                <span class="level-item">队列</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构/集合/">
+            <span class="level-start">
+                <span class="level-item">集合</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/算法/">
+            <span class="level-start">
+                <span class="level-item">算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/算法/排序算法/">
+            <span class="level-start">
+                <span class="level-item">排序算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/系统/">
+            <span class="level-start">
+                <span class="level-item">系统</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/系统/Linux/">
+            <span class="level-start">
+                <span class="level-item">Linux</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/系统/Mac/">
+            <span class="level-start">
+                <span class="level-item">Mac</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-15T00:49:46.000Z">2019-05-15</time></div>
+                    <a href="/2019/05/15/iOS之hash与isEqual/" class="has-link-black-ter is-size-6">iOS之hash与isEqual</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-14T10:04:38.000Z">2019-05-14</time></div>
+                    <a href="/2019/05/14/iOS实现markdown预览/" class="has-link-black-ter is-size-6">iOS实现markdown预览</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/swift/">swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-12T12:32:32.000Z">2019-05-12</time></div>
+                    <a href="/2019/05/12/数据结构之哈希表实现1-链表/" class="has-link-black-ter is-size-6">数据结构之哈希表实现1+链表</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据结构/">数据结构</a> / <a class="has-link-grey -link" href="/categories/数据结构/哈希表/">哈希表</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-11T12:32:32.000Z">2019-05-11</time></div>
+                    <a href="/2019/05/11/数据结构之哈希表/" class="has-link-black-ter is-size-6">数据结构之哈希表</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据结构/">数据结构</a> / <a class="has-link-grey -link" href="/categories/数据结构/哈希表/">哈希表</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-09T02:13:11.148Z">2019-05-09</time></div>
+                    <a href="/2019/05/09/vim配置成IDE/" class="has-link-black-ter is-size-6">vim配置成IDE</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/系统/">系统</a> / <a class="has-link-grey -link" href="/categories/系统/Mac/">Mac</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">9</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Apache/">
+                        <span class="tag">Apache</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Django/">
+                        <span class="tag">Django</span>
+                        <span class="tag is-grey">8</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/LinkedMap/">
+                        <span class="tag">LinkedMap</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/MD5加密/">
+                        <span class="tag">MD5加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Mysql/">
+                        <span class="tag">Mysql</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Nginx/">
+                        <span class="tag">Nginx</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Python/">
+                        <span class="tag">Python</span>
+                        <span class="tag is-grey">13</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/RSA加密/">
+                        <span class="tag">RSA加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Redis/">
+                        <span class="tag">Redis</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Shell/">
+                        <span class="tag">Shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Swift/">
+                        <span class="tag">Swift</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/TreeMap/">
+                        <span class="tag">TreeMap</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/VSCode/">
+                        <span class="tag">VSCode</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dict/">
+                        <span class="tag">dict</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ftp/">
+                        <span class="tag">ftp</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/git/">
+                        <span class="tag">git</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/iOS/">
+                        <span class="tag">iOS</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/shell/">
+                        <span class="tag">shell</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/svn/">
+                        <span class="tag">svn</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/vim/">
+                        <span class="tag">vim</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/zsh/">
+                        <span class="tag">zsh</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/二分搜索树/">
+                        <span class="tag">二分搜索树</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/二叉堆/">
+                        <span class="tag">二叉堆</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/优先队列/">
+                        <span class="tag">优先队列</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/哈希表/">
+                        <span class="tag">哈希表</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/字典/">
+                        <span class="tag">字典</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/工具/">
+                        <span class="tag">工具</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/排序/">
+                        <span class="tag">排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/散列表/">
+                        <span class="tag">散列表</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/数据结构/">
+                        <span class="tag">数据结构</span>
+                        <span class="tag is-grey">11</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/数组/">
+                        <span class="tag">数组</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/映射/">
+                        <span class="tag">映射</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/服务器/">
+                        <span class="tag">服务器</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/栈/">
+                        <span class="tag">栈</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/版本控制/">
+                        <span class="tag">版本控制</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/第三方库/">
+                        <span class="tag">第三方库</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/算法/">
+                        <span class="tag">算法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/链表/">
+                        <span class="tag">链表</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/队列/">
+                        <span class="tag">队列</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/集合/">
+                        <span class="tag">集合</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/myblog.png" alt="数据结构之哈希表实现1+链表" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 GuoTZ&nbsp;
+                <a href target="_blank"></a><a href target="_blank"></a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/GuoTZ">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
